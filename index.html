@@ -355,6 +355,66 @@ tr:hover td { background: rgba(255,255,255,.02); }
 /* === COUNTER ANIMATION === */
 .counter { display: inline-block; }
 
+/* === MOBILE RESPONSIVE === */
+@media(max-width:768px){
+  .hero { padding: 50px 0 70px; }
+  .hero-logo { height: 90px; }
+  .hero-result { padding: 20px 28px; border-radius: 18px; }
+  .hero-result .big { font-size: 2rem; }
+  .hero-result .tag { font-size: .6rem; letter-spacing: 2px; }
+  .hero-period { padding: 8px 20px; font-size: .75rem; }
+  .container { padding: 0 16px; }
+  .section { margin-top: 44px; }
+  .section-title { font-size: 1.2rem; }
+  .kpi-grid { margin-top: -36px; gap: 10px; }
+  .kpi-card { padding: 16px 14px; border-radius: 14px; }
+  .kpi-value { font-size: 1.2rem; }
+  .kpi-label { font-size: .6rem; letter-spacing: 1.5px; }
+  .kpi-sub { font-size: .68rem; }
+  .kpi-delta { font-size: .6rem; padding: 3px 8px; }
+  .card { padding: 18px 14px; border-radius: 14px; margin-bottom: 12px; }
+  .card-title { font-size: .7rem; margin-bottom: 14px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 12px; }
+  /* Tables scroll horizontally */
+  .card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { min-width: 520px; font-size: .72rem; }
+  thead th { padding: 8px 10px; font-size: .6rem; letter-spacing: 1px; }
+  td { padding: 8px 10px; }
+  .row-sub td { padding-left: 22px; font-size: .7rem; }
+  /* Charts */
+  .chart-box canvas { max-height: 250px; }
+  /* Gauge */
+  .gauge-container { flex-direction: column; gap: 20px; align-items: center; }
+  .gauge-arrow { transform: rotate(90deg); }
+  .gauge { width: 110px; height: 110px; }
+  .gauge .pct { font-size: 1.1rem; }
+  /* Insights */
+  .insight { padding: 16px 18px; gap: 12px; }
+  .insight .title { font-size: .82rem; }
+  .insight .desc { font-size: .75rem; }
+  .insight .icon { width: 30px; height: 30px; font-size: 1rem; border-radius: 8px; }
+  /* Mini stats */
+  .stat-row { gap: 10px; }
+  .mini-stat { min-width: 100px; padding: 14px 12px; border-radius: 12px; }
+  .mini-stat .ms-value { font-size: 1.05rem; }
+  .mini-stat .ms-label { font-size: .58rem; }
+  .mini-stat .ms-sub { font-size: .65rem; }
+  /* Footer */
+  .footer-bar { margin-top: 50px; padding: 24px 0; }
+  /* Background effects less heavy */
+  .bg-glow { width: 300px; height: 300px; filter: blur(80px); opacity: .08; }
+}
+@media(max-width:400px){
+  .kpi-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .kpi-card { padding: 14px 12px; }
+  .kpi-value { font-size: 1.05rem; }
+  .hero-result .big { font-size: 1.7rem; }
+  .hero-sub { font-size: .72rem; letter-spacing: 3px; }
+  table { min-width: 480px; font-size: .68rem; }
+  .section-header { gap: 10px; }
+  .section-icon { width: 32px; height: 32px; font-size: .95rem; border-radius: 10px; }
+}
+
 /* === PRINT === */
 @media print {
   body { background: #fff; color: #111; }
