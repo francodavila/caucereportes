@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cauce — Informe de Gestión Marzo 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090d;
+  --bg2: #0e1018;
+  --bg3: #141620;
+  --card: rgba(18,20,34,.75);
+  --card-hover: rgba(26,30,50,.85);
+  --card-border: rgba(255,255,255,.06);
+  --glass: rgba(255,255,255,.03);
+  --glass-border: rgba(255,255,255,.08);
+  --text: #e8e8eb;
+  --text2: #9ca3af;
+  --text3: #5a6070;
+  --green: #34d399;
+  --green2: #10b981;
+  --green-bg: rgba(52,211,153,.08);
+  --green-glow: rgba(52,211,153,.15);
+  --red: #f87171;
+  --red2: #ef4444;
+  --red-bg: rgba(248,113,113,.08);
+  --blue: #60a5fa;
+  --blue2: #3b82f6;
+  --blue-bg: rgba(96,165,250,.08);
+  --amber: #fbbf24;
+  --amber2: #f59e0b;
+  --amber-bg: rgba(251,191,36,.08);
+  --purple: #a78bfa;
+  --cyan: #22d3ee;
+  --accent: #34d399;
+  --shadow: 0 8px 32px rgba(0,0,0,.4);
+  --shadow-lg: 0 16px 64px rgba(0,0,0,.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* === ANIMATED BACKGROUND === */
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 100%);
+}
+.bg-glow {
+  position: fixed; z-index: 0; pointer-events: none;
+  width: 600px; height: 600px; border-radius: 50%;
+  filter: blur(120px); opacity: .12;
+}
+.bg-glow.g1 { top: -200px; left: -100px; background: var(--green2); animation: float1 12s ease-in-out infinite alternate; }
+.bg-glow.g2 { top: 40%; right: -200px; background: var(--blue2); animation: float2 15s ease-in-out infinite alternate; }
+.bg-glow.g3 { bottom: -200px; left: 30%; background: var(--purple); animation: float1 18s ease-in-out infinite alternate-reverse; }
+@keyframes float1 { 0%{transform:translate(0,0)} 100%{transform:translate(40px,30px)} }
+@keyframes float2 { 0%{transform:translate(0,0)} 100%{transform:translate(-30px,40px)} }
+
+/* === SCROLL ANIMATIONS === */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .2s; }
+.reveal-delay-3 { transition-delay: .3s; }
+.reveal-delay-4 { transition-delay: .4s; }
+
+/* === HERO === */
+.hero {
+  position: relative; overflow: hidden; z-index: 1;
+  padding: 80px 0 100px; text-align: center;
+  background: linear-gradient(170deg, #08090d 0%, #111528 35%, #0d1a20 70%, #08090d 100%);
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 50% 40% at 25% 30%, rgba(52,211,153,.07) 0%, transparent 100%),
+    radial-gradient(ellipse 40% 50% at 75% 60%, rgba(96,165,250,.05) 0%, transparent 100%);
+}
+.hero::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(52,211,153,.2), rgba(96,165,250,.2), transparent);
+}
+.hero-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; padding: 0 24px; }
+.hero-logo {
+  height: 140px; margin-bottom: 12px;
+  filter: drop-shadow(0 0 40px rgba(52,211,153,.15));
+  animation: logoIn 1.2s cubic-bezier(.22,1,.36,1) forwards;
+}
+@keyframes logoIn { from{opacity:0;transform:scale(.9) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.hero-sub {
+  font-size: .85rem; color: var(--text3); font-weight: 400;
+  letter-spacing: 4px; text-transform: uppercase;
+  animation: fadeIn .8s .3s both;
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.hero-period {
+  display: inline-flex; align-items: center; gap: 14px; margin-top: 24px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 100px; padding: 10px 30px; font-size: .85rem; color: var(--text2);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  animation: fadeIn .8s .5s both;
+}
+.hero-period .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--green-glow); }
+.hero-result {
+  margin-top: 36px; display: inline-flex; flex-direction: column; align-items: center;
+  background: linear-gradient(135deg, rgba(52,211,153,.06), rgba(52,211,153,.02));
+  border: 1px solid rgba(52,211,153,.15);
+  border-radius: 24px; padding: 28px 48px;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 0 60px rgba(52,211,153,.06), inset 0 1px 0 rgba(255,255,255,.05);
+  animation: resultIn 1s .6s both;
+}
+@keyframes resultIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.hero-result .tag {
+  font-size: .65rem; color: var(--green); text-transform: uppercase; letter-spacing: 3px; font-weight: 600;
+}
+.hero-result .big {
+  font-size: 3rem; font-weight: 900; letter-spacing: -1px;
+  background: linear-gradient(135deg, #34d399, #6ee7b7);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+}
+.hero-result .vs {
+  font-size: .8rem; color: var(--text3); margin-top: 10px;
+  padding-top: 10px; border-top: 1px solid rgba(255,255,255,.06);
+}
+.hero-result .vs .neg { color: var(--red); font-weight: 600; }
+.hero-result .vs .pos { color: var(--green); font-weight: 700; }
+.container { max-width: 1220px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+/* === KPI CARDS === */
+.kpi-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+  margin-top: -48px; position: relative; z-index: 3;
+}
+@media(max-width:1000px){ .kpi-grid { grid-template-columns: repeat(3,1fr); } }
+@media(max-width:600px){ .kpi-grid { grid-template-columns: repeat(2,1fr); } }
+.kpi-card {
+  background: var(--card); border: 1px solid var(--card-border);
+  border-radius: 20px; padding: 24px 20px;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  transition: all .4s cubic-bezier(.22,1,.36,1);
+  position: relative; overflow: hidden;
+}
+.kpi-card:hover {
+  background: var(--card-hover); transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: rgba(255,255,255,.1);
+}
+.kpi-card .kpi-accent {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.kpi-card .kpi-glow {
+  position: absolute; top: -40px; right: -40px; width: 100px; height: 100px;
+  border-radius: 50%; filter: blur(40px); opacity: .08;
+}
+.kpi-label {
+  font-size: .65rem; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--text3); font-weight: 500; position: relative;
+}
+.kpi-value {
+  font-size: 1.6rem; font-weight: 800; color: #fff; margin: 8px 0 4px;
+  letter-spacing: -.5px; position: relative;
+}
+.kpi-sub { font-size: .75rem; color: var(--text3); position: relative; }
+.kpi-delta {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: .68rem; font-weight: 700; padding: 4px 10px;
+  border-radius: 8px; margin-top: 8px; position: relative;
+}
+.kpi-delta.up { background: var(--green-bg); color: var(--green); }
+.kpi-delta.down { background: var(--red-bg); color: var(--red); }
+.kpi-delta svg { width: 10px; height: 10px; }
+
+/* Sparkline in KPI */
+.kpi-spark { height: 30px; margin-top: 8px; opacity: .5; }
+.kpi-spark canvas { width: 100% !important; height: 30px !important; }
+
+/* === SECTIONS === */
+.section { margin-top: 64px; }
+.section-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
+}
+.section-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; position: relative;
+  box-shadow: 0 0 20px rgba(0,0,0,.2);
+}
+.section-title {
+  font-family: 'Playfair Display', serif; font-size: 1.5rem;
+  font-weight: 700; color: #fff; letter-spacing: -.2px;
+}
+.section-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--card-border), transparent);
+}
+
+/* === CARDS === */
+.card {
+  background: var(--card); border: 1px solid var(--card-border);
+  border-radius: 20px; padding: 28px; margin-bottom: 16px;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  transition: border-color .3s;
+}
+.card:hover { border-color: rgba(255,255,255,.1); }
+.card-title {
+  font-size: .75rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--text3); margin-bottom: 18px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-title::before {
+  content: ''; width: 3px; height: 14px; border-radius: 3px;
+  background: var(--accent);
+}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+@media(max-width:800px){ .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+/* === TABLES === */
+table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+thead th {
+  text-align: left; padding: 12px 14px; font-weight: 600; font-size: .68rem;
+  text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  background: rgba(255,255,255,.01);
+}
+thead th:not(:first-child) { text-align: right; }
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.025);
+  transition: background .2s;
+}
+td:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+tr:hover td { background: rgba(255,255,255,.02); }
+.row-group td {
+  font-weight: 700; color: #fff;
+  background: rgba(255,255,255,.025) !important;
+}
+.row-sub td { padding-left: 32px; color: var(--text2); font-size: .78rem; }
+.row-total td {
+  font-weight: 700; color: #fff;
+  border-top: 2px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.03) !important;
+}
+.up { color: var(--green); font-weight: 600; }
+.down { color: var(--red); font-weight: 600; }
+.neutral { color: var(--text3); }
+
+/* === CHART === */
+.chart-box { position: relative; }
+
+/* === INSIGHT CARDS === */
+.insight {
+  border-radius: 16px; padding: 20px 24px; margin-bottom: 14px;
+  border: 1px solid; display: flex; gap: 16px;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  transition: transform .3s, box-shadow .3s;
+}
+.insight:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+.insight .icon {
+  font-size: 1.3rem; flex-shrink: 0; margin-top: 1px;
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.insight .title { font-weight: 700; font-size: .88rem; margin-bottom: 5px; }
+.insight .desc { font-size: .8rem; line-height: 1.6; }
+.insight-green {
+  background: linear-gradient(135deg, rgba(52,211,153,.06), rgba(52,211,153,.02));
+  border-color: rgba(52,211,153,.12);
+}
+.insight-green .icon { background: rgba(52,211,153,.1); }
+.insight-green .title { color: var(--green); }
+.insight-green .desc { color: rgba(52,211,153,.75); }
+.insight-amber {
+  background: linear-gradient(135deg, rgba(251,191,36,.06), rgba(251,191,36,.02));
+  border-color: rgba(251,191,36,.12);
+}
+.insight-amber .icon { background: rgba(251,191,36,.1); }
+.insight-amber .title { color: var(--amber); }
+.insight-amber .desc { color: rgba(251,191,36,.75); }
+.insight-red {
+  background: linear-gradient(135deg, rgba(248,113,113,.06), rgba(248,113,113,.02));
+  border-color: rgba(248,113,113,.12);
+}
+.insight-red .icon { background: rgba(248,113,113,.1); }
+.insight-red .title { color: var(--red); }
+.insight-red .desc { color: rgba(248,113,113,.75); }
+.insight-blue {
+  background: linear-gradient(135deg, rgba(96,165,250,.06), rgba(96,165,250,.02));
+  border-color: rgba(96,165,250,.12);
+}
+.insight-blue .icon { background: rgba(96,165,250,.1); }
+.insight-blue .title { color: var(--blue); }
+.insight-blue .desc { color: rgba(96,165,250,.75); }
+
+/* === MINI STAT === */
+.stat-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 18px; }
+.mini-stat {
+  flex: 1; min-width: 140px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 14px; padding: 18px;
+  transition: all .3s;
+}
+.mini-stat:hover { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.12); }
+.mini-stat .ms-label { font-size: .65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); font-weight: 500; }
+.mini-stat .ms-value { font-size: 1.3rem; font-weight: 800; color: #fff; margin: 5px 0; letter-spacing: -.3px; }
+.mini-stat .ms-sub { font-size: .72rem; color: var(--text2); }
+
+/* === GAUGE === */
+.gauge-container { display: flex; justify-content: center; align-items: center; gap: 40px; padding: 20px 0; }
+.gauge { position: relative; width: 130px; height: 130px; }
+.gauge svg { transform: rotate(-90deg); }
+.gauge .track { fill: none; stroke: rgba(255,255,255,.04); stroke-width: 10; }
+.gauge .fill { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1.5s cubic-bezier(.22,1,.36,1); }
+.gauge .center {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.gauge .pct { font-size: 1.4rem; font-weight: 900; color: #fff; }
+.gauge .lbl { font-size: .6rem; color: var(--text3); text-transform: uppercase; letter-spacing: 2px; margin-top: 2px; }
+.gauge-arrow { font-size: 2.5rem; color: var(--text3); animation: arrowPulse 2s ease-in-out infinite; }
+@keyframes arrowPulse { 0%,100%{opacity:.3} 50%{opacity:.8} }
+
+/* === FOOTER === */
+.footer-bar {
+  margin-top: 80px; padding: 32px 0; position: relative; z-index: 1;
+  border-top: 1px solid rgba(255,255,255,.04);
+  text-align: center;
+}
+.footer-bar .f-logo {
+  font-family: 'Playfair Display', serif; font-size: 1.1rem;
+  color: var(--text3); margin-bottom: 6px; letter-spacing: 4px;
+}
+.footer-bar .f-text { font-size: .72rem; color: var(--text3); }
+
+/* === COUNTER ANIMATION === */
+.counter { display: inline-block; }
+
+/* === PRINT === */
+@media print {
+  body { background: #fff; color: #111; }
+  .bg-grid, .bg-glow { display: none; }
+  .card { border: 1px solid #ddd; box-shadow: none; background: #fff; backdrop-filter: none; }
+  .hero { background: #1a3a4a !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ======== PASSWORD GATE ======== -->
+<div id="lockScreen" style="
+  position:fixed;inset:0;z-index:9999;
+  background:#08090d;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  font-family:'Inter',system-ui,sans-serif;
+">
+  <div style="
+    background:rgba(18,20,34,.85);border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;padding:48px 44px;text-align:center;
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    box-shadow:0 16px 64px rgba(0,0,0,.5);max-width:400px;width:90%;
+    position:relative;overflow:hidden;
+  ">
+    <div style="position:absolute;top:-60px;right:-60px;width:160px;height:160px;border-radius:50%;background:rgba(52,211,153,.06);filter:blur(40px);"></div>
+    <div style="position:absolute;bottom:-40px;left:-40px;width:120px;height:120px;border-radius:50%;background:rgba(96,165,250,.04);filter:blur(40px);"></div>
+    <div style="position:relative;z-index:1;">
+      <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fff;letter-spacing:4px;margin-bottom:4px;">CAUCE</div>
+      <div style="font-family:'Playfair Display',serif;font-size:.85rem;font-style:italic;color:#6b7280;margin-bottom:28px;">de los fuegos</div>
+      <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:#5a6070;margin-bottom:20px;font-weight:500;">Informe de Gestión · Marzo 2026</div>
+      <div style="position:relative;">
+        <input id="pwdInput" type="password" placeholder="Ingresá la contraseña"
+          autocomplete="off"
+          onkeydown="if(event.key==='Enter')checkPwd()"
+          style="
+            width:100%;padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
+            background:rgba(255,255,255,.04);color:#e8e8eb;font-size:.9rem;font-family:'Inter',sans-serif;
+            outline:none;transition:border-color .3s;box-sizing:border-box;
+          "
+          onfocus="this.style.borderColor='rgba(52,211,153,.3)'"
+          onblur="this.style.borderColor='rgba(255,255,255,.1)'"
+        >
+      </div>
+      <button onclick="checkPwd()" style="
+        width:100%;margin-top:14px;padding:13px;border-radius:12px;border:none;
+        background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-size:.85rem;
+        font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.5px;
+        transition:opacity .3s,transform .2s;
+      " onmouseover="this.style.opacity='.9';this.style.transform='translateY(-1px)'"
+         onmouseout="this.style.opacity='1';this.style.transform='translateY(0)'">
+        Ingresar
+      </button>
+      <div id="pwdError" style="color:#f87171;font-size:.78rem;margin-top:12px;opacity:0;transition:opacity .3s;">
+        Contraseña incorrecta
+      </div>
+      <div style="margin-top:24px;font-size:.65rem;color:#3a3f50;">🔒 Acceso restringido a socios</div>
+    </div>
+  </div>
+</div>
+
+<div id="mainContent" style="display:none;">
+<div class="bg-grid"></div>
+<div class="bg-glow g1"></div>
+<div class="bg-glow g2"></div>
+<div class="bg-glow g3"></div>
+
+<!-- ======== HERO ======== -->
+<div class="hero">
+  <div class="hero-content">
+    <img class="hero-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzIwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMyMCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIEBpbXBvcnQgdXJsKCdodHRwczovL2ZvbnRzLmdvb2dsZWFwaXMuY29tL2NzczI/ZmFtaWx5PVBsYXlmYWlyK0Rpc3BsYXk6aXRhbCx3Z2h0QDAsNDAwOzAsNzAwOzEsNDAwJmFtcDtkaXNwbGF5PXN3YXAnKTsKICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDwhLS0gQ3Jvc3NlZCBheGVzL3Rvb2xzIC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIwMCw5MCkiIHN0cm9rZT0iI2ZmZiIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICAgIDwhLS0gTGVmdCB0b29sIChheGUpIC0tPgogICAgPGcgdHJhbnNmb3JtPSJyb3RhdGUoLTM1KSI+CiAgICAgIDxsaW5lIHgxPSIwIiB5MT0iLTcwIiB4Mj0iMCIgeTI9IjcwIiBzdHJva2Utd2lkdGg9IjMuNSIvPgogICAgICA8cGF0aCBkPSJNLTE4LC02MiBDLTE0LC03MCAtNiwtNzggMCwtNzAgQzYsLTc4IDE0LC03MCAxOCwtNjIgQzEyLC01NiA2LC01MiAwLC01NSBDLTYsLTUyIC0xMiwtNTYgLTE4LC02MloiIGZpbGw9IiNmZmYiIHN0cm9rZT0ibm9uZSIvPgogICAgPC9nPgogICAgPGcgdHJhbnNmb3JtPSJyb3RhdGUoMzUpIj4KICAgICAgPGxpbmUgeDE9IjAiIHkxPSItNzAiIHgyPSIwIiB5Mj0iNzAiIHN0cm9rZS13aWR0aD0iMy41Ii8+CiAgICAgIDxwYXRoIGQ9Ik0tMTgsLTYyIEMtMTQsLTcwIC02LC03OCAwLC03MCA2LC03OCAxNCwtNzAgMTgsLTYyIEMxMiwtNTYgNiwtNTIgMCwtNTUgQy02LC01MiAtMTIsLTU2IC0xOCwtNjJaIiBmaWxsPSIjZmZmIiBzdHJva2U9Im5vbmUiLz4KICAgIDwvZz4KICAgIDx0ZXh0IHg9IjAiIHk9IjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInUGxheWZhaXIgRGlzcGxheScsIEdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjI4IiBmb250LXN0eWxlPSJpdGFsaWMiIGZpbGw9IiNmZmYiIHN0cm9rZT0ibm9uZSI+QzwvdGV4dD4KICA8L2c+CiAgPHRleHQgeD0iMjAwIiB5PSIyMjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInUGxheWZhaXIgRGlzcGxheScsIEdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iNDAwIiBsZXR0ZXItc3BhY2luZz0iMTgiIGZpbGw9IiNmZmYiPkNBVUNFPC90ZXh0PgogIDx0ZXh0IHg9IjIwMCIgeT0iMjcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ1BsYXlmYWlyIERpc3BsYXknLCBHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIyNCIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iNDAwIiBsZXR0ZXItc3BhY2luZz0iNCIgZmlsbD0iI2ZmZiI+ZGUgbG9zIGZ1ZWdvczwvdGV4dD4KPC9zdmc+Cg==" alt="Cauce de los Fuegos">
+    <div class="hero-sub">Informe de Gestión Mensual</div>
+    <div class="hero-period">
+      <span>Marzo 2026</span>
+      <span class="dot"></span>
+      <span>Comparativa vs. Febrero 2026</span>
+    </div>
+    <div class="hero-result">
+      <div class="tag">Resultado del mes</div>
+      <div class="big">+$5.047.760</div>
+      <div class="vs">Febrero 2026: <span class="neg">-$10.264.163</span> &nbsp;·&nbsp; Recupero: <span class="pos">+$15.311.924</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== KPI GRID ======== -->
+<div class="container">
+  <div class="kpi-grid">
+    <div class="kpi-card reveal">
+      <div class="kpi-accent" style="background:linear-gradient(90deg,#60a5fa,#3b82f6);"></div>
+      <div class="kpi-glow" style="background:#3b82f6;"></div>
+      <div class="kpi-label">Venta Total</div>
+      <div class="kpi-value">$<span class="counter" data-target="309.98">0</span>M</div>
+      <div class="kpi-sub">Feb: $268,97M</div>
+      <div class="kpi-delta up">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10V2M2 5l4-4 4 4"/></svg>
+        +15,2%
+      </div>
+    </div>
+    <div class="kpi-card reveal reveal-delay-1">
+      <div class="kpi-accent" style="background:linear-gradient(90deg,#f87171,#ef4444);"></div>
+      <div class="kpi-glow" style="background:#ef4444;"></div>
+      <div class="kpi-label">Costo Variable</div>
+      <div class="kpi-value">$<span class="counter" data-target="133.74">0</span>M</div>
+      <div class="kpi-sub">43,1% s/vta <span style="color:var(--text3);">(Feb: 48,4%)</span></div>
+      <div class="kpi-delta up">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v8M2 7l4 4 4-4"/></svg>
+        -5,3 pp
+      </div>
+    </div>
+    <div class="kpi-card reveal reveal-delay-2">
+      <div class="kpi-accent" style="background:linear-gradient(90deg,#fbbf24,#f59e0b);"></div>
+      <div class="kpi-glow" style="background:#f59e0b;"></div>
+      <div class="kpi-label">Costo Fijo</div>
+      <div class="kpi-value">$<span class="counter" data-target="61.10">0</span>M</div>
+      <div class="kpi-sub">19,7% s/vta <span style="color:var(--text3);">(Feb: 19,1%)</span></div>
+      <div class="kpi-delta down">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10V2M2 5l4-4 4 4"/></svg>
+        +18,9%
+      </div>
+    </div>
+    <div class="kpi-card reveal reveal-delay-3">
+      <div class="kpi-accent" style="background:linear-gradient(90deg,#60a5fa,#818cf8);"></div>
+      <div class="kpi-glow" style="background:#818cf8;"></div>
+      <div class="kpi-label">Sueldos</div>
+      <div class="kpi-value">$<span class="counter" data-target="109.05">0</span>M</div>
+      <div class="kpi-sub">35,2% s/vta <span style="color:var(--text3);">(Feb: 35,9%)</span></div>
+      <div class="kpi-delta down">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10V2M2 5l4-4 4 4"/></svg>
+        +12,9%
+      </div>
+    </div>
+    <div class="kpi-card reveal reveal-delay-4">
+      <div class="kpi-accent" style="background:linear-gradient(90deg,#34d399,#10b981);"></div>
+      <div class="kpi-glow" style="background:#10b981;"></div>
+      <div class="kpi-label">Margen Neto</div>
+      <div class="kpi-value" style="background:linear-gradient(135deg,#34d399,#6ee7b7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"><span class="counter" data-target="1.63">0</span>%</div>
+      <div class="kpi-sub">Feb: <span style="color:var(--red);">-3,81%</span></div>
+      <div class="kpi-delta up">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10V2M2 5l4-4 4 4"/></svg>
+        +5,44 pp
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== INSIGHTS ======== -->
+  <div class="section reveal">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--green-bg); box-shadow: 0 0 20px var(--green-glow);">💡</div>
+      <div class="section-title">Insights del Mes</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="insight insight-green reveal">
+          <div class="icon">📈</div>
+          <div class="content">
+            <div class="title">Recupero total: +$15,3M vs Febrero</div>
+            <div class="desc">La empresa revierte la pérdida de Febrero (-$10,3M) y cierra Marzo con $5M positivos. La venta creció 15,2% (+$41M), con 611 personas más atendidas en salón, impulsadas por un aumento de 2,5x en reservas.</div>
+          </div>
+        </div>
+        <div class="insight insight-blue reveal reveal-delay-1">
+          <div class="icon">🎯</div>
+          <div class="content">
+            <div class="title">Eficiencia en costo variable: -5,3 pp</div>
+            <div class="desc">El costo variable bajó de 48,4% a 43,1% sobre ventas. Destaca la reducción en tarjetas del sistema (-33%) y la caída en bebidas sin alcohol (-67%). El mayor volumen de venta diluyó costos fijos relativos.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="insight insight-amber reveal">
+          <div class="icon">⚠️</div>
+          <div class="content">
+            <div class="title">Acuerdos laborales: $12,2M extraordinarios</div>
+            <div class="desc">Tres acuerdos laborales (Soto Lucas $7M, Valdez Matías $3,6M, Rodríguez Diego $1,6M) presionaron el resultado. Sin ellos, el margen habría sido 5,6% ($17,2M). El costo base salarial solo creció 2,8%.</div>
+          </div>
+        </div>
+        <div class="insight insight-red reveal reveal-delay-1">
+          <div class="icon">🔴</div>
+          <div class="content">
+            <div class="title">Costos fijos +18,9%: presión impositiva</div>
+            <div class="desc">Los impuestos saltaron de $18,5M a $29,2M (+57,9%), con mayor carga de IVA e Ingresos Brutos. Aparece el rubro Financiero ($3,76M por Imp. Ley Crédito). El margen neto de 1,63% sigue muy ajustado.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== BRIDGE ======== -->
+  <div class="section reveal">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--blue-bg); box-shadow: 0 0 20px rgba(96,165,250,.1);">🌊</div>
+      <div class="section-title">Puente de Resultado: Febrero → Marzo</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card">
+      <div class="chart-box" style="height:340px;"><canvas id="chartBridge"></canvas></div>
+      <div style="font-size:.72rem; color:var(--text3); text-align:center; margin-top:10px; letter-spacing:.3px;">
+        Las barras verdes suman al resultado · Las rojas restan · El puente muestra cómo la mejora en ventas (+$41M) compensó los incrementos en costos
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== ESTADO DE RESULTADOS ======== -->
+  <div class="section reveal">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--amber-bg); box-shadow: 0 0 20px rgba(251,191,36,.1);">📊</div>
+      <div class="section-title">Estado de Resultados Comparativo</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th>Concepto</th><th>Febrero</th><th>% Vta</th><th>Marzo</th><th>% Vta</th><th>Variación $</th><th>Var %</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-group"><td>Venta Total</td><td>268.965.304</td><td>100,0%</td><td>309.983.567</td><td>100,0%</td><td class="up">+41.018.263</td><td class="up">+15,2%</td></tr>
+          <tr><td>Costo Variable</td><td>(130.107.540)</td><td>48,4%</td><td>(133.738.859)</td><td>43,1%</td><td class="down">+3.631.319</td><td class="up">-5,3 pp</td></tr>
+          <tr><td>Costo Fijo</td><td>(51.368.534)</td><td>19,1%</td><td>(61.099.888)</td><td>19,7%</td><td class="down">+9.731.354</td><td class="down">+18,9%</td></tr>
+          <tr><td>Sueldos</td><td>(96.570.614)</td><td>35,9%</td><td>(109.045.332)</td><td>35,2%</td><td class="down">+12.474.718</td><td class="down">+12,9%</td></tr>
+          <tr class="row-total"><td>Total Costos</td><td>(278.046.688)</td><td>103,4%</td><td>(303.884.078)</td><td>98,0%</td><td class="down">+25.837.390</td><td>+9,3%</td></tr>
+          <tr><td>Retención Ing. Brutos</td><td>(1.182.779)</td><td>0,4%</td><td>(1.051.728)</td><td>0,3%</td><td class="up">-131.051</td><td class="up">-11,1%</td></tr>
+          <tr class="row-total">
+            <td style="font-size:.92rem;">Resultado Neto</td>
+            <td style="color:var(--red); font-size:.92rem; font-weight:800;">-10.264.163</td><td style="color:var(--red);">-3,8%</td>
+            <td style="color:var(--green); font-size:.92rem; font-weight:800;">+5.047.760</td><td style="color:var(--green);">+1,6%</td>
+            <td class="up" style="font-size:.92rem;">+15.311.924</td><td class="up">Recupero</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">Estructura de Costos</div>
+        <div class="chart-box" style="max-height:300px;"><canvas id="chartEstructura"></canvas></div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Evolución Rubros Principales</div>
+        <div class="chart-box" style="max-height:300px;"><canvas id="chartBarComp"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== COSTO VARIABLE ======== -->
+  <div class="section reveal">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--red-bg); box-shadow: 0 0 20px rgba(248,113,113,.1);">🔥</div>
+      <div class="section-title">Costo Variable</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">Peso sobre ventas</div>
+        <div class="gauge-container">
+          <div class="gauge">
+            <svg width="130" height="130" viewBox="0 0 130 130">
+              <circle class="track" cx="65" cy="65" r="54"/>
+              <circle class="fill" cx="65" cy="65" r="54"
+                style="stroke:var(--red);stroke-dasharray:339.3;stroke-dashoffset:175;"
+              />
+            </svg>
+            <div class="center"><div class="pct">48,4%</div><div class="lbl">Febrero</div></div>
+          </div>
+          <div class="gauge-arrow">→</div>
+          <div class="gauge">
+            <svg width="130" height="130" viewBox="0 0 130 130">
+              <circle class="track" cx="65" cy="65" r="54"/>
+              <circle class="fill" cx="65" cy="65" r="54"
+                style="stroke:var(--green);stroke-dasharray:339.3;stroke-dashoffset:193;"
+              />
+            </svg>
+            <div class="center"><div class="pct">43,1%</div><div class="lbl">Marzo</div></div>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top:12px;">
+          <span style="background:linear-gradient(135deg,rgba(52,211,153,.12),rgba(52,211,153,.05)); color:var(--green); padding:6px 18px; border-radius:10px; font-size:.78rem; font-weight:700; border:1px solid rgba(52,211,153,.15);">↓ Mejora de 5,3 puntos porcentuales</span>
+        </div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Top variaciones Feb → Mar</div>
+        <div class="chart-box" style="max-height:280px;"><canvas id="chartCVtop"></canvas></div>
+      </div>
+    </div>
+    <div class="card reveal">
+      <div class="card-title">Desglose completo</div>
+      <table>
+        <thead><tr><th>Grupo</th><th>Feb $</th><th>Feb %Vta</th><th>Mar $</th><th>Mar %Vta</th><th>Var %</th></tr></thead>
+        <tbody>
+          <tr class="row-group" style="background:rgba(248,113,113,.05)!important"><td style="font-size:.84rem">🥩 CMV (Materia Prima)</td><td>97.484.735</td><td>36,24%</td><td>101.406.071</td><td>32,71%</td><td class="down">+4,0%</td></tr>
+          <tr class="row-sub"><td>Carnes Rojas</td><td>—</td><td>—</td><td>56.221.746</td><td>18,14%</td><td class="neutral">—</td></tr>
+          <tr class="row-sub"><td>Vinos y Champagnes</td><td>—</td><td>—</td><td>9.251.294</td><td>2,98%</td><td class="neutral">—</td></tr>
+          <tr class="row-sub"><td>Almacen</td><td>—</td><td>—</td><td>8.192.604</td><td>2,64%</td><td class="neutral">—</td></tr>
+          <tr class="row-sub"><td>Frutas y Verduras</td><td>—</td><td>—</td><td>7.631.950</td><td>2,46%</td><td class="neutral">—</td></tr>
+          <tr class="row-sub"><td>Lácteos</td><td>4.803.752</td><td>1,79%</td><td>7.510.398</td><td>2,42%</td><td class="down">+56,3%</td></tr>
+          <tr class="row-sub"><td>Pescados y Mariscos</td><td>2.771.956</td><td>1,03%</td><td>4.760.786</td><td>1,54%</td><td class="down">+71,7%</td></tr>
+          <tr class="row-sub"><td>Bebidas sin Alcohol</td><td>7.223.701</td><td>2,69%</td><td>2.392.800</td><td>0,77%</td><td class="up">-66,9%</td></tr>
+          <tr class="row-sub"><td>Achuras</td><td>2.202.242</td><td>0,82%</td><td>1.196.332</td><td>0,39%</td><td class="up">-45,7%</td></tr>
+          <tr class="row-sub"><td>Carnes Blancas</td><td>—</td><td>—</td><td>1.099.317</td><td>0,35%</td><td class="neutral">—</td></tr>
+          <tr class="row-sub"><td>Panificados</td><td>1.861.533</td><td>0,69%</td><td>1.085.999</td><td>0,35%</td><td class="up">-41,7%</td></tr>
+          <tr class="row-sub"><td>Cremas Heladas</td><td>431.999</td><td>0,16%</td><td>576.008</td><td>0,19%</td><td class="down">+33,3%</td></tr>
+          <tr class="row-sub"><td>Carbón y Leña</td><td>1.468.577</td><td>0,55%</td><td>568.458</td><td>0,18%</td><td class="up">-61,3%</td></tr>
+          <tr class="row-sub"><td>Fiambre y Embutidos</td><td>—</td><td>—</td><td>343.182</td><td>0,11%</td><td class="neutral">—</td></tr>
+          <tr class="row-sub"><td>Hongos</td><td>—</td><td>—</td><td>315.203</td><td>0,10%</td><td class="neutral">—</td></tr>
+          <tr class="row-sub"><td>Pastas</td><td>—</td><td>—</td><td>291.057</td><td>0,09%</td><td class="neutral">—</td></tr>
+          <tr class="row-sub"><td>Sin clasificar</td><td>—</td><td>—</td><td>197.207</td><td>0,06%</td><td class="neutral">—</td></tr>
+          <tr class="row-sub"><td>Farmacia Insumos Varios</td><td>—</td><td>—</td><td>12.600</td><td>0,00%</td><td class="neutral">—</td></tr>
+          <tr class="row-group"><td>Tarjetas Sistema</td><td>20.256.912</td><td>7,53%</td><td>13.545.322</td><td>4,37%</td><td class="up">-33,1%</td></tr>
+          <tr class="row-group"><td>Operativo</td><td>7.793.788</td><td>2,90%</td><td>10.343.278</td><td>3,34%</td><td class="down">+32,7%</td></tr>
+          <tr class="row-sub"><td>Mantelería</td><td>3.687.032</td><td>1,37%</td><td>4.133.501</td><td>1,33%</td><td>+12,1%</td></tr>
+          <tr class="row-sub"><td>Art. Limpieza</td><td>1.603.789</td><td>0,60%</td><td>2.458.815</td><td>0,79%</td><td class="down">+53,3%</td></tr>
+          <tr class="row-sub"><td>Papelera y Librería</td><td>1.561.007</td><td>0,58%</td><td>2.159.152</td><td>0,70%</td><td class="down">+38,3%</td></tr>
+          <tr class="row-group"><td>Abonos Varios</td><td>3.051.410</td><td>1,13%</td><td>5.184.665</td><td>1,67%</td><td class="down">+69,9%</td></tr>
+          <tr class="row-group"><td>Comida Personal</td><td>1.520.695</td><td>0,57%</td><td>3.135.272</td><td>1,01%</td><td class="down">+106,2%</td></tr>
+          <tr class="row-total"><td>Total CV</td><td>130.107.540</td><td>48,4%</td><td>133.738.859</td><td>43,1%</td><td class="down">+2,8%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ======== COSTO FIJO ======== -->
+  <div class="section reveal">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--amber-bg); box-shadow: 0 0 20px rgba(251,191,36,.1);">🏠</div>
+      <div class="section-title">Costo Fijo</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">Composición comparativa</div>
+        <div class="chart-box" style="max-height:300px;"><canvas id="chartCFcomp"></canvas></div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Detalle por rubro</div>
+        <table>
+          <thead><tr><th>Rubro</th><th>Feb $</th><th>Mar $</th><th>Var</th></tr></thead>
+          <tbody>
+            <tr class="row-group"><td>Impuestos</td><td>18.509.759</td><td>29.234.987</td><td class="down">+57,9%</td></tr>
+            <tr class="row-sub"><td>IVA</td><td>11.424.325</td><td>11.762.543</td><td>+3,0%</td></tr>
+            <tr class="row-sub"><td>Ingresos Brutos</td><td>7.085.435</td><td>9.654.544</td><td class="down">+36,3%</td></tr>
+            <tr class="row-sub"><td>IVA Facturas</td><td>7.179.000</td><td>7.817.900</td><td>+8,9%</td></tr>
+            <tr class="row-group"><td>Inmobiliario</td><td>28.983.547</td><td>28.102.349</td><td class="up">-3,0%</td></tr>
+            <tr class="row-sub"><td>Establecimiento</td><td>15.694.670</td><td>15.694.670</td><td class="neutral">0,0%</td></tr>
+            <tr class="row-sub"><td>Expensas</td><td>10.248.877</td><td>10.647.679</td><td>+3,9%</td></tr>
+            <tr class="row-group"><td>Financiero</td><td>—</td><td>3.762.552</td><td class="down">Nuevo</td></tr>
+            <tr class="row-group"><td>Alquileres</td><td>3.040.000</td><td>1.760.000</td><td class="up">-42,1%</td></tr>
+            <tr class="row-group"><td>Servicios</td><td>2.138.228</td><td>—</td><td class="neutral">—</td></tr>
+            <tr class="row-group"><td>Honorarios Prof.</td><td>1.737.000</td><td>—</td><td class="neutral">—</td></tr>
+            <tr class="row-total"><td>Total CF</td><td>51.368.534</td><td>61.099.888</td><td class="down">+18,9%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== SUELDOS ======== -->
+  <div class="section reveal">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--blue-bg); box-shadow: 0 0 20px rgba(96,165,250,.1);">👥</div>
+      <div class="section-title">Sueldos</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">Composición comparativa</div>
+        <div class="chart-box" style="max-height:300px;"><canvas id="chartSueldos"></canvas></div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Detalle</div>
+        <table>
+          <thead><tr><th>Concepto</th><th>Feb $</th><th>Mar $</th><th>Var</th></tr></thead>
+          <tbody>
+            <tr class="row-group"><td>Sueldos base</td><td>75.489.312</td><td>77.947.896</td><td class="down">+3,3%</td></tr>
+            <tr class="row-group"><td>Jubilación</td><td>18.681.302</td><td>18.897.436</td><td>+1,2%</td></tr>
+            <tr class="row-group"><td>Liquidaciones</td><td>2.400.000</td><td>—</td><td class="up">Eliminado</td></tr>
+            <tr class="row-sub"><td>Liq. Natala Muñoz</td><td>2.400.000</td><td>—</td><td></td></tr>
+            <tr class="row-group"><td>Juicios y Acuerdos</td><td>—</td><td>12.200.000</td><td class="down">Nuevo</td></tr>
+            <tr class="row-sub"><td>Acuerdo Soto Lucas</td><td>—</td><td>7.000.000</td><td></td></tr>
+            <tr class="row-sub"><td>Acuerdo Valdez Matías</td><td>—</td><td>3.600.000</td><td></td></tr>
+            <tr class="row-sub"><td>Acuerdo Rodríguez Diego</td><td>—</td><td>1.600.000</td><td></td></tr>
+            <tr class="row-total"><td>Total</td><td>96.570.614</td><td>109.045.332</td><td class="down">+12,9%</td></tr>
+          </tbody>
+        </table>
+        <div class="insight insight-amber" style="margin-top:16px;">
+          <div class="icon">💡</div>
+          <div class="content">
+            <div class="title">Impacto sin extraordinarios</div>
+            <div class="desc">Costo base (sueldos + jubilación) creció solo 2,8%. Sin acuerdos, el resultado sería ~$17,2M (5,6% s/vta).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== DOTACIÓN Y NÓMINA DETALLADA ======== -->
+  <div class="section reveal">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(167,139,250,.08); box-shadow: 0 0 20px rgba(167,139,250,.1);">🧑‍🍳</div>
+      <div class="section-title">Dotación y Nómina — Marzo 2026</div>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- KPI stats row -->
+    <div style="display:flex; gap:14px; flex-wrap:wrap; margin-bottom:16px;">
+      <div class="mini-stat" style="flex:1;min-width:130px;background:linear-gradient(135deg,rgba(167,139,250,.06),rgba(167,139,250,.02));border-color:rgba(167,139,250,.12);">
+        <div class="ms-label">Dotación Activa</div>
+        <div class="ms-value">50</div>
+        <div class="ms-sub">40 AFIP + 9 Seguro + 1 Baja c/sueldo</div>
+      </div>
+      <div class="mini-stat" style="flex:1;min-width:130px;">
+        <div class="ms-label">Extras</div>
+        <div class="ms-value">13</div>
+        <div class="ms-sub">$5.670.500 total</div>
+      </div>
+      <div class="mini-stat" style="flex:1;min-width:130px;">
+        <div class="ms-label">Bajas del Mes</div>
+        <div class="ms-value" style="color:var(--red);">28</div>
+        <div class="ms-sub">18 AFIP + 10 Seguro</div>
+      </div>
+      <div class="mini-stat" style="flex:1;min-width:130px;">
+        <div class="ms-label">Sueldo Promedio</div>
+        <div class="ms-value">$1.397.519</div>
+        <div class="ms-sub">Mediana: $1.296.000</div>
+      </div>
+      <div class="mini-stat" style="flex:1;min-width:130px;background:linear-gradient(135deg,rgba(52,211,153,.06),rgba(52,211,153,.02));border-color:rgba(52,211,153,.12);">
+        <div class="ms-label">Nómina Total</div>
+        <div class="ms-value" style="color:var(--green);">$75.546.433</div>
+        <div class="ms-sub">Sueldos + Feriados ($3.218.267)</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Distribución por Área -->
+      <div class="card reveal">
+        <div class="card-title">Distribución por Área</div>
+        <div class="chart-box" style="max-height:300px;"><canvas id="chartDotacionArea"></canvas></div>
+      </div>
+      <!-- Distribución por Situación -->
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Distribución por Situación Laboral</div>
+        <div class="chart-box" style="max-height:300px;"><canvas id="chartDotacionSit"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Top 10 sueldos -->
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">Top 10 Remuneraciones</div>
+        <table>
+          <thead><tr><th>Empleado</th><th>Área</th><th>Sueldo</th><th>Feriados</th><th>Total</th></tr></thead>
+          <tbody>
+            <tr class="row-group"><td>Belardinelli, Emiliano</td><td>Cocina</td><td>4.500.000</td><td>—</td><td>4.500.000</td></tr>
+            <tr><td>Del Valle Paz, Thomás</td><td>Compras</td><td>3.250.000</td><td>260.000</td><td>3.510.000</td></tr>
+            <tr><td>Tarallo, Martín</td><td>Salón</td><td>3.500.000</td><td>—</td><td>3.500.000</td></tr>
+            <tr><td>Benitez Rios, Natalia</td><td>Oficina</td><td>2.000.000</td><td>—</td><td>2.000.000</td></tr>
+            <tr><td>Gauto, César</td><td>Cocina</td><td>1.700.000</td><td>136.000</td><td>1.836.000</td></tr>
+            <tr><td>Sánchez, Marcos</td><td>Cocina</td><td>1.700.000</td><td>136.000</td><td>1.836.000</td></tr>
+            <tr><td>Pichel Vera, Laura</td><td>Barra</td><td>1.600.000</td><td>128.000</td><td>1.728.000</td></tr>
+            <tr><td>Flores, Christian</td><td>Salón</td><td>1.600.000</td><td>128.000</td><td>1.728.000</td></tr>
+            <tr><td>Marti, Patricia</td><td>Salón</td><td>1.600.000</td><td>128.000</td><td>1.728.000</td></tr>
+            <tr><td>González, Verónica</td><td>Salón</td><td>1.600.000</td><td>128.000</td><td>1.728.000</td></tr>
+          </tbody>
+        </table>
+        <div class="insight insight-blue" style="margin-top:14px;">
+          <div class="icon">💡</div>
+          <div class="content">
+            <div class="title">Concentración salarial</div>
+            <div class="desc">Los 3 sueldos más altos representan $11,5M (15,2% de la nómina). El rango va de $40.000 (mínimo) a $4.500.000. La mediana de $1.296.000 está un 7,3% por debajo del promedio, indicando una distribución con asimetría positiva.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listado completo por área -->
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Costo por Área — Resumen</div>
+        <table>
+          <thead><tr><th>Área</th><th>Personas</th><th>Costo Total</th><th>Promedio</th><th>% Nómina</th></tr></thead>
+          <tbody>
+            <tr class="row-group"><td>Cocina</td><td style="text-align:center;">22</td><td>27.232.033</td><td>1.237.820</td><td>36,0%</td></tr>
+            <tr><td>Salón</td><td style="text-align:center;">16</td><td>20.782.400</td><td>1.298.900</td><td>27,5%</td></tr>
+            <tr><td>Barra</td><td style="text-align:center;">4</td><td>5.166.000</td><td>1.291.500</td><td>6,8%</td></tr>
+            <tr><td>Compras</td><td style="text-align:center;">1</td><td>3.510.000</td><td>3.510.000</td><td>4,6%</td></tr>
+            <tr><td>Caja</td><td style="text-align:center;">3</td><td>3.666.000</td><td>1.222.000</td><td>4,9%</td></tr>
+            <tr><td>Oficina</td><td style="text-align:center;">2</td><td>3.200.000</td><td>1.600.000</td><td>4,2%</td></tr>
+            <tr><td>Recepción</td><td style="text-align:center;">2</td><td>2.916.000</td><td>1.458.000</td><td>3,9%</td></tr>
+            <tr><td>Garage</td><td style="text-align:center;">2</td><td>2.592.000</td><td>1.296.000</td><td>3,4%</td></tr>
+            <tr><td>Limpieza</td><td style="text-align:center;">2</td><td>2.392.000</td><td>1.196.000</td><td>3,2%</td></tr>
+            <tr><td>Sommelier</td><td style="text-align:center;">1</td><td>1.600.000</td><td>1.600.000</td><td>2,1%</td></tr>
+            <tr><td>Gerencia</td><td style="text-align:center;">1</td><td>750.000</td><td>750.000</td><td>1,0%</td></tr>
+            <tr><td>Op / Otros</td><td style="text-align:center;">1</td><td>975.000</td><td>975.000</td><td>1,3%</td></tr>
+            <tr class="row-total"><td>Total</td><td style="text-align:center;">57</td><td>74.781.433</td><td>1.312.042</td><td>100%</td></tr>
+          </tbody>
+        </table>
+
+        <div class="card-title" style="margin-top:20px;">Personal Extra — Detalle</div>
+        <table>
+          <thead><tr><th>Empleado</th><th>Área</th><th>Total</th></tr></thead>
+          <tbody>
+            <tr><td>Vega, Luis</td><td>Op</td><td>975.000</td></tr>
+            <tr><td>Soto, Camila</td><td>Barra</td><td>900.000</td></tr>
+            <tr><td>Barrios, Naira</td><td>Cocina</td><td>880.000</td></tr>
+            <tr><td>López, Morena</td><td>Salón</td><td>760.000</td></tr>
+            <tr><td>Misenta, Lola</td><td>Caja</td><td>750.000</td></tr>
+            <tr><td>Cerdan, Juan</td><td>Cocina</td><td>480.500</td></tr>
+            <tr><td>Cervellera, Marcelo</td><td>—</td><td>200.000</td></tr>
+            <tr><td>Ledesma, José</td><td>—</td><td>200.000</td></tr>
+            <tr><td>González, Dalma</td><td>Cocina</td><td>160.000</td></tr>
+            <tr><td>Viard, Lucio</td><td>—</td><td>160.000</td></tr>
+            <tr><td>Carrera, Cristian</td><td>—</td><td>120.000</td></tr>
+            <tr><td>Soto, Micaela</td><td>—</td><td>45.000</td></tr>
+            <tr><td>Toledo, Tomás</td><td>—</td><td>40.000</td></tr>
+            <tr class="row-total"><td>Total Extras</td><td></td><td>5.670.500</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Listado completo nómina activa -->
+    <div class="card reveal">
+      <div class="card-title">Nómina Activa Completa — Alta AFIP (40 empleados)</div>
+      <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Apellido</th><th>Nombre</th><th>Área</th><th>Sueldo</th><th>Feriados</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Belardinelli</td><td>Emiliano</td><td>Cocina</td><td>4.500.000</td><td>—</td><td>4.500.000</td></tr>
+          <tr><td>Del Valle Paz</td><td>Thomás</td><td>Compras</td><td>3.250.000</td><td>260.000</td><td>3.510.000</td></tr>
+          <tr><td>Gauto</td><td>César</td><td>Cocina</td><td>1.700.000</td><td>136.000</td><td>1.836.000</td></tr>
+          <tr><td>Sánchez</td><td>Marcos</td><td>Cocina</td><td>1.700.000</td><td>136.000</td><td>1.836.000</td></tr>
+          <tr><td>Pichel Vera</td><td>Laura</td><td>Barra</td><td>1.600.000</td><td>128.000</td><td>1.728.000</td></tr>
+          <tr><td>Flores</td><td>Christian</td><td>Salón</td><td>1.600.000</td><td>128.000</td><td>1.728.000</td></tr>
+          <tr><td>Marti</td><td>Patricia</td><td>Salón</td><td>1.600.000</td><td>128.000</td><td>1.728.000</td></tr>
+          <tr><td>González</td><td>Verónica</td><td>Salón</td><td>1.600.000</td><td>128.000</td><td>1.728.000</td></tr>
+          <tr><td>Moreyra</td><td>Marcelo</td><td>Salón</td><td>1.600.000</td><td>—</td><td>1.600.000</td></tr>
+          <tr><td>Silveira</td><td>Alanis</td><td>Cocina</td><td>1.600.000</td><td>—</td><td>1.600.000</td></tr>
+          <tr><td>Rodríguez</td><td>Eduardo</td><td>Sommelier</td><td>1.600.000</td><td>—</td><td>1.600.000</td></tr>
+          <tr><td>Robles</td><td>Marcos</td><td>Caja</td><td>1.500.000</td><td>120.000</td><td>1.620.000</td></tr>
+          <tr><td>Aguirre</td><td>Griselda</td><td>Recepción</td><td>1.500.000</td><td>120.000</td><td>1.620.000</td></tr>
+          <tr><td>Gómez</td><td>César</td><td>Cocina</td><td>1.413.333</td><td>128.000</td><td>1.541.333</td></tr>
+          <tr><td>Mazzeo</td><td>Tomás</td><td>Barra</td><td>1.350.000</td><td>—</td><td>1.350.000</td></tr>
+          <tr><td>Brazda</td><td>Tiara</td><td>Cocina</td><td>1.300.000</td><td>104.000</td><td>1.404.000</td></tr>
+          <tr><td>Sosa</td><td>Marcelo</td><td>Cocina</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Lezcano Amarilla</td><td>Jorge</td><td>Cocina</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Cáceres</td><td>Patricio</td><td>Cocina</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Sosa</td><td>Roberto</td><td>Cocina</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Sanchez</td><td>Alberto</td><td>Cocina</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Elisiri</td><td>Brisa</td><td>Cocina</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>López</td><td>Delfina</td><td>Salón</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Maldonado</td><td>Gabriel</td><td>Salón</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Romero</td><td>Iara</td><td>Salón</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Maidana</td><td>Lucas</td><td>Salón</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Torres</td><td>Eduardo</td><td>Garage</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Cardozo Roda</td><td>Luciano</td><td>Garage</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Acosta</td><td>Sebastián</td><td>Caja</td><td>1.200.000</td><td>96.000</td><td>1.296.000</td></tr>
+          <tr><td>Serrano</td><td>Daniela</td><td>Oficina</td><td>1.200.000</td><td>—</td><td>1.200.000</td></tr>
+          <tr><td>Flores</td><td>Ignacio</td><td>Salón</td><td>1.200.000</td><td>—</td><td>1.200.000</td></tr>
+          <tr><td>Vega</td><td>Iván</td><td>Salón</td><td>1.200.000</td><td>—</td><td>1.200.000</td></tr>
+          <tr><td>Nieto</td><td>Alejandro</td><td>Cocina</td><td>1.100.000</td><td>88.000</td><td>1.188.000</td></tr>
+          <tr><td>Batalla Troncoso</td><td>Javier</td><td>Barra</td><td>1.100.000</td><td>88.000</td><td>1.188.000</td></tr>
+          <tr><td>Escudero Rojas</td><td>Diana</td><td>Limpieza</td><td>1.150.000</td><td>—</td><td>1.150.000</td></tr>
+          <tr><td>Ortiz</td><td>Susana</td><td>Cocina</td><td>1.150.000</td><td>—</td><td>1.150.000</td></tr>
+          <tr><td>Chazarreta</td><td>Karina</td><td>Limpieza</td><td>1.150.000</td><td>92.000</td><td>1.242.000</td></tr>
+          <tr><td>Gonzalez</td><td>Roxana</td><td>Cocina</td><td>975.000</td><td>78.000</td><td>1.053.000</td></tr>
+          <tr><td>Defilippi</td><td>Susana</td><td>Gerencia</td><td>750.000</td><td>—</td><td>750.000</td></tr>
+          <tr><td>Copani</td><td>Santiago</td><td>Salón</td><td>513.333</td><td>41.067</td><td>554.400</td></tr>
+          <tr class="row-total"><td colspan="3">Total Alta AFIP (40)</td><td>59.652.733</td><td>3.151.067</td><td>62.803.800</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Alta Seguro -->
+    <div class="card reveal">
+      <div class="card-title">Nómina Alta Seguro (9 empleados) + Baja con sueldo (1)</div>
+      <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Apellido</th><th>Nombre</th><th>Área</th><th>Sueldo</th><th>Feriados</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Tarallo</td><td>Martín</td><td>Salón</td><td>3.500.000</td><td>—</td><td>3.500.000</td></tr>
+          <tr><td>Benitez Rios</td><td>Natalia</td><td>Oficina</td><td>2.000.000</td><td>—</td><td>2.000.000</td></tr>
+          <tr><td>Villanueva</td><td>Patricia</td><td>Recepción</td><td>1.296.000</td><td>—</td><td>1.296.000</td></tr>
+          <tr><td>Guevara</td><td>Gabriel</td><td>Cocina</td><td>880.000</td><td>67.200</td><td>947.200</td></tr>
+          <tr><td>Cabrera <span style="color:var(--amber);font-size:.65rem;">(BAJA)</span></td><td>Ramiro</td><td>Salón</td><td>600.000</td><td>—</td><td>600.000</td></tr>
+          <tr><td>López</td><td>Carlos</td><td>Cocina</td><td>560.000</td><td>—</td><td>560.000</td></tr>
+          <tr><td>Zelinsky</td><td>Milagros</td><td>Salón</td><td>560.000</td><td>—</td><td>560.000</td></tr>
+          <tr><td>Breme</td><td>Damaris</td><td>Salón</td><td>440.000</td><td>—</td><td>440.000</td></tr>
+          <tr><td>Tello</td><td>Tobías</td><td>Cocina</td><td>280.000</td><td>—</td><td>280.000</td></tr>
+          <tr><td>Pérez Muñoz</td><td>Andrés</td><td>Cocina</td><td>40.000</td><td>—</td><td>40.000</td></tr>
+          <tr class="row-total"><td colspan="3">Total Alta Seguro + Baja (10)</td><td>10.156.000</td><td>67.200</td><td>10.223.200</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Bajas insight -->
+    <div class="insight insight-amber reveal" style="margin-bottom:16px;">
+      <div class="icon">⚠️</div>
+      <div class="content">
+        <div class="title">28 bajas registradas en el mes (18 AFIP + 10 Seguro)</div>
+        <div class="desc">Alta rotación principalmente en Cocina y Salón. Entre las bajas AFIP: Soto Lucas (Cocina) — relacionado con el acuerdo laboral de $7M registrado en costos. También figuran bajas en Sommelier (Rodríguez Diego, acuerdo $1,6M) y otros puestos operativos. Se recomienda analizar las causas de rotación para reducir costos de incorporación y acuerdos.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== VENTAS / INGRESOS ======== -->
+  <div class="section reveal">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--green-bg); box-shadow: 0 0 20px var(--green-glow);">💰</div>
+      <div class="section-title">Composición de Ingresos</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">Medios de Pago</div>
+        <table>
+          <thead><tr><th>Medio</th><th>Feb $</th><th>%</th><th>Mar $</th><th>%</th></tr></thead>
+          <tbody>
+            <tr><td>Tarjetas</td><td>218.633.013</td><td>81,3%</td><td>233.698.941</td><td>75,4%</td></tr>
+            <tr><td>Efectivo</td><td>38.436.231</td><td>14,3%</td><td>46.826.794</td><td>15,1%</td></tr>
+            <tr><td>Reservas</td><td>2.879.400</td><td>1,1%</td><td>16.000.500</td><td>5,2%</td></tr>
+            <tr><td>Cta Corriente</td><td>7.125.860</td><td>2,6%</td><td>12.728.540</td><td>4,1%</td></tr>
+            <tr><td>Cheques/Transfer</td><td>184.000</td><td>0,1%</td><td>5.270.792</td><td>1,7%</td></tr>
+            <tr><td>Prepagos</td><td>1.706.800</td><td>0,6%</td><td>—</td><td>—</td></tr>
+          </tbody>
+        </table>
+        <div class="chart-box" style="max-height:240px; margin-top:16px;"><canvas id="chartMedios"></canvas></div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Tarjetas — Detalle (con propina)</div>
+        <table>
+          <thead><tr><th>Tarjeta</th><th>Feb Total</th><th>Mar Total</th><th>Var</th></tr></thead>
+          <tbody>
+            <tr><td>Visa</td><td>98.971.445</td><td>95.676.300</td><td class="up">-3,3%</td></tr>
+            <tr><td>Master Card</td><td>35.371.972</td><td>58.192.127</td><td class="down">+64,5%</td></tr>
+            <tr><td>American Express</td><td>32.259.672</td><td>41.883.592</td><td class="down">+29,8%</td></tr>
+            <tr><td>Electron</td><td>23.534.039</td><td>36.651.832</td><td class="down">+55,7%</td></tr>
+            <tr><td>Diners Club</td><td>25.894.310</td><td>—</td><td class="neutral">—</td></tr>
+            <tr><td>MerQR Débito</td><td>8.553.014</td><td>12.155.011</td><td class="down">+42,1%</td></tr>
+            <tr><td>Maestro</td><td>8.099.220</td><td>8.578.199</td><td>+5,9%</td></tr>
+            <tr><td>Cabal</td><td>—</td><td>175.450</td><td class="neutral">Nuevo</td></tr>
+            <tr class="row-total"><td>Total</td><td>233.697.933</td><td>252.312.511</td><td class="down">+8,0%</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:14px; display:flex; gap:12px;">
+          <div class="mini-stat" style="flex:1;">
+            <div class="ms-label">Propinas Feb</div>
+            <div class="ms-value" style="font-size:1rem;">$14,68M</div>
+            <div class="ms-sub">5,46% s/vta</div>
+          </div>
+          <div class="mini-stat" style="flex:1;">
+            <div class="ms-label">Propinas Mar</div>
+            <div class="ms-value" style="font-size:1rem;">$17,17M</div>
+            <div class="ms-sub">5,54% s/vta</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">Efectivo por Moneda</div>
+        <table>
+          <thead><tr><th>Moneda</th><th>Feb ($ARS)</th><th>Mar ($ARS)</th><th>Var</th></tr></thead>
+          <tbody>
+            <tr><td>Pesos</td><td>27.468.525</td><td>30.237.514</td><td class="up">+10,1%</td></tr>
+            <tr><td>Dólares</td><td>8.770.306</td><td>14.221.680</td><td class="up">+62,2%</td></tr>
+            <tr><td>Reales</td><td>2.007.400</td><td>2.367.600</td><td class="up">+17,9%</td></tr>
+            <tr><td>Euros</td><td>190.000</td><td>—</td><td class="neutral">—</td></tr>
+            <tr class="row-total"><td>Total</td><td>38.436.231</td><td>46.826.794</td><td class="up">+21,8%</td></tr>
+          </tbody>
+        </table>
+        <div class="chart-box" style="max-height:220px; margin-top:14px;"><canvas id="chartEfectivo"></canvas></div>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Centro de Venta</div>
+        <table>
+          <thead><tr><th></th><th>Feb Pers</th><th>Feb $/P</th><th>Mar Pers</th><th>Mar $/P</th></tr></thead>
+          <tbody>
+            <tr><td>Salón</td><td>3.606</td><td>$74.341</td><td>4.120</td><td>$75.046</td></tr>
+            <tr><td>Barra</td><td>22</td><td>$40.559</td><td>12</td><td>$65.740</td></tr>
+            <tr class="row-total"><td>Total</td><td>3.724</td><td>$72.225</td><td>4.335</td><td>$71.506</td></tr>
+          </tbody>
+        </table>
+        <div class="stat-row">
+          <div class="mini-stat">
+            <div class="ms-label">Personas</div>
+            <div class="ms-value">4.335</div>
+            <div class="ms-sub" style="color:var(--green);">+611 vs Feb (+16,4%)</div>
+          </div>
+          <div class="mini-stat">
+            <div class="ms-label">$/Persona</div>
+            <div class="ms-value">$71.506</div>
+            <div class="ms-sub" style="color:var(--red);">-1,0% vs Feb</div>
+          </div>
+          <div class="mini-stat">
+            <div class="ms-label">$/Doc Salón</div>
+            <div class="ms-value">$229.710</div>
+            <div class="ms-sub" style="color:var(--green);">+16,2% vs Feb</div>
+          </div>
+          <div class="mini-stat">
+            <div class="ms-label">Reservas</div>
+            <div class="ms-value">$28,9M</div>
+            <div class="ms-sub" style="color:var(--green);">+145% vs Feb</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== OTROS ======== -->
+  <div class="section reveal">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(167,139,250,.08); box-shadow: 0 0 20px rgba(167,139,250,.1);">📋</div>
+      <div class="section-title">Otros Indicadores</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="grid-2">
+      <div class="card reveal">
+        <div class="card-title">Descuentos y Ajustes</div>
+        <table>
+          <thead><tr><th>Concepto</th><th>Feb</th><th>Mar</th></tr></thead>
+          <tbody>
+            <tr><td>Descuento</td><td>$5.876.340 (2,18%)</td><td>$5.986.440 (1,93%)</td></tr>
+            <tr><td>Sin Cargo</td><td>$10.373.823 (3,86%)</td><td>$21.461.117 (6,92%)</td></tr>
+            <tr><td>Anulado/Remp.</td><td>$3.783.001 (1,41%)</td><td>$2.419.050 (0,78%)</td></tr>
+            <tr><td>Borrado/Devuelto</td><td>$8.735.200 (3,25%)</td><td>$13.933.376 (4,49%)</td></tr>
+            <tr><td>Control</td><td>$62.229.561 (23,14%)</td><td>$52.789.190 (17,03%)</td></tr>
+            <tr><td>Comisiones</td><td>$1.209.234 (0,45%)</td><td>$1.735.540 (0,56%)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card reveal reveal-delay-1">
+        <div class="card-title">Reservas</div>
+        <table>
+          <thead><tr><th></th><th>Feb</th><th>Mar</th></tr></thead>
+          <tbody>
+            <tr class="row-group"><td>Total</td><td>$11.768.400</td><td>$28.876.000</td></tr>
+            <tr><td>Efectivo</td><td>$3.098.400</td><td>$460.000</td></tr>
+            <tr><td>Transfer</td><td>$1.395.000</td><td>$13.335.500</td></tr>
+            <tr><td>Tarjetas</td><td>$380.000</td><td>$1.445.000</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:14px;">
+          <table>
+            <thead><tr><th>Canjes</th><th>Feb</th><th>Mar</th></tr></thead>
+            <tbody><tr><td>Canje Publicidad</td><td>$5.200.000</td><td>$300.000</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== CONCLUSIONES ======== -->
+  <div class="section reveal">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--green-bg); box-shadow: 0 0 20px var(--green-glow);">✅</div>
+      <div class="section-title">Conclusiones y Recomendaciones</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="insight insight-green reveal">
+          <div class="icon">1</div>
+          <div class="content">
+            <div class="title">Recupero de rentabilidad confirmado</div>
+            <div class="desc">Marzo revierte el rojo de Febrero con +$15,3M de mejora. El motor fue el volumen: +611 personas (+16,4%) y +$41M en facturación. Las reservas se multiplicaron 2,5x, señalando demanda sostenida.</div>
+          </div>
+        </div>
+        <div class="insight insight-green reveal reveal-delay-1">
+          <div class="icon">2</div>
+          <div class="content">
+            <div class="title">Eficiencia operativa: mejor mix de costos</div>
+            <div class="desc">El costo variable relativo bajó 5,3pp gracias a menores costos de tarjetas (-33%), menor peso de bebidas sin alcohol (-67%) y mejor dilución por mayor escala. Mantener esta eficiencia es clave.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="insight insight-amber reveal">
+          <div class="icon">3</div>
+          <div class="content">
+            <div class="title">Monitorear presión fiscal y financiera</div>
+            <div class="desc">Los impuestos crecieron 57,9% y representan ya 9,4% de la venta. El nuevo rubro Financiero ($3,76M) sumó presión. Se recomienda revisar la estrategia fiscal y optimizar el costo del crédito.</div>
+          </div>
+        </div>
+        <div class="insight insight-red reveal reveal-delay-1">
+          <div class="icon">4</div>
+          <div class="content">
+            <div class="title">Gestionar riesgo laboral</div>
+            <div class="desc">Los acuerdos laborales ($12,2M) consumieron más del doble del resultado neto. Sin estos, el margen sería 5,6%. Es fundamental anticipar contingencias laborales y provisionar reservas para eventuales acuerdos futuros.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== FOOTER ======== -->
+  <div class="footer-bar">
+    <div class="f-logo">CAUCE</div>
+    <div class="f-text">Informe de Gestión — Marzo 2026 con comparativa Febrero 2026 &nbsp;·&nbsp; Generado el 11 de Abril de 2026</div>
+  </div>
+</div>
+
+<!-- ======== CHARTS ======== -->
+<script>
+// Chart.js global config
+Chart.defaults.color = '#6b7280';
+Chart.defaults.borderColor = 'rgba(255,255,255,.04)';
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyleWidth = 8;
+Chart.defaults.plugins.legend.labels.padding = 16;
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(10,12,20,.92)';
+Chart.defaults.plugins.tooltip.borderColor = 'rgba(255,255,255,.1)';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.cornerRadius = 10;
+Chart.defaults.plugins.tooltip.padding = 12;
+Chart.defaults.plugins.tooltip.titleFont = { weight: '600', size: 12 };
+Chart.defaults.plugins.tooltip.bodyFont = { size: 11 };
+
+const green='#34d399',green2='#10b981',red='#f87171',red2='#ef4444',blue='#60a5fa',blue2='#3b82f6',amber='#fbbf24',amber2='#f59e0b',purple='#a78bfa',cyan='#22d3ee';
+const febColor='rgba(96,165,250,.5)',marColor='#34d399';
+const fmtM=v=>'$'+(v/1e6).toFixed(1)+'M';
+
+// Gradient helper
+function createGrad(ctx,c1,c2,vertical=true) {
+  const g = vertical ? ctx.createLinearGradient(0,0,0,ctx.canvas.height) : ctx.createLinearGradient(0,0,ctx.canvas.width,0);
+  g.addColorStop(0,c1); g.addColorStop(1,c2); return g;
+}
+
+// === BRIDGE CHART ===
+(() => {
+  const ctx = document.getElementById('chartBridge').getContext('2d');
+  const labels = ['Resultado Feb','+ Ventas','- C. Variable','- C. Fijo','- Sueldos','+ Ret. menor','Resultado Mar'];
+  const deltas = [-10264163, 41018263, -3631319, -9731354, -12474718, 131051, 0];
+  let running = 0;
+  const bases=[], values=[];
+  for (let i=0;i<deltas.length;i++) {
+    if (i===0) { bases.push(0); values.push(deltas[i]); running=deltas[i]; }
+    else if (i===deltas.length-1) { bases.push(0); values.push(running); }
+    else { const d=deltas[i]; if(d>=0){bases.push(running);values.push(d);running+=d;} else{running+=d;bases.push(running);values.push(-d);} }
+  }
+  const colors = values.map((v,i) => {
+    if (i===0) return red;
+    if (i===labels.length-1) return running>=0?green:red;
+    return deltas[i]>=0?green:red;
+  });
+  new Chart(ctx, {
+    type:'bar',
+    data: {
+      labels,
+      datasets: [
+        { data:bases, backgroundColor:'transparent', borderWidth:0, barPercentage:.5 },
+        { data:values, backgroundColor:colors, borderRadius:8, barPercentage:.5 }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins: {
+        legend:{display:false},
+        tooltip: { callbacks: { label:c=>{if(c.datasetIndex===0)return'';const i=c.dataIndex;const val=i===0?deltas[0]:i===labels.length-1?running:deltas[i];return(val>=0?'+':'')+fmtM(val)} } }
+      },
+      scales: {
+        x:{stacked:true,grid:{display:false},ticks:{font:{size:10,weight:'500'}}},
+        y:{stacked:true,ticks:{callback:v=>fmtM(v),font:{size:10}},grid:{color:'rgba(255,255,255,.03)'}}
+      }
+    }
+  });
+})();
+
+// === ESTRUCTURA DONUT ===
+new Chart(document.getElementById('chartEstructura'), {
+  type:'doughnut',
+  data:{
+    labels:['C.Variable','C.Fijo','Sueldos'],
+    datasets:[
+      {label:'Febrero',data:[130107540,51368534,96570614],backgroundColor:[red+'80',amber+'80',blue+'80'],borderWidth:0,borderRadius:4},
+      {label:'Marzo',data:[133738859,61099888,109045332],backgroundColor:[red,amber,blue],borderWidth:2,borderColor:'rgba(0,0,0,.3)',borderRadius:4}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:true,cutout:'35%',
+    plugins:{
+      legend:{position:'bottom',labels:{font:{size:11}}},
+      tooltip:{callbacks:{label:c=>c.dataset.label+' - '+c.label+': '+fmtM(c.raw)}}
+    }
+  }
+});
+
+// === BAR COMP ===
+new Chart(document.getElementById('chartBarComp'), {
+  type:'bar',
+  data:{
+    labels:['Venta','C.Variable','C.Fijo','Sueldos','Resultado'],
+    datasets:[
+      {label:'Febrero',data:[268965304,130107540,51368534,96570614,-10264163],backgroundColor:febColor,borderRadius:6,borderSkipped:false},
+      {label:'Marzo',data:[309983567,133738859,61099888,109045332,5047760],backgroundColor:marColor,borderRadius:6,borderSkipped:false}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtM(c.raw)}}},
+    scales:{y:{ticks:{callback:v=>fmtM(v)},grid:{color:'rgba(255,255,255,.03)'}},x:{grid:{display:false}}}
+  }
+});
+
+// === CV TOP ===
+new Chart(document.getElementById('chartCVtop'), {
+  type:'bar',
+  data:{
+    labels:['Tarjetas Sist.','Beb. s/Alc.','Carbón/Leña','Achuras','Panificados','Lácteos','Pesc./Mariscos','Abonos','Comida Pers.'],
+    datasets:[{
+      data:[-33.1,-66.9,-61.3,-45.7,-41.7,56.3,71.7,69.9,106.2],
+      backgroundColor:c=>c.raw<0?green:red,
+      borderRadius:6
+    }]
+  },
+  options:{
+    indexAxis:'y',responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>(c.raw>0?'+':'')+c.raw+'%'}}},
+    scales:{x:{ticks:{callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.03)'}},y:{grid:{display:false},ticks:{font:{size:10}}}}
+  }
+});
+
+// === CF COMP ===
+new Chart(document.getElementById('chartCFcomp'), {
+  type:'bar',
+  data:{
+    labels:['Impuestos','Inmobiliario','Financiero','Alquileres','Servicios','Honorarios'],
+    datasets:[
+      {label:'Febrero',data:[18509759,28983547,0,3040000,2138228,1737000],backgroundColor:febColor,borderRadius:6},
+      {label:'Marzo',data:[29234987,28102349,3762552,1760000,0,0],backgroundColor:marColor,borderRadius:6}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtM(c.raw)}}},
+    scales:{y:{ticks:{callback:v=>fmtM(v)},grid:{color:'rgba(255,255,255,.03)'}},x:{grid:{display:false}}}
+  }
+});
+
+// === SUELDOS ===
+new Chart(document.getElementById('chartSueldos'), {
+  type:'bar',
+  data:{
+    labels:['Sueldos base','Jubilación','Liquidaciones','Juicios/Acuerdos'],
+    datasets:[
+      {label:'Febrero',data:[75489312,18681302,2400000,0],backgroundColor:febColor,borderRadius:6},
+      {label:'Marzo',data:[77947896,18897436,0,12200000],backgroundColor:marColor,borderRadius:6}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtM(c.raw)}}},
+    scales:{y:{ticks:{callback:v=>fmtM(v)},grid:{color:'rgba(255,255,255,.03)'}},x:{grid:{display:false}}}
+  }
+});
+
+// === MEDIOS PAGO ===
+new Chart(document.getElementById('chartMedios'), {
+  type:'bar',
+  data:{
+    labels:['Tarjetas','Efectivo','Reservas','Cta Cte','Cheq/Transf'],
+    datasets:[
+      {label:'Febrero',data:[218633013,38436231,2879400,7125860,184000],backgroundColor:febColor,borderRadius:4},
+      {label:'Marzo',data:[233698941,46826794,16000500,12728540,5270792],backgroundColor:marColor,borderRadius:4}
+    ]
+  },
+  options:{
+    indexAxis:'y',responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtM(c.raw)}}},
+    scales:{x:{ticks:{callback:v=>fmtM(v)},grid:{color:'rgba(255,255,255,.03)'}},y:{grid:{display:false}}}
+  }
+});
+
+// === EFECTIVO MONEDA ===
+new Chart(document.getElementById('chartEfectivo'), {
+  type:'doughnut',
+  data:{
+    labels:['Pesos','Dólares','Reales'],
+    datasets:[
+      {data:[27468525,8770306,2007400],backgroundColor:[blue+'70',green+'70',amber+'70'],borderWidth:0,label:'Feb'},
+      {data:[30237514,14221680,2367600],backgroundColor:[blue,green,amber],borderWidth:2,borderColor:'rgba(0,0,0,.3)',label:'Mar'}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:true,cutout:'40%',
+    plugins:{
+      legend:{position:'bottom',labels:{font:{size:10}}},
+      tooltip:{callbacks:{label:c=>c.dataset.label+' '+c.label+': '+fmtM(c.raw)}}
+    }
+  }
+});
+
+// === DOTACIÓN POR ÁREA (bar horizontal) ===
+new Chart(document.getElementById('chartDotacionArea'), {
+  type:'bar',
+  data:{
+    labels:['Cocina','Salón','Barra','Caja','Compras','Oficina','Recepción','Garage','Limpieza','Sommelier','Gerencia','Op'],
+    datasets:[
+      {label:'Personas',data:[22,16,4,3,1,2,2,2,2,1,1,1],backgroundColor:purple,borderRadius:6,yAxisID:'y'},
+      {label:'Costo ($M)',data:[27.2,20.8,5.2,3.7,3.5,3.2,2.9,2.6,2.4,1.6,0.75,0.98],backgroundColor:cyan,borderRadius:6,yAxisID:'y1'}
+    ]
+  },
+  options:{
+    indexAxis:'y',responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label==='Personas'?c.raw+' pers.':'$'+c.raw+'M'}}},
+    scales:{
+      y:{grid:{display:false},ticks:{font:{size:9}}},
+      y1:{position:'top',grid:{color:'rgba(255,255,255,.03)'},ticks:{callback:v=>'$'+v+'M',font:{size:8}}},
+    }
+  }
+});
+
+// === DOTACIÓN POR SITUACIÓN (donut) ===
+new Chart(document.getElementById('chartDotacionSit'), {
+  type:'doughnut',
+  data:{
+    labels:['Alta AFIP (40)','Alta Seguro (9)','Baja c/sueldo (1)','Extras (13)','Bajas s/sueldo (28)'],
+    datasets:[{
+      data:[59652733,9623200,600000,5670500,0],
+      backgroundColor:[green,'#60a5fa','#fbbf24','#a78bfa','#374151'],
+      borderWidth:2, borderColor:'rgba(0,0,0,.3)', borderRadius:4
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:true,cutout:'40%',
+    plugins:{
+      legend:{position:'bottom',labels:{font:{size:9},padding:10,usePointStyle:true}},
+      tooltip:{callbacks:{label:c=>{const v=c.raw;return v>0?c.label+': '+fmtM(v):c.label}}}
+    }
+  }
+});
+
+// === SCROLL REVEAL ===
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// === COUNTER ANIMATION ===
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.done) {
+      e.target.dataset.done = '1';
+      const target = parseFloat(e.target.dataset.target);
+      const decimals = (e.target.dataset.target.split('.')[1]||'').length;
+      const duration = 1500;
+      const start = performance.now();
+      const animate = (now) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        const current = (target * eased).toFixed(decimals).replace('.',',');
+        e.target.textContent = current;
+        if (progress < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+</script>
+</div><!-- /mainContent -->
+
+<script>
+// Password check using SHA-256 hash (password not visible in source)
+const HASH = '71bf252c232a9f63eb2af094ed389edc6144bdd4b7e957aa8dac7f4425e84ea6';
+
+async function sha256(msg) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkPwd() {
+  const input = document.getElementById('pwdInput').value;
+  const hash = await sha256(input);
+  if (hash === HASH) {
+    document.getElementById('lockScreen').style.transition = 'opacity .5s';
+    document.getElementById('lockScreen').style.opacity = '0';
+    setTimeout(() => {
+      document.getElementById('lockScreen').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
+      // Re-trigger scroll observers after content is visible
+      document.querySelectorAll('.reveal').forEach(el => {
+        el.classList.remove('visible');
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        obs.observe(el);
+      });
+      document.querySelectorAll('.counter').forEach(el => {
+        el.dataset.done = '';
+        const counterObs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting && !e.target.dataset.done) {
+              e.target.dataset.done = '1';
+              const target = parseFloat(e.target.dataset.target);
+              const decimals = (e.target.dataset.target.split('.')[1]||'').length;
+              const duration = 1500;
+              const start = performance.now();
+              const animate = (now) => {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 4);
+                e.target.textContent = (target * eased).toFixed(decimals).replace('.',',');
+                if (progress < 1) requestAnimationFrame(animate);
+              };
+              requestAnimationFrame(animate);
+            }
+          });
+        }, { threshold: 0.5 });
+        counterObs.observe(el);
+      });
+    }, 500);
+  } else {
+    const err = document.getElementById('pwdError');
+    err.style.opacity = '1';
+    document.getElementById('pwdInput').style.borderColor = 'rgba(248,113,113,.4)';
+    setTimeout(() => { err.style.opacity = '0'; }, 2500);
+  }
+}
+
+// Focus password input on load
+window.addEventListener('load', () => document.getElementById('pwdInput').focus());
+</script>
+</body>
+</html>
