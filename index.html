@@ -363,7 +363,7 @@ tr:hover td { background: rgba(255,255,255,.02); }
   .hero-result .big { font-size: 2rem; }
   .hero-result .tag { font-size: .6rem; letter-spacing: 2px; }
   .hero-period { padding: 8px 20px; font-size: .75rem; }
-  .container { padding: 0 16px; }
+  .container { padding: 0 12px; }
   .section { margin-top: 44px; }
   .section-title { font-size: 1.2rem; }
   .kpi-grid { margin-top: -36px; gap: 10px; }
@@ -372,17 +372,22 @@ tr:hover td { background: rgba(255,255,255,.02); }
   .kpi-label { font-size: .6rem; letter-spacing: 1.5px; }
   .kpi-sub { font-size: .68rem; }
   .kpi-delta { font-size: .6rem; padding: 3px 8px; }
-  .card { padding: 18px 14px; border-radius: 14px; margin-bottom: 12px; }
+  .card { padding: 16px 12px; border-radius: 14px; margin-bottom: 12px; }
   .card-title { font-size: .7rem; margin-bottom: 14px; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 12px; }
-  /* Tables scroll horizontally */
-  .card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table { min-width: 520px; font-size: .72rem; }
-  thead th { padding: 8px 10px; font-size: .6rem; letter-spacing: 1px; }
-  td { padding: 8px 10px; }
-  .row-sub td { padding-left: 22px; font-size: .7rem; }
-  /* Charts */
-  .chart-box canvas { max-height: 250px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr !important; gap: 12px; }
+
+  /* Tables: wrap in scrollable container */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -12px; padding: 0 12px; }
+  table { min-width: 560px; font-size: .72rem; }
+  thead th { padding: 8px 8px; font-size: .58rem; letter-spacing: 1px; }
+  td { padding: 8px 8px; }
+  .row-sub td { padding-left: 20px; font-size: .7rem; }
+
+  /* Charts: force fill container width on mobile */
+  .chart-box { width: 100% !important; overflow: visible !important; }
+  .chart-box[style] { max-height: 280px !important; height: 280px !important; }
+  .chart-box canvas { width: 100% !important; display: block; }
+
   /* Gauge */
   .gauge-container { flex-direction: column; gap: 20px; align-items: center; }
   .gauge-arrow { transform: rotate(90deg); }
@@ -401,18 +406,23 @@ tr:hover td { background: rgba(255,255,255,.02); }
   .mini-stat .ms-sub { font-size: .65rem; }
   /* Footer */
   .footer-bar { margin-top: 50px; padding: 24px 0; }
-  /* Background effects less heavy */
+  .footer-bar .f-text { font-size: .65rem; padding: 0 16px; }
+  /* Background effects lighter on mobile */
   .bg-glow { width: 300px; height: 300px; filter: blur(80px); opacity: .08; }
 }
-@media(max-width:400px){
+@media(max-width:420px){
   .kpi-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
   .kpi-card { padding: 14px 12px; }
   .kpi-value { font-size: 1.05rem; }
   .hero-result .big { font-size: 1.7rem; }
   .hero-sub { font-size: .72rem; letter-spacing: 3px; }
-  table { min-width: 480px; font-size: .68rem; }
   .section-header { gap: 10px; }
   .section-icon { width: 32px; height: 32px; font-size: .95rem; border-radius: 10px; }
+  .container { padding: 0 10px; }
+  .card { padding: 14px 10px; }
+  table { min-width: 520px; font-size: .66rem; }
+  thead th { padding: 6px 6px; font-size: .55rem; }
+  td { padding: 7px 6px; }
 }
 
 /* === PRINT === */
@@ -1475,6 +1485,21 @@ const counterObs = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.5 });
 document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+// === MOBILE FIX: wrap tables for horizontal scroll ===
+if (window.innerWidth <= 768) {
+  document.querySelectorAll('.card > table, .card > div > table').forEach(tbl => {
+    if (!tbl.parentElement.classList.contains('table-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.className = 'table-wrap';
+      wrap.style.cssText = 'overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -12px;padding:0 12px;';
+      tbl.parentElement.insertBefore(wrap, tbl);
+      wrap.appendChild(tbl);
+    }
+  });
+  // Force Chart.js to resize after layout settles
+  setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 300);
+}
 </script>
 </div><!-- /mainContent -->
 
@@ -1504,6 +1529,22 @@ async function checkPwd() {
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
         obs.observe(el);
       });
+      // Wrap tables on mobile after content shows
+      if (window.innerWidth <= 768) {
+        document.querySelectorAll('#mainContent .card table').forEach(tbl => {
+          if (!tbl.parentElement.classList.contains('table-wrap')) {
+            const wrap = document.createElement('div');
+            wrap.className = 'table-wrap';
+            wrap.style.cssText = 'overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -12px;padding:0 12px;';
+            tbl.parentElement.insertBefore(wrap, tbl);
+            wrap.appendChild(tbl);
+          }
+        });
+      }
+      // Force charts to resize to new container width
+      setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 100);
+      setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 600);
+
       document.querySelectorAll('.counter').forEach(el => {
         el.dataset.done = '';
         const counterObs = new IntersectionObserver((entries) => {
