@@ -110,14 +110,6 @@ body {
   animation: fadeIn .8s .3s both;
 }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-.hero-period {
-  display: inline-flex; align-items: center; gap: 14px; margin-top: 24px;
-  background: var(--glass); border: 1px solid var(--glass-border);
-  border-radius: 100px; padding: 10px 30px; font-size: .85rem; color: var(--text2);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  animation: fadeIn .8s .5s both;
-}
-.hero-period .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--green-glow); }
 .hero-result {
   margin-top: 36px; display: inline-flex; flex-direction: column; align-items: center;
   background: linear-gradient(135deg, rgba(52,211,153,.06), rgba(52,211,153,.02));
@@ -415,7 +407,6 @@ tr:hover td { background: rgba(255,255,255,.02); }
   .hero-result { padding: 20px 28px; border-radius: 18px; }
   .hero-result .big { font-size: 2rem; }
   .hero-result .tag { font-size: .6rem; letter-spacing: 2px; }
-  .hero-period { padding: 8px 20px; font-size: .75rem; }
   .container { padding: 0 16px; }
   .section { margin-top: 44px; }
   .section-title { font-size: 1.2rem; }
@@ -586,6 +577,9 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   .hero { background: #1a3a4a !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* === WELCOME BANNER ANIMATION === */
+@keyframes slideDown { from{opacity:0;transform:translateY(-100%)} to{opacity:1;transform:translateY(0)} }
 </style>
 </head>
 <body>
@@ -658,9 +652,6 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   animation:slideDown .5s cubic-bezier(.22,1,.36,1) both;
   justify-content:space-between;align-items:center;
 "></div>
-<style>
-@keyframes slideDown { from{opacity:0;transform:translateY(-100%)} to{opacity:1;transform:translateY(0)} }
-</style>
 
 <!-- ======== HERO ======== -->
 <div class="hero" style="padding-top:130px;">
@@ -873,7 +864,6 @@ const reportData = {
       { type: 'amber', text: 'CMV alto: 31,47% sobre venta. Carnes Rojas lidera con 13,08% del total' },
       { type: 'red', text: 'Tarjetas Sistema: 7,27% de la venta es significativo' }
     ],
-    conclusiones: ['Inicio sólido pese a presión de liquidaciones', 'Estructura de costos a monitorear', 'Efecto estacional: demanda fuerte', 'Revisar carga de tarjetas del sistema']
   },
   febrero: {
     month: 'Febrero 2026',
@@ -1107,7 +1097,6 @@ const reportData = {
       { type: 'green', text: 'Sueldos contención: bajo a $96,6M vs $114M de Enero (-15,3%)' },
       { type: 'amber', text: 'Estacionalidad: febrero es históricamente bajo' }
     ],
-    conclusiones: ['Mes en rojo por caída estacional', 'CV relativo disparado por menor dilución', 'Punto positivo: reducción de sueldos', 'Necesidad de recuperar volumen en marzo']
   },
   marzo: {
     month: 'Marzo 2026',
@@ -1276,7 +1265,6 @@ const reportData = {
       { type: 'amber', text: 'Acuerdos laborales: $12,2M extraordinarios (3 acuerdos). Sin ellos margen 5,6%' },
       { type: 'red', text: 'CF +18,9%: Impuestos +57,9%, nuevo rubro Financiero $3,76M' }
     ],
-    conclusiones: ['Recupero de rentabilidad confirmado', 'Eficiencia operativa: mejor mix de costos', 'Monitorear presión fiscal y financiera', 'Gestionar riesgo laboral']
   }
 };
 
@@ -1338,7 +1326,6 @@ function renderTab(tab) {
   const data = reportData[tab];
   if (!data) return;
 
-  // heroPeriod removed
   document.getElementById('heroResult').textContent = (data.resultado >= 0 ? '+' : '') + formatNumber(data.resultado);
   document.getElementById('heroResult').style.background = data.resultado >= 0 ? 'linear-gradient(135deg, #34d399, #6ee7b7)' : 'linear-gradient(135deg, #f87171, #fca5a5)';
   document.getElementById('heroResult').style.webkitBackgroundClip = 'text';
@@ -2263,10 +2250,9 @@ function revealOnScroll() {
 window.addEventListener('load', () => {
   renderTab('resumen');
   revealOnScroll();
+  document.getElementById('pwdInput').focus();
 });
-</script>
 
-<script>
 // Password check using SHA-256 hash — multi-user system
 const USERS = [
   { hash: '3cbe9096ceb3ae197368e793ea762300bfa5d76988aff20f9f01b97539568a5f', name: 'Franco Davila', cargo: 'Administrador' },
@@ -2328,10 +2314,14 @@ function logout() {
   lock.style.transition = 'none';
   pwd.value = '';
   pwd.focus();
+  document.querySelectorAll('body > .side-index').forEach(s => s.remove());
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
+let authInProgress = false;
 async function checkPwd() {
+  if (authInProgress) return;
+  authInProgress = true;
   const input = document.getElementById('pwdInput').value;
   const hash = await sha256(input);
   const user = USERS.find(u => u.hash === hash);
@@ -2349,10 +2339,9 @@ async function checkPwd() {
     err.style.opacity = '1';
     document.getElementById('pwdInput').style.borderColor = 'rgba(248,113,113,.4)';
     setTimeout(() => { err.style.opacity = '0'; }, 2500);
+    authInProgress = false;
   }
 }
-
-window.addEventListener('load', () => document.getElementById('pwdInput').focus());
 
 // Sidebar smooth navigation
 function smoothNav(e, id) {
@@ -2371,9 +2360,7 @@ window.addEventListener('scroll', () => {
   if (sidebarRAF) return;
   sidebarRAF = requestAnimationFrame(() => {
     sidebarRAF = null;
-    const activeTab = document.querySelector('.tab-content.active');
-    if (!activeTab) return;
-    const sidebar = activeTab.querySelector('.side-index') || document.querySelector('.side-index');
+    const sidebar = document.querySelector('body > .side-index');
     if (!sidebar || sidebar.style.display === 'none') return;
     const links = sidebar.querySelectorAll('.side-index-link');
     let current = '';
@@ -2422,6 +2409,7 @@ document.body.appendChild(scrollBtn);
 window.addEventListener('scroll', () => {
   scrollBtn.classList.toggle('visible', window.scrollY > 400);
 });
+
 </script>
 </body>
 </html>
