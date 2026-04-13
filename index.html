@@ -587,9 +587,10 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   background: rgba(10,12,20,.95);
   border-bottom: 1px solid rgba(255,255,255,.06);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  display: none; justify-content: center; align-items: center; gap: 6px;
-  padding: 10px 28px;
+  display: none; justify-content: center; align-items: center; gap: 4px;
+  padding: 8px 12px;
   animation: slideDown .4s cubic-bezier(.22,1,.36,1) both;
+  flex-wrap: wrap;
 }
 .top-nav-btn {
   padding: 9px 28px; border-radius: 100px;
@@ -608,8 +609,8 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 .view-section { display: none; }
 .view-section.active-view { display: block; }
 @media(max-width:768px){
-  .top-nav { padding: 8px 12px; gap: 4px; }
-  .top-nav-btn { padding: 7px 16px; font-size: .72rem; }
+  .top-nav { padding: 6px 8px; gap: 3px; }
+  .top-nav-btn { padding: 6px 12px; font-size: .68rem; letter-spacing: 0; }
 }
 
 /* === ORGANIGRAMA INLINE === */
@@ -2672,6 +2673,9 @@ window.addEventListener('load', () => {
   document.getElementById('pwdInput').focus();
 });
 
+// Reposition top nav on resize
+window.addEventListener('resize', () => { positionTopNav(); });
+
 // Password check using SHA-256 hash — multi-user system
 const USERS = [
   { hash: '3cbe9096ceb3ae197368e793ea762300bfa5d76988aff20f9f01b97539568a5f', name: 'Franco Davila', cargo: 'Administrador' },
@@ -2718,9 +2722,30 @@ function showWelcomeBanner(user) {
     </button>
   `;
   banner.style.display = 'flex';
-  // Show top nav
+  // Show top nav and position it below welcome banner
   const topNav = document.getElementById('topNav');
-  if (topNav) topNav.style.display = 'flex';
+  if (topNav) {
+    topNav.style.display = 'flex';
+    positionTopNav();
+  }
+}
+
+function positionTopNav() {
+  const banner = document.getElementById('welcomeBanner');
+  const topNav = document.getElementById('topNav');
+  if (!banner || !topNav || banner.style.display === 'none') return;
+  const bannerH = banner.offsetHeight;
+  topNav.style.top = bannerH + 'px';
+  // Also update hero padding to account for both bars
+  const totalFixed = bannerH + topNav.offsetHeight;
+  const hero = document.querySelector('.hero');
+  if (hero) hero.style.paddingTop = (totalFixed + 40) + 'px';
+  // Update organigrama top padding
+  const orgPad = document.querySelector('#view-organigrama > div');
+  if (orgPad) orgPad.style.paddingTop = (totalFixed + 20) + 'px';
+  // Update financieros top padding
+  const finPad = document.querySelector('#view-financieros > div');
+  if (finPad) finPad.style.marginTop = (totalFixed + 40) + 'px';
 }
 
 function logout() {
