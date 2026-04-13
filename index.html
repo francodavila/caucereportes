@@ -638,11 +638,6 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   <div class="hero-content">
     <div class="hero-logo">CAUCE</div>
     <div class="hero-sub">Informe de Gestión Mensual</div>
-    <div class="hero-period">
-      <span id="heroPeriod">Enero 2026</span>
-      <span class="dot"></span>
-      <span id="heroComparison">Comparativa disponible</span>
-    </div>
     <div class="hero-result">
       <div class="tag">Resultado del mes</div>
       <div class="big" id="heroResult">+$5.112.207</div>
@@ -1295,7 +1290,6 @@ function renderTab(tab) {
     const totCMV = e.cmv + f.cmv + m.cmv;
     const totResultado = e.resultado + f.resultado + m.resultado;
 
-    document.getElementById('heroPeriod').textContent = 'Consolidación 2026';
     document.getElementById('heroResult').textContent = (totResultado >= 0 ? '+' : '') + formatNumber(totResultado);
     document.getElementById('heroResult').style.background = totResultado >= 0 ? 'linear-gradient(135deg, #34d399, #6ee7b7)' : 'linear-gradient(135deg, #f87171, #fca5a5)';
     document.getElementById('heroResult').style.webkitBackgroundClip = 'text';
@@ -1314,7 +1308,7 @@ function renderTab(tab) {
   const data = reportData[tab];
   if (!data) return;
 
-  document.getElementById('heroPeriod').textContent = data.month;
+  // heroPeriod removed
   document.getElementById('heroResult').textContent = (data.resultado >= 0 ? '+' : '') + formatNumber(data.resultado);
   document.getElementById('heroResult').style.background = data.resultado >= 0 ? 'linear-gradient(135deg, #34d399, #6ee7b7)' : 'linear-gradient(135deg, #f87171, #fca5a5)';
   document.getElementById('heroResult').style.webkitBackgroundClip = 'text';
