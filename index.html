@@ -379,8 +379,37 @@ tr:hover td { background: rgba(255,255,255,.02); }
 /* === COUNTER ANIMATION === */
 .counter { display: inline-block; }
 
+/* === SIDE INDEX === */
+.side-index {
+  position: fixed; left: 0; top: 50%; transform: translateY(-50%);
+  z-index: 9990; padding: 16px 0;
+  background: rgba(14,16,24,.95);
+  border: 1px solid rgba(255,255,255,.06);
+  border-left: none;
+  border-radius: 0 16px 16px 0;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  display: flex; flex-direction: column; gap: 2px;
+  max-height: 70vh; overflow-y: auto;
+  box-shadow: 4px 0 24px rgba(0,0,0,.3);
+  transition: transform .3s ease;
+  width: 180px;
+}
+.side-index-title {
+  font-size: .6rem; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--text3); padding: 4px 18px 8px; font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 4px;
+}
+.side-index-link {
+  display: block; padding: 7px 18px; font-size: .72rem; color: var(--text2);
+  text-decoration: none; transition: all .2s; border-left: 2px solid transparent;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.side-index-link:hover { color: #fff; background: rgba(52,211,153,.06); border-left-color: var(--green); }
+.side-index-link.active-link { color: var(--green); border-left-color: var(--green); background: rgba(52,211,153,.08); font-weight: 500; }
+
 /* === MOBILE RESPONSIVE === */
 @media(max-width:768px){
+  .side-index { display: none; }
   .hero { padding: 50px 0 70px; }
   .hero-logo { font-size: 2rem; }
   .hero-result { padding: 20px 28px; border-radius: 18px; }
@@ -1278,6 +1307,7 @@ function switchTab(tab, event) {
   currentTab = tab;
   renderTab(tab);
   revealOnScroll();
+  updateSidebar(tab);
 }
 
 function renderTab(tab) {
@@ -1334,6 +1364,11 @@ function renderTab(tab) {
   try {
     container.innerHTML = renderMonthContent(tab, data);
   } catch(e) { console.error('Render error for ' + tab + ':', e); container.innerHTML = '<div class="card" style="padding:30px;color:#f87171;">Error al renderizar: ' + e.message + '</div>'; }
+
+  // Remove ALL old sidebars from body first, then move new one out of container
+  document.querySelectorAll('body > .side-index').forEach(s => s.remove());
+  const sidebar = document.getElementById('sidebar-' + tab);
+  if (sidebar) document.body.appendChild(sidebar);
 
   setTimeout(() => initializeCharts(tab, data), 100);
 }
@@ -1570,7 +1605,7 @@ function renderMonthContent(tab, data) {
   `;
 
   let insightsHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-insights" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:var(--green-bg); box-shadow: 0 0 20px var(--green-glow);">💡</div>
         <div class="section-title">Insights del Mes</div>
@@ -1590,7 +1625,7 @@ function renderMonthContent(tab, data) {
   `;
 
   let estadoHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-estado" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:var(--amber-bg); box-shadow: 0 0 20px rgba(251,191,36,.1);">📊</div>
         <div class="section-title">Estado de Resultados ${prevMonth ? 'Comparativo' : ''}</div>
@@ -1657,7 +1692,7 @@ function renderMonthContent(tab, data) {
   `;
 
   let cmvHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-cmv" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:var(--green-bg); box-shadow: 0 0 20px var(--green-glow);">🥩</div>
         <div class="section-title">Análisis CMV</div>
@@ -1693,7 +1728,7 @@ function renderMonthContent(tab, data) {
   `;
 
   let nominaHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-nomina" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:var(--blue-bg); box-shadow: 0 0 20px rgba(96,165,250,.1);">👥</div>
         <div class="section-title">Dotación y Nómina</div>
@@ -1785,7 +1820,7 @@ function renderMonthContent(tab, data) {
     const highThreshold = maxTotal * 0.5;
 
     nominaCompletaHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-nomina-completa" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:rgba(34,211,153,.08); box-shadow: 0 0 20px rgba(34,211,153,.1);">📋</div>
         <div class="section-title">Nómina Completa de Sueldos</div>
@@ -1834,7 +1869,7 @@ function renderMonthContent(tab, data) {
   let sueldosHTML = '';
   if (data.sueldosSubDetail) {
     sueldosHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-sueldos" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:rgba(167,139,250,.08); box-shadow: 0 0 20px rgba(167,139,250,.1);">💰</div>
         <div class="section-title">Composición de Sueldos</div>
@@ -1865,7 +1900,7 @@ function renderMonthContent(tab, data) {
   let cfHTML = '';
   if (data.cfSubDetail) {
     cfHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-costos-fijos" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:rgba(251,191,36,.08); box-shadow: 0 0 20px rgba(251,191,36,.1);">📋</div>
         <div class="section-title">Composición de Costos Fijos</div>
@@ -1896,7 +1931,7 @@ function renderMonthContent(tab, data) {
   let ventasProductoHTML = '';
   if (data.ventasProducto) {
     ventasProductoHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-ventas" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:var(--amber-bg); box-shadow: 0 0 20px rgba(251,191,36,.1);">🍽️</div>
         <div class="section-title">Ventas por Producto</div>
@@ -1935,7 +1970,7 @@ function renderMonthContent(tab, data) {
   }
 
   let mediosPagoHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-medios" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:rgba(167,139,250,.08); box-shadow: 0 0 20px rgba(167,139,250,.1);">💳</div>
         <div class="section-title">Medios de Pago</div>
@@ -1988,7 +2023,7 @@ function renderMonthContent(tab, data) {
 
   // Centro de Venta
   let centroVentaHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-centro" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:var(--green-bg); box-shadow: 0 0 20px var(--green-glow);">🏠</div>
         <div class="section-title">Centro de Venta</div>
@@ -2018,7 +2053,7 @@ function renderMonthContent(tab, data) {
 
   // Otros Indicadores
   let otrosHTML = `
-    <div class="section reveal">
+    <div id="sec-${tab}-otros" class="section reveal">
       <div class="section-header">
         <div class="section-icon" style="background:rgba(167,139,250,.08); box-shadow: 0 0 20px rgba(167,139,250,.1);">📋</div>
         <div class="section-title">Otros Indicadores</div>
@@ -2059,23 +2094,6 @@ function renderMonthContent(tab, data) {
     </div>
   `;
 
-  // Conclusiones
-  let conclusionesHTML = `
-    <div class="section reveal">
-      <div class="section-header">
-        <div class="section-icon" style="background:var(--green-bg); box-shadow: 0 0 20px var(--green-glow);">✅</div>
-        <div class="section-title">Conclusiones y Recomendaciones</div>
-        <div class="section-line"></div>
-      </div>
-      <div class="grid-2"><div>
-  `;
-  const colors = ['green','green','amber','amber'];
-  const icons = ['1','2','3','4'];
-  data.conclusiones.forEach((conc, i) => {
-    conclusionesHTML += `<div class="insight insight-${colors[i]||'amber'} reveal ${i>0?'reveal-delay-1':''}"><div class="icon">${icons[i]||i+1}</div><div class="content"><div class="title"></div><div class="desc">${conc}</div></div></div>`;
-  });
-  conclusionesHTML += `</div></div></div>`;
-
   let footerHTML = `
     <div class="footer-bar">
       <div class="f-logo">CAUCE</div>
@@ -2083,7 +2101,27 @@ function renderMonthContent(tab, data) {
     </div>
   `;
 
-  return kpiHTML + insightsHTML + estadoHTML + cmvHTML + nominaHTML + nominaCompletaHTML + sueldosHTML + cfHTML + ventasProductoHTML + mediosPagoHTML + centroVentaHTML + otrosHTML + conclusionesHTML + footerHTML;
+  const sidebarLinks = [
+    { id: 'insights', label: 'Insights', always: true },
+    { id: 'estado', label: 'Estado de Resultados', always: true },
+    { id: 'cmv', label: 'Análisis CMV', always: true },
+    { id: 'nomina', label: 'Dotación y Nómina', always: true },
+    { id: 'nomina-completa', label: 'Nómina Completa', always: !!(data.empleados && data.empleados.length > 0) },
+    { id: 'sueldos', label: 'Composición Sueldos', always: !!data.sueldosSubDetail },
+    { id: 'costos-fijos', label: 'Costos Fijos', always: !!data.cfSubDetail },
+    { id: 'ventas', label: 'Ventas por Producto', always: !!data.ventasProducto },
+    { id: 'medios', label: 'Medios de Pago', always: true },
+    { id: 'centro', label: 'Centro de Venta', always: true },
+    { id: 'otros', label: 'Otros Indicadores', always: true },
+  ];
+  const sidebarHTML = `
+    <nav id="sidebar-${tab}" class="side-index">
+      <div class="side-index-title">Índice</div>
+      ${sidebarLinks.filter(l => l.always).map(l => `<a href="#sec-${tab}-${l.id}" class="side-index-link" onclick="smoothNav(event, 'sec-${tab}-${l.id}')">${l.label}</a>`).join('')}
+    </nav>
+  `;
+
+  return sidebarHTML + kpiHTML + insightsHTML + estadoHTML + cmvHTML + nominaHTML + nominaCompletaHTML + sueldosHTML + cfHTML + ventasProductoHTML + mediosPagoHTML + centroVentaHTML + otrosHTML + footerHTML;
 }
 
 function initializeCharts(tab, data) {
@@ -2315,6 +2353,48 @@ async function checkPwd() {
 }
 
 window.addEventListener('load', () => document.getElementById('pwdInput').focus());
+
+// Sidebar smooth navigation
+function smoothNav(e, id) {
+  e.preventDefault();
+  const el = document.getElementById(id);
+  if (el) {
+    const offset = 70;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}
+
+// Highlight active sidebar link on scroll
+let sidebarRAF = null;
+window.addEventListener('scroll', () => {
+  if (sidebarRAF) return;
+  sidebarRAF = requestAnimationFrame(() => {
+    sidebarRAF = null;
+    const activeTab = document.querySelector('.tab-content.active');
+    if (!activeTab) return;
+    const sidebar = activeTab.querySelector('.side-index') || document.querySelector('.side-index');
+    if (!sidebar || sidebar.style.display === 'none') return;
+    const links = sidebar.querySelectorAll('.side-index-link');
+    let current = '';
+    links.forEach(link => {
+      const id = link.getAttribute('href').substring(1);
+      const sec = document.getElementById(id);
+      if (sec && sec.getBoundingClientRect().top <= 120) current = id;
+    });
+    links.forEach(link => {
+      const id = link.getAttribute('href').substring(1);
+      link.classList.toggle('active-link', id === current);
+    });
+  });
+});
+
+// Show/hide sidebar based on active tab
+function updateSidebar(tab) {
+  document.querySelectorAll('.side-index').forEach(s => s.style.display = 'none');
+  const sidebar = document.getElementById('sidebar-' + tab);
+  if (sidebar && window.innerWidth > 768) sidebar.style.display = 'flex';
+}
 
 // Filter nómina table
 function filterNomina(searchId, tbodyId, countId) {
