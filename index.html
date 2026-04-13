@@ -580,6 +580,124 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 
 /* === WELCOME BANNER ANIMATION === */
 @keyframes slideDown { from{opacity:0;transform:translateY(-100%)} to{opacity:1;transform:translateY(0)} }
+
+/* === TOP NAV BANNER === */
+.top-nav {
+  position: fixed; top: 66px; left: 0; right: 0; z-index: 998;
+  background: rgba(10,12,20,.95);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  display: none; justify-content: center; align-items: center; gap: 6px;
+  padding: 10px 28px;
+  animation: slideDown .4s cubic-bezier(.22,1,.36,1) both;
+}
+.top-nav-btn {
+  padding: 9px 28px; border-radius: 100px;
+  font-size: .8rem; font-weight: 600; letter-spacing: .5px;
+  color: var(--text3); cursor: pointer;
+  background: transparent; border: 1px solid transparent;
+  font-family: 'Inter', sans-serif;
+  transition: all .3s ease;
+}
+.top-nav-btn:hover { color: var(--text2); background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
+.top-nav-btn.active-nav {
+  color: #fff; background: rgba(52,211,153,.1);
+  border-color: rgba(52,211,153,.25);
+  box-shadow: 0 0 16px rgba(52,211,153,.08);
+}
+.view-section { display: none; }
+.view-section.active-view { display: block; }
+@media(max-width:768px){
+  .top-nav { padding: 8px 12px; gap: 4px; }
+  .top-nav-btn { padding: 7px 16px; font-size: .72rem; }
+}
+
+/* === ORGANIGRAMA INLINE === */
+.org-wrap { max-width: 1400px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+.org-header { text-align: center; padding: 40px 20px 28px; position: relative; }
+.org-header::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:280px; height:1px; background:linear-gradient(90deg,transparent,var(--green),transparent); }
+.org-title { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:#fff; letter-spacing:4px; }
+.org-subtitle { font-size:.8rem; color:var(--text3); margin-top:6px; letter-spacing:2px; }
+.org-kpi-bar { display:flex; justify-content:center; gap:50px; padding:28px 20px 24px; flex-wrap:wrap; }
+.org-kpi { text-align:center; }
+.org-kpi-value { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--green); line-height:1; }
+.org-kpi-label { font-size:.6rem; letter-spacing:2.5px; text-transform:uppercase; color:var(--text3); margin-top:4px; font-weight:500; }
+.org-sep { width:100%; max-width:900px; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent); margin:0 auto; }
+
+/* Org search */
+.org-search { display:flex; justify-content:center; padding:20px 20px 12px; }
+.org-search-input { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); color:var(--text); padding:10px 18px 10px 40px; border-radius:12px; font-size:.82rem; font-family:'Inter',sans-serif; width:320px; outline:none; transition:all .3s; }
+.org-search-input::placeholder { color:var(--text3); }
+.org-search-input:focus { border-color:rgba(52,211,153,.3); box-shadow:0 0 20px rgba(52,211,153,.06); }
+.org-search-wrap { position:relative; }
+.org-search-wrap svg { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--text3); pointer-events:none; }
+
+/* Legend */
+.org-legend { display:flex; justify-content:center; gap:20px; padding:8px 20px 28px; flex-wrap:wrap; }
+.org-legend-item { display:flex; align-items:center; gap:6px; font-size:.65rem; color:var(--text3); letter-spacing:.5px; font-weight:500; }
+.org-legend-dot { width:8px; height:8px; border-radius:50%; }
+
+/* Leadership */
+.org-leadership { display:flex; flex-direction:column; align-items:center; padding:10px 20px 36px; }
+.org-exec { background:linear-gradient(135deg,rgba(52,211,153,.06),rgba(52,211,153,.02)); border:1px solid rgba(52,211,153,.2); border-radius:20px; padding:24px 40px; text-align:center; min-width:240px; backdrop-filter:blur(10px); box-shadow:0 8px 40px rgba(0,0,0,.3); transition:all .35s; }
+.org-exec:hover { transform:translateY(-3px); box-shadow:0 12px 50px rgba(0,0,0,.4),0 0 30px rgba(52,211,153,.05); }
+.org-exec-tag { font-size:.6rem; letter-spacing:3px; text-transform:uppercase; color:var(--green); font-weight:600; margin-bottom:4px; }
+.org-exec-title { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:600; color:#fff; margin-bottom:2px; }
+.org-vline { width:1px; height:28px; background:linear-gradient(to bottom,var(--green),rgba(255,255,255,.06)); }
+.org-vline-short { width:1px; height:18px; background:rgba(255,255,255,.06); }
+
+/* C-Suite */
+.org-csuite { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; padding:0 20px; }
+.org-cs-card { background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:18px 22px; text-align:center; min-width:170px; max-width:200px; backdrop-filter:blur(10px); transition:all .3s; box-shadow:0 4px 20px rgba(0,0,0,.25); overflow:hidden; position:relative; }
+.org-cs-card:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,.35); border-color:rgba(255,255,255,.1); }
+.org-cs-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+.org-cs-role { font-size:.6rem; letter-spacing:2px; text-transform:uppercase; font-weight:700; margin-bottom:4px; }
+.org-cs-name { font-size:.88rem; font-weight:600; color:#fff; line-height:1.2; }
+.org-cs-vacant { font-size:.78rem; color:var(--text3); font-style:italic; }
+.org-vacant-badge { display:inline-block; margin-top:4px; font-size:.55rem; letter-spacing:2px; text-transform:uppercase; color:var(--text3); border:1px dashed rgba(255,255,255,.12); padding:2px 10px; border-radius:6px; font-weight:500; }
+
+/* Department colors */
+.org-c-cocina { --dept-color: #f87171; }
+.org-c-salon { --dept-color: #34d399; }
+.org-c-barra { --dept-color: #a78bfa; }
+.org-c-admin { --dept-color: #60a5fa; }
+.org-c-ops { --dept-color: #22d3ee; }
+
+/* Department blocks */
+.org-depts { display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:1400px; margin:36px auto 0; padding:0 28px 60px; }
+.org-dept { background:var(--card); border:1px solid var(--card-border); border-radius:20px; overflow:hidden; backdrop-filter:blur(10px); transition:all .35s; box-shadow:0 4px 24px rgba(0,0,0,.2); }
+.org-dept:hover { box-shadow:0 8px 40px rgba(0,0,0,.3); border-color:rgba(255,255,255,.1); }
+.org-dept-head { padding:22px 24px 14px; position:relative; }
+.org-dept-head::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--dept-color),transparent); }
+.org-dept-icon { width:32px; height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; margin-bottom:8px; background:rgba(255,255,255,.04); }
+.org-dept-name { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:600; color:var(--dept-color); line-height:1; margin-bottom:2px; }
+.org-dept-lead { font-size:.7rem; color:var(--text3); letter-spacing:.3px; }
+.org-dept-count { position:absolute; top:18px; right:22px; font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--dept-color); line-height:1; }
+.org-dept-count-lbl { position:absolute; top:40px; right:22px; font-size:.5rem; letter-spacing:2px; text-transform:uppercase; color:var(--text3); font-weight:500; }
+.org-dept-body { padding:0 24px 22px; }
+.org-tier { margin-bottom:14px; }
+.org-tier:last-child { margin-bottom:0; }
+.org-tier-label { font-size:.55rem; letter-spacing:2.5px; text-transform:uppercase; color:var(--text3); margin-bottom:6px; padding-left:2px; font-weight:600; display:flex; align-items:center; gap:8px; }
+.org-tier-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.04); }
+.org-tier-grid { display:flex; flex-wrap:wrap; gap:7px; }
+.org-person { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-left:2px solid var(--dept-color); border-radius:10px; padding:8px 12px; min-width:110px; max-width:150px; transition:all .25s; cursor:default; }
+.org-person:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(0,0,0,.3); border-color:rgba(255,255,255,.1); border-left-color:var(--dept-color); }
+.org-person .op-role { font-size:.52rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; color:var(--dept-color); margin-bottom:2px; line-height:1.3; }
+.org-person .op-name { font-size:.75rem; font-weight:500; color:var(--text); line-height:1.2; }
+.org-person.org-found { border-color:var(--green) !important; box-shadow:0 0 20px rgba(52,211,153,.12); }
+.org-person.org-faded { opacity:.12; }
+.org-full-span { grid-column: 1 / -1; }
+
+@media(max-width:900px){
+  .org-depts { grid-template-columns:1fr; padding:0 16px 40px; }
+  .org-full-span { grid-column:1; }
+  .org-csuite { gap:10px; }
+  .org-title { font-size:1.6rem; }
+}
+@media(max-width:768px){
+  .org-person { min-width:90px; max-width:130px; }
+  .org-dept-name { font-size:1.1rem; }
+}
 </style>
 </head>
 <body>
@@ -653,8 +771,18 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   justify-content:space-between;align-items:center;
 "></div>
 
+<!-- ======== TOP NAVIGATION ======== -->
+<div id="topNav" class="top-nav">
+  <button class="top-nav-btn active-nav" onclick="switchView('economicos')">Resultados económicos</button>
+  <button class="top-nav-btn" onclick="switchView('organigrama')">Organigrama</button>
+  <button class="top-nav-btn" onclick="switchView('financieros')">Resultados financieros</button>
+</div>
+
+<!-- ======== VIEW: RESULTADOS ECONÓMICOS ======== -->
+<div id="view-economicos" class="view-section active-view">
+
 <!-- ======== HERO ======== -->
-<div class="hero" style="padding-top:130px;">
+<div class="hero" style="padding-top:160px;">
   <div class="hero-content">
     <div class="hero-logo">CAUCE</div>
     <div class="hero-sub">Informe de Gestión Mensual</div>
@@ -691,6 +819,297 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 
 <div id="marzo" class="tab-content">
   <div class="container" id="marzoContent"></div>
+</div>
+
+</div><!-- /view-economicos -->
+
+<!-- ======== VIEW: ORGANIGRAMA ======== -->
+<div id="view-organigrama" class="view-section">
+  <div style="padding-top:120px;">
+
+    <!-- Header -->
+    <div class="org-header">
+      <div class="org-title">CAUCE</div>
+      <div style="font-family:'Playfair Display',serif;font-size:.9rem;font-style:italic;color:var(--text3);margin-top:2px;">de los fuegos</div>
+      <div class="org-subtitle" style="margin-top:16px;">Organigrama Institucional · Abril 2026</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="org-kpi-bar">
+      <div class="org-kpi"><div class="org-kpi-value">55+</div><div class="org-kpi-label">Colaboradores</div></div>
+      <div class="org-kpi"><div class="org-kpi-value">6</div><div class="org-kpi-label">Departamentos</div></div>
+      <div class="org-kpi"><div class="org-kpi-value">5</div><div class="org-kpi-label">Niveles Jerárquicos</div></div>
+      <div class="org-kpi"><div class="org-kpi-value">2</div><div class="org-kpi-label">Turnos Operativos</div></div>
+    </div>
+
+    <div class="org-sep"></div>
+
+    <!-- Search -->
+    <div class="org-search">
+      <div class="org-search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="org-search-input" id="orgSearchInput" placeholder="Buscar por nombre o puesto..." oninput="searchOrg(this.value)">
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="org-legend">
+      <div class="org-legend-item"><div class="org-legend-dot" style="background:var(--green);box-shadow:0 0 8px var(--green)"></div>Dirección</div>
+      <div class="org-legend-item"><div class="org-legend-dot" style="background:#f87171;box-shadow:0 0 8px #f87171"></div>Cocina</div>
+      <div class="org-legend-item"><div class="org-legend-dot" style="background:#34d399;box-shadow:0 0 8px #34d399"></div>Servicio & Salón</div>
+      <div class="org-legend-item"><div class="org-legend-dot" style="background:#a78bfa;box-shadow:0 0 8px #a78bfa"></div>Barra & Sommellerie</div>
+      <div class="org-legend-item"><div class="org-legend-dot" style="background:#60a5fa;box-shadow:0 0 8px #60a5fa"></div>Administración</div>
+      <div class="org-legend-item"><div class="org-legend-dot" style="background:#22d3ee;box-shadow:0 0 8px #22d3ee"></div>Operaciones</div>
+    </div>
+
+    <!-- Leadership -->
+    <div class="org-leadership">
+      <div class="org-exec">
+        <div class="org-exec-tag">Socios</div>
+        <div class="org-exec-title">Cauce de los Fuegos</div>
+        <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);margin:10px auto;"></div>
+        <div class="org-exec-tag" style="margin-bottom:0;margin-top:2px;">Dirección General</div>
+      </div>
+      <div class="org-vline"></div>
+
+      <!-- C-Suite -->
+      <div class="org-csuite">
+        <div>
+          <div class="org-vline-short" style="margin:0 auto"></div>
+          <div class="org-cs-card org-c-cocina" style="--dept-color:#f87171;">
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#f87171,transparent);"></div>
+            <div class="org-cs-role" style="color:#f87171;">Jefe de Cocina</div>
+            <div class="org-cs-name">Emiliano Belardinelli</div>
+          </div>
+        </div>
+        <div>
+          <div class="org-vline-short" style="margin:0 auto"></div>
+          <div class="org-cs-card org-c-salon" style="--dept-color:#34d399;">
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#34d399,transparent);"></div>
+            <div class="org-cs-role" style="color:#34d399;">Gerente de Servicio</div>
+            <div class="org-cs-name">Martín Tarallo</div>
+          </div>
+        </div>
+        <div>
+          <div class="org-vline-short" style="margin:0 auto"></div>
+          <div class="org-cs-card org-c-admin" style="--dept-color:#60a5fa;">
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#60a5fa,transparent);"></div>
+            <div class="org-cs-role" style="color:#60a5fa;">Administración</div>
+            <div class="org-cs-name">Agustín del Valle</div>
+          </div>
+        </div>
+        <div>
+          <div class="org-vline-short" style="margin:0 auto"></div>
+          <div class="org-cs-card" style="border-style:dashed;--dept-color:#fbbf24;">
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#fbbf24,transparent);"></div>
+            <div class="org-cs-role" style="color:#fbbf24;">Comercial</div>
+            <div class="org-cs-vacant">Próxima incorporación</div>
+            <div class="org-vacant-badge">Vacante</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="org-sep" style="margin-bottom:8px;"></div>
+
+    <!-- Departments -->
+    <div class="org-depts">
+
+      <!-- COCINA -->
+      <div class="org-dept org-c-cocina" style="--dept-color:#f87171;">
+        <div class="org-dept-head">
+          <div class="org-dept-icon">🔥</div>
+          <div class="org-dept-name">Cocina</div>
+          <div class="org-dept-lead">Dir. Emiliano Belardinelli</div>
+          <div class="org-dept-count">14</div>
+          <div class="org-dept-count-lbl">PERSONAS</div>
+        </div>
+        <div class="org-dept-body">
+          <div class="org-tier">
+            <div class="org-tier-label">Jefe de Turno</div>
+            <div class="org-tier-grid">
+              <div class="org-person" data-orgname="Alanís"><div class="op-role">Jefe Turno Mañana</div><div class="op-name">Alanís</div></div>
+            </div>
+          </div>
+          <div class="org-tier">
+            <div class="org-tier-label">Turno Mañana</div>
+            <div class="org-tier-grid">
+              <div class="org-person" data-orgname="César Gauto"><div class="op-role">Parrillero</div><div class="op-name">César Gauto</div></div>
+              <div class="org-person" data-orgname="Marcos Sánchez"><div class="op-role">Produc. Carnes</div><div class="op-name">Marcos Sánchez</div></div>
+              <div class="org-person" data-orgname="Brisa Elisiri"><div class="op-role">Pastelera</div><div class="op-name">Brisa Elisiri</div></div>
+              <div class="org-person" data-orgname="Tiara Brazda"><div class="op-role">Pastelería</div><div class="op-name">Tiara Brazda</div></div>
+              <div class="org-person" data-orgname="César Gómez"><div class="op-role">Cocina</div><div class="op-name">César Gómez</div></div>
+              <div class="org-person" data-orgname="Yuliano Sosa"><div class="op-role">Cocina</div><div class="op-name">Yuliano Sosa</div></div>
+              <div class="org-person" data-orgname="Daniel Sosa"><div class="op-role">Cocina</div><div class="op-name">Daniel Sosa</div></div>
+              <div class="org-person" data-orgname="Patricio Caseres"><div class="op-role">Cocina</div><div class="op-name">Patricio Caseres</div></div>
+              <div class="org-person" data-orgname="Depósito"><div class="op-role">Auxiliar</div><div class="op-name">Depósito</div></div>
+              <div class="org-person" data-orgname="Joel Nieto"><div class="op-role">Bacha</div><div class="op-name">Joel Nieto</div></div>
+              <div class="org-person" data-orgname="Alberto Sánchez"><div class="op-role">Panadero</div><div class="op-name">Alberto Sánchez</div></div>
+            </div>
+          </div>
+          <div class="org-tier">
+            <div class="org-tier-label">Turno Noche</div>
+            <div class="org-tier-grid">
+              <div class="org-person" data-orgname="Jorge Lezcano"><div class="op-role">Producción</div><div class="op-name">Jorge Lezcano</div></div>
+              <div class="org-person" data-orgname="Alicia Ortiz"><div class="op-role">Producción</div><div class="op-name">Alicia Ortiz</div></div>
+              <div class="org-person" data-orgname="Roxana Gonzales"><div class="op-role">Bachero</div><div class="op-name">Roxana Gonzales</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVICIO & SALÓN -->
+      <div class="org-dept org-c-salon" style="--dept-color:#34d399;">
+        <div class="org-dept-head">
+          <div class="org-dept-icon">🍽️</div>
+          <div class="org-dept-name">Servicio & Salón</div>
+          <div class="org-dept-lead">Gte. de Servicio: Martín Tarallo</div>
+          <div class="org-dept-count">10</div>
+          <div class="org-dept-count-lbl">PERSONAS</div>
+        </div>
+        <div class="org-dept-body">
+          <div class="org-tier">
+            <div class="org-tier-label">Jefes de Turno</div>
+            <div class="org-tier-grid">
+              <div class="org-person" data-orgname="Verónica Gonzales"><div class="op-role">Jefe Turno Mañana</div><div class="op-name">Verónica Gonzales</div></div>
+              <div class="org-person" data-orgname="Christian Flores"><div class="op-role">Jefe Turno Noche</div><div class="op-name">Christian Flores</div></div>
+            </div>
+          </div>
+          <div class="org-tier">
+            <div class="org-tier-label">Maîtres</div>
+            <div class="org-tier-grid">
+              <div class="org-person" data-orgname="Marcelo Moreyra"><div class="op-role">Maître</div><div class="op-name">Marcelo Moreyra</div></div>
+              <div class="org-person" data-orgname="Patricia Martí"><div class="op-role">Maître</div><div class="op-name">Patricia Martí</div></div>
+            </div>
+          </div>
+          <div class="org-tier">
+            <div class="org-tier-label">Mozos</div>
+            <div class="org-tier-grid">
+              <div class="org-person" data-orgname="Lucas Maidana"><div class="op-role">Mozo</div><div class="op-name">Lucas Maidana</div></div>
+              <div class="org-person" data-orgname="Gabriel Maldonado"><div class="op-role">Mozo</div><div class="op-name">Gabriel Maldonado</div></div>
+              <div class="org-person" data-orgname="Delfina Gonzales"><div class="op-role">Mozo</div><div class="op-name">Delfina Gonzales</div></div>
+              <div class="org-person" data-orgname="Iara Romero"><div class="op-role">Mozo</div><div class="op-name">Iara Romero</div></div>
+              <div class="org-person" data-orgname="Iván Vega"><div class="op-role">Mozo</div><div class="op-name">Iván Vega</div></div>
+              <div class="org-person" data-orgname="Ignacio Flores"><div class="op-role">Mozo</div><div class="op-name">Ignacio Flores</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BARRA & SOMMELLERIE -->
+      <div class="org-dept org-c-barra" style="--dept-color:#a78bfa;">
+        <div class="org-dept-head">
+          <div class="org-dept-icon">🍷</div>
+          <div class="org-dept-name">Barra & Sommellerie</div>
+          <div class="org-dept-lead">Dependencia: Gerencia de Servicio</div>
+          <div class="org-dept-count">4</div>
+          <div class="org-dept-count-lbl">PERSONAS</div>
+        </div>
+        <div class="org-dept-body">
+          <div class="org-tier">
+            <div class="org-tier-label">Responsables</div>
+            <div class="org-tier-grid">
+              <div class="org-person" data-orgname="Laura Pichel"><div class="op-role">Jefe de Barra</div><div class="op-name">Laura Pichel</div></div>
+              <div class="org-person" data-orgname="Celestino Rodríguez"><div class="op-role">Sommelier</div><div class="op-name">Celestino Rodríguez</div></div>
+            </div>
+          </div>
+          <div class="org-tier">
+            <div class="org-tier-label">Equipo</div>
+            <div class="org-tier-grid">
+              <div class="org-person" data-orgname="Tomás Mazzeo"><div class="op-role">Barback</div><div class="op-name">Tomás Mazzeo</div></div>
+              <div class="org-person" data-orgname="Javier Batalla"><div class="op-role">Barback</div><div class="op-name">Javier Batalla</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMINISTRACIÓN -->
+      <div class="org-dept org-c-admin" style="--dept-color:#60a5fa;">
+        <div class="org-dept-head">
+          <div class="org-dept-icon">📊</div>
+          <div class="org-dept-name">Administración</div>
+          <div class="org-dept-lead">Dir. Agustín del Valle</div>
+          <div class="org-dept-count">5</div>
+          <div class="org-dept-count-lbl">PERSONAS</div>
+        </div>
+        <div class="org-dept-body">
+          <div class="org-tier">
+            <div class="org-tier-label">Responsables</div>
+            <div class="org-tier-grid">
+              <div class="org-person" data-orgname="Daniela Serrano"><div class="op-role">Admin. RRHH</div><div class="op-name">Daniela Serrano</div></div>
+              <div class="org-person" data-orgname="Natalia"><div class="op-role">Admin. Contable</div><div class="op-name">Natalia</div></div>
+            </div>
+          </div>
+          <div class="org-tier">
+            <div class="org-tier-label">Cajeros</div>
+            <div class="org-tier-grid">
+              <div class="org-person" data-orgname="Marcos Robles"><div class="op-role">Cajero</div><div class="op-name">Marcos Robles</div></div>
+              <div class="org-person" data-orgname="Sebastián Acosta"><div class="op-role">Cajero</div><div class="op-name">Sebastián Acosta</div></div>
+              <div class="org-person" data-orgname="Lola Franquero"><div class="op-role">Cajero</div><div class="op-name">Lola Franquero</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPERACIONES GENERALES (full width) -->
+      <div class="org-dept org-c-ops org-full-span" style="--dept-color:#22d3ee;">
+        <div class="org-dept-head">
+          <div class="org-dept-icon">⚙️</div>
+          <div class="org-dept-name">Operaciones Generales</div>
+          <div class="org-dept-lead">Soporte operativo transversal</div>
+          <div class="org-dept-count">7</div>
+          <div class="org-dept-count-lbl">PERSONAS</div>
+        </div>
+        <div class="org-dept-body">
+          <div style="display:flex;gap:28px;flex-wrap:wrap;">
+            <div class="org-tier" style="flex:1;min-width:180px;">
+              <div class="org-tier-label">Limpieza</div>
+              <div class="org-tier-grid">
+                <div class="org-person" data-orgname="Diana Escudero"><div class="op-role">Limpieza</div><div class="op-name">Diana Escudero</div></div>
+                <div class="org-person" data-orgname="Karina Chazarreta"><div class="op-role">Limpieza</div><div class="op-name">Karina Chazarreta</div></div>
+                <div class="org-person" data-orgname="Franquera"><div class="op-role">Limpieza</div><div class="op-name">Franquera</div></div>
+              </div>
+            </div>
+            <div class="org-tier" style="flex:1;min-width:180px;">
+              <div class="org-tier-label">Recepción</div>
+              <div class="org-tier-grid">
+                <div class="org-person" data-orgname="Griselda Aguirre"><div class="op-role">Recepción</div><div class="op-name">Griselda Aguirre</div></div>
+                <div class="org-person" data-orgname="Patricia Villanueva"><div class="op-role">Recepción</div><div class="op-name">Patricia Villanueva</div></div>
+              </div>
+            </div>
+            <div class="org-tier" style="flex:1;min-width:180px;">
+              <div class="org-tier-label">Valet Parking</div>
+              <div class="org-tier-grid">
+                <div class="org-person" data-orgname="Luciano Cardozo"><div class="op-role">Valet Parking</div><div class="op-name">Luciano Cardozo</div></div>
+                <div class="org-person" data-orgname="Eduardo"><div class="op-role">Valet Parking</div><div class="op-name">Eduardo</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /org-depts -->
+
+    <!-- Footer -->
+    <div style="text-align:center;padding:20px 20px 40px;border-top:1px solid rgba(255,255,255,.04);">
+      <div style="font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--text3);font-weight:500;">Cauce de los Fuegos · Organigrama Institucional · Abril 2026</div>
+      <div style="font-size:.65rem;color:var(--text3);margin-top:4px;font-weight:300;opacity:.6;">Documento confidencial · Uso interno exclusivo</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ======== VIEW: RESULTADOS FINANCIEROS ======== -->
+<div id="view-financieros" class="view-section">
+  <div style="margin-top:160px;min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 28px;">
+    <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(96,165,250,.08));border:1px solid rgba(52,211,153,.12);display:flex;align-items:center;justify-content:center;font-size:2.4rem;margin-bottom:28px;animation:float1 4s ease-in-out infinite alternate;">🚀</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:12px;">Estamos trabajando en esto</div>
+    <div style="font-size:.92rem;color:var(--text2);max-width:440px;line-height:1.7;">Tranquilo, ansioso. Esta sección está en pleno desarrollo.<br>Pronto vas a poder ver acá el análisis financiero completo del período.</div>
+    <div style="margin-top:28px;display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.12);font-size:.72rem;color:var(--green);font-weight:600;letter-spacing:1px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      EN DESARROLLO
+    </div>
+  </div>
 </div>
 
 </div><!-- /mainContent -->
@@ -2299,6 +2718,9 @@ function showWelcomeBanner(user) {
     </button>
   `;
   banner.style.display = 'flex';
+  // Show top nav
+  const topNav = document.getElementById('topNav');
+  if (topNav) topNav.style.display = 'flex';
 }
 
 function logout() {
@@ -2306,8 +2728,10 @@ function logout() {
   const main = document.getElementById('mainContent');
   const lock = document.getElementById('lockScreen');
   const pwd = document.getElementById('pwdInput');
+  const topNav = document.getElementById('topNav');
   banner.style.display = 'none';
   banner.innerHTML = '';
+  if (topNav) topNav.style.display = 'none';
   main.style.display = 'none';
   lock.style.display = 'flex';
   lock.style.opacity = '1';
@@ -2315,6 +2739,12 @@ function logout() {
   pwd.value = '';
   pwd.focus();
   document.querySelectorAll('body > .side-index').forEach(s => s.remove());
+  // Reset to economic view
+  currentView = 'economicos';
+  document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active-view'));
+  document.getElementById('view-economicos').classList.add('active-view');
+  document.querySelectorAll('.top-nav-btn').forEach(btn => btn.classList.remove('active-nav'));
+  document.querySelector('.top-nav-btn').classList.add('active-nav');
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
@@ -2341,6 +2771,50 @@ async function checkPwd() {
     setTimeout(() => { err.style.opacity = '0'; }, 2500);
     authInProgress = false;
   }
+}
+
+// === TOP NAV VIEW SWITCHING ===
+let currentView = 'economicos';
+
+function switchView(view) {
+  if (view === currentView) return;
+  currentView = view;
+  // Update nav buttons
+  document.querySelectorAll('.top-nav-btn').forEach(btn => btn.classList.remove('active-nav'));
+  document.querySelectorAll('.top-nav-btn').forEach(btn => {
+    if (btn.textContent.toLowerCase().includes(view === 'economicos' ? 'económicos' : view === 'organigrama' ? 'organigrama' : 'financieros')) {
+      btn.classList.add('active-nav');
+    }
+  });
+  // Toggle views
+  document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active-view'));
+  const target = document.getElementById('view-' + view);
+  if (target) target.classList.add('active-view');
+  // Sidebar visibility
+  if (view === 'economicos') {
+    updateSidebar(currentTab);
+  } else {
+    document.querySelectorAll('.side-index').forEach(s => s.style.display = 'none');
+  }
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+// Organigrama search
+function searchOrg(q) {
+  const cards = document.querySelectorAll('.org-person');
+  const val = q.toLowerCase().trim();
+  if (!val) { cards.forEach(c => { c.classList.remove('org-found','org-faded'); }); return; }
+  let any = false;
+  cards.forEach(c => {
+    const n = (c.getAttribute('data-orgname') || '').toLowerCase();
+    const r = (c.querySelector('.op-role')?.textContent || '').toLowerCase();
+    if (n.includes(val) || r.includes(val)) {
+      c.classList.add('org-found'); c.classList.remove('org-faded'); any = true;
+    } else {
+      c.classList.remove('org-found'); c.classList.add('org-faded');
+    }
+  });
+  if (!any) cards.forEach(c => { c.classList.remove('org-found','org-faded'); });
 }
 
 // Sidebar smooth navigation
