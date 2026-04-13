@@ -618,8 +618,23 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 <div class="bg-glow g2"></div>
 <div class="bg-glow g3"></div>
 
+<!-- ======== WELCOME BANNER ======== -->
+<div id="welcomeBanner" style="
+  display:none;
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  padding:12px 28px;
+  background:rgba(14,16,24,.92);
+  border-bottom:1px solid rgba(52,211,153,.15);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  animation:slideDown .5s cubic-bezier(.22,1,.36,1) both;
+  justify-content:space-between;align-items:center;
+"></div>
+<style>
+@keyframes slideDown { from{opacity:0;transform:translateY(-100%)} to{opacity:1;transform:translateY(0)} }
+</style>
+
 <!-- ======== HERO ======== -->
-<div class="hero">
+<div class="hero" style="padding-top:130px;">
   <div class="hero-content">
     <div class="hero-logo">CAUCE</div>
     <div class="hero-sub">Informe de Gestión Mensual</div>
@@ -2220,23 +2235,81 @@ window.addEventListener('load', () => {
 </script>
 
 <script>
-// Password check using SHA-256 hash
-const HASH = '71bf252c232a9f63eb2af094ed389edc6144bdd4b7e957aa8dac7f4425e84ea6';
+// Password check using SHA-256 hash — multi-user system
+const USERS = [
+  { hash: '3cbe9096ceb3ae197368e793ea762300bfa5d76988aff20f9f01b97539568a5f', name: 'Franco Davila', cargo: 'Administrador' },
+  { hash: '3a455292555407d0b78e78656aea8d176d93aa8670e2f4893c121a41b5ebd2f3', name: 'Sofía Maidana', cargo: 'Socia' },
+  { hash: '2e0b3f5ec08e5aefd612e3a1164da0436d7dea72de7bc20e293c51bc958ca9c9', name: 'Ramiro Maidana', cargo: 'Socio' },
+  { hash: 'f60edc98c64589132c727e38043182f4799137a23201717ce48d22f16a76f8b5', name: 'Patricia González', cargo: 'Socia' },
+  { hash: '3c8424f7b9e7c826c70fb16b30395cfcd036b8fe5e380a1fbc0de2363036f1b6', name: 'Leonardo La Regina', cargo: 'Socio' },
+  { hash: '68739f12714f92674cf6bc4211d4369c3abb2d0545231f195e1175a02e6119de', name: 'Agustín Del Valle', cargo: 'Administración' },
+  { hash: 'a84a9a3991169fd661fc3bffd25e96a84d593cd63810b3ab9640ae969e8145bc', name: 'Martín Tarallo', cargo: 'Gerente de Servicio' },
+];
 
 async function sha256(msg) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
 
+function showWelcomeBanner(user) {
+  const banner = document.getElementById('welcomeBanner');
+  if (!banner) return;
+  const now = new Date();
+  const hour = now.getHours();
+  let greeting = 'Buenas noches';
+  if (hour >= 6 && hour < 13) greeting = 'Buen día';
+  else if (hour >= 13 && hour < 20) greeting = 'Buenas tardes';
+  banner.innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#10b981,#059669);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:#fff;flex-shrink:0;">
+        ${user.name.split(' ').map(n => n[0]).slice(0,2).join('')}
+      </div>
+      <div>
+        <div style="font-size:1rem;font-weight:600;color:#fff;">${greeting}, ${user.name.split(' ')[0]}</div>
+        <div style="font-size:.75rem;color:#9ca3af;margin-top:2px;">${user.name} · <span style="color:#34d399;">${user.cargo}</span></div>
+      </div>
+    </div>
+    <button onclick="logout()" style="
+      display:flex;align-items:center;gap:6px;
+      padding:8px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);color:#9ca3af;font-size:.75rem;
+      font-family:'Inter',sans-serif;cursor:pointer;transition:all .3s;white-space:nowrap;
+    " onmouseover="this.style.background='rgba(248,113,113,.1)';this.style.borderColor='rgba(248,113,113,.3)';this.style.color='#f87171'"
+       onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.1)';this.style.color='#9ca3af'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Cerrar sesión
+    </button>
+  `;
+  banner.style.display = 'flex';
+}
+
+function logout() {
+  const banner = document.getElementById('welcomeBanner');
+  const main = document.getElementById('mainContent');
+  const lock = document.getElementById('lockScreen');
+  const pwd = document.getElementById('pwdInput');
+  banner.style.display = 'none';
+  banner.innerHTML = '';
+  main.style.display = 'none';
+  lock.style.display = 'flex';
+  lock.style.opacity = '1';
+  lock.style.transition = 'none';
+  pwd.value = '';
+  pwd.focus();
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
 async function checkPwd() {
   const input = document.getElementById('pwdInput').value;
   const hash = await sha256(input);
-  if (hash === HASH) {
+  const user = USERS.find(u => u.hash === hash);
+  if (user) {
     document.getElementById('lockScreen').style.transition = 'opacity .5s';
     document.getElementById('lockScreen').style.opacity = '0';
     setTimeout(() => {
       document.getElementById('lockScreen').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
+      showWelcomeBanner(user);
       revealOnScroll();
     }, 500);
   } else {
