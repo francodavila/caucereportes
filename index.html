@@ -699,6 +699,13 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   .org-person { min-width:90px; max-width:130px; }
   .org-dept-name { font-size:1.1rem; }
 }
+@media(max-width:900px){
+  #view-financieros .kpi-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media(max-width:700px){
+  #view-financieros [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
+  #view-financieros [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+}
 </style>
 </head>
 <body>
@@ -1102,13 +1109,1029 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 
 <!-- ======== VIEW: RESULTADOS FINANCIEROS ======== -->
 <div id="view-financieros" class="view-section">
-  <div style="margin-top:160px;min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 28px;">
-    <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(96,165,250,.08));border:1px solid rgba(52,211,153,.12);display:flex;align-items:center;justify-content:center;font-size:2.4rem;margin-bottom:28px;animation:float1 4s ease-in-out infinite alternate;">🚀</div>
-    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:12px;">Estamos trabajando en esto</div>
-    <div style="font-size:.92rem;color:var(--text2);max-width:440px;line-height:1.7;">Tranquilo, ansioso. Esta sección está en pleno desarrollo.<br>Pronto vas a poder ver acá el análisis financiero completo del período.</div>
-    <div style="margin-top:28px;display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.12);font-size:.72rem;color:var(--green);font-weight:600;letter-spacing:1px;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-      EN DESARROLLO
+  <div style="padding-top:160px;">
+
+    <!-- Hero Financiero -->
+    <div style="position:relative;overflow:hidden;padding:0 0 60px;text-align:center;">
+      <div style="position:relative;z-index:2;max-width:800px;margin:0 auto;padding:0 24px;">
+        <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:#fff;letter-spacing:4px;margin-bottom:12px;">CAUCE</div>
+        <div style="font-size:.85rem;color:var(--text3);font-weight:400;letter-spacing:4px;text-transform:uppercase;">Proyección Financiera · Enero–Marzo 2026</div>
+        <div style="margin-top:36px;display:inline-flex;flex-direction:column;align-items:center;background:linear-gradient(135deg,rgba(248,113,113,.06),rgba(248,113,113,.02));border:1px solid rgba(248,113,113,.15);border-radius:24px;padding:28px 48px;backdrop-filter:blur(20px);box-shadow:0 0 60px rgba(248,113,113,.06),inset 0 1px 0 rgba(255,255,255,.05);">
+          <div style="font-size:.65rem;color:var(--red);text-transform:uppercase;letter-spacing:3px;font-weight:600;">Saldo Caja · 31 de Marzo 2026</div>
+          <div style="font-size:3rem;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,#f87171,#fca5a5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">-$246,8M</div>
+          <div style="font-size:.8rem;color:var(--text3);margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);">
+            Bancos + Efectivo · Piso del trimestre: <span style="color:var(--red);font-weight:600;">-$255,8M</span> en semana 4 de Marzo
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width:1220px;margin:0 auto;padding:0 28px;position:relative;z-index:1;">
+
+      <!-- KPIs Financieros -->
+      <div class="kpi-grid" style="margin-top:0;">
+        <div class="kpi-card reveal visible">
+          <div class="kpi-accent" style="background:linear-gradient(90deg,var(--green),transparent);"></div>
+          <div class="kpi-glow" style="background:var(--green);"></div>
+          <div class="kpi-label">Ingresos Q1</div>
+          <div class="kpi-value">$765,9M</div>
+          <div class="kpi-sub">Ene–Mar 2026</div>
+        </div>
+        <div class="kpi-card reveal visible">
+          <div class="kpi-accent" style="background:linear-gradient(90deg,var(--red),transparent);"></div>
+          <div class="kpi-glow" style="background:var(--red);"></div>
+          <div class="kpi-label">Egresos Q1</div>
+          <div class="kpi-value">$1.009,5M</div>
+          <div class="kpi-sub">Cheques + Pagos + Obs</div>
+        </div>
+        <div class="kpi-card reveal visible">
+          <div class="kpi-accent" style="background:linear-gradient(90deg,var(--amber),transparent);"></div>
+          <div class="kpi-glow" style="background:var(--amber);"></div>
+          <div class="kpi-label">Cheques Emitidos</div>
+          <div class="kpi-value">373</div>
+          <div class="kpi-sub">$688,0M total · $1,8M promedio</div>
+        </div>
+        <div class="kpi-card reveal visible">
+          <div class="kpi-accent" style="background:linear-gradient(90deg,var(--blue),transparent);"></div>
+          <div class="kpi-glow" style="background:var(--blue);"></div>
+          <div class="kpi-label">Piso del Trimestre</div>
+          <div class="kpi-value" style="color:var(--red);">-$255,8M</div>
+          <div class="kpi-sub">Semana 4 de Marzo</div>
+        </div>
+      </div>
+
+      <!-- Saldo Bancario Evolution Chart -->
+      <div class="section" style="margin-top:48px;">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(96,165,250,.15),rgba(96,165,250,.05));border:1px solid rgba(96,165,250,.2);">📈</div>
+          <div class="section-title">Evolución del Saldo Caja</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="--accent-color:var(--blue);">Saldo caja semanal · Enero a Marzo 2026</div>
+          <div style="height:360px;position:relative;">
+            <canvas id="finSaldoChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ingresos vs Egresos Chart -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(52,211,153,.15),rgba(52,211,153,.05));border:1px solid rgba(52,211,153,.2);">💰</div>
+          <div class="section-title">Ingresos vs Egresos Mensual</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="--accent-color:var(--green);">Flujo de fondos por mes</div>
+          <div style="height:340px;position:relative;">
+            <canvas id="finFlowChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Detail Cards -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(167,139,250,.05));border:1px solid rgba(167,139,250,.2);">📊</div>
+          <div class="section-title">Detalle Mensual</div>
+          <div class="section-line"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+          <div class="card" style="padding:22px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#fff;">Enero</div>
+              <div style="padding:4px 10px;border-radius:8px;font-size:.68rem;font-weight:700;background:var(--red-bg);color:var(--red);">-$2,2M</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span style="color:var(--text2);">Ingresos</span><span style="color:var(--green);font-weight:600;">$341,5M</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span style="color:var(--text2);">Egresos</span><span style="color:var(--red);font-weight:600;">$343,8M</span></div>
+              <div style="height:1px;background:var(--card-border);"></div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;"><span style="color:var(--text3);">Cheques</span><span style="color:var(--text2);">$196,8M</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;"><span style="color:var(--text3);">Pagos</span><span style="color:var(--text2);">$146,9M</span></div>
+            </div>
+          </div>
+          <div class="card" style="padding:22px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#fff;">Febrero</div>
+              <div style="padding:4px 10px;border-radius:8px;font-size:.68rem;font-weight:700;background:var(--red-bg);color:var(--red);">-$151,2M</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span style="color:var(--text2);">Ingresos</span><span style="color:var(--green);font-weight:600;">$175,1M</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span style="color:var(--text2);">Egresos</span><span style="color:var(--red);font-weight:600;">$326,3M</span></div>
+              <div style="height:1px;background:var(--card-border);"></div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;"><span style="color:var(--text3);">Cheques</span><span style="color:var(--text2);">$138,8M</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;"><span style="color:var(--text3);">Pagos</span><span style="color:var(--text2);">$61,0M</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;"><span style="color:var(--text3);">Observaciones</span><span style="color:var(--amber);">$126,5M</span></div>
+            </div>
+          </div>
+          <div class="card" style="padding:22px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#fff;">Marzo</div>
+              <div style="padding:4px 10px;border-radius:8px;font-size:.68rem;font-weight:700;background:var(--red-bg);color:var(--red);">-$90,1M</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span style="color:var(--text2);">Ingresos</span><span style="color:var(--green);font-weight:600;">$249,4M</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span style="color:var(--text2);">Egresos</span><span style="color:var(--red);font-weight:600;">$339,4M</span></div>
+              <div style="height:1px;background:var(--card-border);"></div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;"><span style="color:var(--text3);">Cheques</span><span style="color:var(--text2);">$248,9M</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:.78rem;"><span style="color:var(--text3);">Observaciones</span><span style="color:var(--amber);">$90,5M</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cheques Analysis -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(251,191,36,.15),rgba(251,191,36,.05));border:1px solid rgba(251,191,36,.2);">📝</div>
+          <div class="section-title">Cheques Emitidos al 31/3</div>
+          <div class="section-line"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="card">
+            <div class="card-title" style="--accent-color:var(--amber);">Top 10 Proveedores · Emisión hasta 31/3</div>
+            <div style="height:300px;position:relative;">
+              <canvas id="finChequesProvChart"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="--accent-color:var(--purple);">Estado de Cheques · Emisión hasta 31/3</div>
+            <div style="height:300px;position:relative;">
+              <canvas id="finChequesStatusChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cheques Emitidos No Pagados -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(248,113,113,.15),rgba(248,113,113,.05));border:1px solid rgba(248,113,113,.2);">🔴</div>
+          <div class="section-title">Cheques Emitidos No Pagados</div>
+          <div class="section-line"></div>
+        </div>
+
+        <!-- KPIs -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;">
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--red),transparent);"></div>
+            <div class="kpi-label">Vencidos (≤ 31/3)</div>
+            <div class="kpi-value" style="color:var(--red);">35</div>
+            <div class="kpi-sub">$68,2M · 14 proveedores</div>
+          </div>
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--amber),transparent);"></div>
+            <div class="kpi-label">Próximos (> 31/3)</div>
+            <div class="kpi-value" style="color:var(--amber);">186</div>
+            <div class="kpi-sub">$406,8M · Abr–Ago 2026</div>
+          </div>
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--purple),transparent);"></div>
+            <div class="kpi-label">Total Sin Pagar</div>
+            <div class="kpi-value">234</div>
+            <div class="kpi-sub">$475,0M acumulado</div>
+          </div>
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--cyan),transparent);"></div>
+            <div class="kpi-label">Mayor Acreedor</div>
+            <div class="kpi-value" style="font-size:1.3rem;">NATY</div>
+            <div class="kpi-sub">71 chq · $186,8M (39% del total)</div>
+          </div>
+        </div>
+
+        <!-- Alerta -->
+        <div style="background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.15);border-radius:14px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;">
+          <div style="font-size:1.5rem;">⚠️</div>
+          <div>
+            <div style="font-weight:700;color:var(--red);font-size:.88rem;">35 cheques vencidos sin pagar por $68,2M</div>
+            <div style="font-size:.78rem;color:var(--text2);margin-top:2px;">Incluye 24 cheques con estado "VENCIDO" ($44,5M), 8 sin estado ($14,2M), 2 entregados ($7,1M) y 1 emitido ($2,3M). Vencimientos desde Nov 2025. En Abril vencen 113 cheques adicionales por $161M.</div>
+          </div>
+        </div>
+
+        <!-- Tabla cheques vencidos -->
+        <div class="card">
+          <div class="card-title" style="--accent-color:var(--red);">Cheques Vencidos · Detalle al 31/03/2026</div>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:separate;border-spacing:0;font-size:.78rem;">
+              <thead>
+                <tr>
+                  <th style="text-align:left;padding:8px 10px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Vto</th>
+                  <th style="text-align:left;padding:8px 10px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Cheque</th>
+                  <th style="text-align:left;padding:8px 10px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Destinatario</th>
+                  <th style="text-align:right;padding:8px 10px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Monto</th>
+                  <th style="text-align:center;padding:8px 10px;font-size:.6rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Nov 2025 -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);background:rgba(248,113,113,.03);">
+                  <td colspan="5" style="padding:6px 10px;font-size:.65rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;">Noviembre 2025 — 5 cheques · $8,5M</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">01/11</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">—</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$240.790</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">08/11</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">3207165</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$240.790</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">08/11</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071064</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$240.790</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">21/11</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">31918620</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$7.530.325</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">22/11</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">3207166</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$240.790</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <!-- Dic 2025 -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);background:rgba(248,113,113,.03);">
+                  <td colspan="5" style="padding:6px 10px;font-size:.65rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;">Diciembre 2025 — 10 cheques · $28,7M</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">05/12</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071086</td><td style="padding:6px 10px;color:var(--text2);">NONNA PIA</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$1.024.150</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">05/12</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071087</td><td style="padding:6px 10px;color:var(--text2);">DE SANTOS</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$500.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">10/12</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071093</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$1.832.411</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">10/12</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071088</td><td style="padding:6px 10px;color:var(--text2);">DE SANTOS</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$500.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">12/12</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071091</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$8.126.450</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">12/12</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071094</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$712.400</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">19/12</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071092</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$7.900.080</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">26/12</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071085</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$4.930.312</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">26/12</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071097</td><td style="padding:6px 10px;color:var(--text2);">ROMAN</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$2.000.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">31/12</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">1151</td><td style="padding:6px 10px;color:var(--text3);font-style:italic;">—</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$1.175.261</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <!-- Ene 2026 -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);background:rgba(248,113,113,.03);">
+                  <td colspan="5" style="padding:6px 10px;font-size:.65rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;">Enero 2026 — 7 cheques · $5,1M</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">04/01</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">1135</td><td style="padding:6px 10px;color:var(--text2);">VUELTA ABAJO</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$381.776</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">05/01</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">1188</td><td style="padding:6px 10px;color:var(--text2);">VUELTA ABAJO</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$185.670</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">15/01</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071101</td><td style="padding:6px 10px;color:var(--text2);">DE SANTOS</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$500.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">19/01</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">33140455</td><td style="padding:6px 10px;color:var(--text2);">LATTO</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$1.000.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">20/01</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071105</td><td style="padding:6px 10px;color:var(--text2);">CAMPO IMAVA</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$2.000.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">23/01</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071102</td><td style="padding:6px 10px;color:var(--text2);">DE SANTOS</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$500.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">25/01</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071103</td><td style="padding:6px 10px;color:var(--text2);">DE SANTOS</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$500.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <!-- Mar 2026 -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);background:rgba(248,113,113,.03);">
+                  <td colspan="5" style="padding:6px 10px;font-size:.65rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1px;">Marzo 2026 — 13 cheques · $25,9M</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">09/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">13282510</td><td style="padding:6px 10px;color:var(--text2);">J.M. CORSO</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$1.132.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">10/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">13282511</td><td style="padding:6px 10px;color:var(--text2);">J.M. CORSO</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$1.132.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);">VENCIDO</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">10/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">13193223</td><td style="padding:6px 10px;color:var(--text2);">MODESHA</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$569.500</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(251,191,36,.1);color:var(--amber);">—</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">11/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">33138726</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$1.000.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(251,191,36,.1);color:var(--amber);">—</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">13/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">1328522</td><td style="padding:6px 10px;color:var(--text2);">HORECA</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$240.474</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(251,191,36,.1);color:var(--amber);">—</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">17/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">13193189</td><td style="padding:6px 10px;color:var(--text3);font-style:italic;">—</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$4.515.488</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(251,191,36,.1);color:var(--amber);">—</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">25/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">33140470</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$2.766.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(251,191,36,.1);color:var(--amber);">—</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">26/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">13282551</td><td style="padding:6px 10px;color:var(--text2);">MUGE</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$2.714.967</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(251,191,36,.1);color:var(--amber);">—</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">26/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">1338</td><td style="padding:6px 10px;color:var(--text2);">R. RODOFELI</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$1.423.565</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(251,191,36,.1);color:var(--amber);">—</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">27/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">33140440</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$5.107.295</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(96,165,250,.1);color:var(--blue);">Entregado</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">27/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">1275</td><td style="padding:6px 10px;color:var(--text2);">WIDETT</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$2.343.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(167,139,250,.1);color:var(--purple);">Emitido</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">27/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">33138755</td><td style="padding:6px 10px;color:var(--text2);">NATY</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$1.000.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(251,191,36,.1);color:var(--amber);">—</span></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.02);"><td style="padding:6px 10px;color:var(--text3);">30/03</td><td style="padding:6px 10px;font-family:monospace;font-size:.72rem;">32071063</td><td style="padding:6px 10px;color:var(--text3);font-style:italic;">—</td><td style="padding:6px 10px;text-align:right;color:#fff;font-weight:600;">$2.000.000</td><td style="padding:6px 10px;text-align:center;"><span style="padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:600;background:rgba(96,165,250,.1);color:var(--blue);">Entregado</span></td></tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3" style="padding:10px;font-size:.72rem;font-weight:700;color:var(--text);border-top:1px solid var(--card-border);text-align:right;">TOTAL VENCIDOS</td>
+                  <td style="padding:10px;text-align:right;font-size:.88rem;font-weight:800;color:var(--red);border-top:1px solid var(--card-border);">$68.206.284</td>
+                  <td style="padding:10px;text-align:center;font-size:.68rem;color:var(--text3);border-top:1px solid var(--card-border);">35 cheques</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Próximos vencimientos -->
+        <div class="card" style="margin-top:14px;">
+          <div class="card-title" style="--accent-color:var(--amber);">Próximos Vencimientos · Cheques Emitidos (Abr–Ago 2026)</div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;">
+            <div style="background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.12);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--red);">$161M</div>
+              <div style="font-size:.68rem;color:var(--text3);margin-top:2px;">Abril · 113 chq</div>
+            </div>
+            <div style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.12);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--amber);">$128,6M</div>
+              <div style="font-size:.68rem;color:var(--text3);margin-top:2px;">Mayo · 39 chq</div>
+            </div>
+            <div style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.12);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--amber);">$101,2M</div>
+              <div style="font-size:.68rem;color:var(--text3);margin-top:2px;">Junio · 30 chq</div>
+            </div>
+            <div style="background:rgba(255,255,255,.03);border:1px solid var(--card-border);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--text2);">$6,0M</div>
+              <div style="font-size:.68rem;color:var(--text3);margin-top:2px;">Julio · 2 chq</div>
+            </div>
+            <div style="background:rgba(255,255,255,.03);border:1px solid var(--card-border);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--text2);">$10,0M</div>
+              <div style="font-size:.68rem;color:var(--text3);margin-top:2px;">Agosto · 2 chq</div>
+            </div>
+          </div>
+          <!-- Top 10 proveedores próximos -->
+          <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;margin-bottom:10px;">Top 10 Proveedores · Próximos</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;font-size:.78rem;"><span style="color:var(--text2);">NATY</span><span style="color:#fff;font-weight:600;">57 chq · $145,0M</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;font-size:.78rem;"><span style="color:var(--text2);">GROCAL SA</span><span style="color:#fff;font-weight:600;">8 chq · $90,0M</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;font-size:.78rem;"><span style="color:var(--text2);">GUSTAVO FINANCIERA</span><span style="color:#fff;font-weight:600;">6 chq · $46,6M</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;font-size:.78rem;"><span style="color:var(--text2);">MADERO CLEANER</span><span style="color:#fff;font-weight:600;">5 chq · $20,0M</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;font-size:.78rem;"><span style="color:var(--text2);">MUGE</span><span style="color:#fff;font-weight:600;">9 chq · $13,7M</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;font-size:.78rem;"><span style="color:var(--text2);">GUSTAVO</span><span style="color:#fff;font-weight:600;">3 chq · $9,5M</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;font-size:.78rem;"><span style="color:var(--text2);">REIVAJ SA</span><span style="color:#fff;font-weight:600;">1 chq · $7,8M</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;font-size:.78rem;"><span style="color:var(--text2);">CRIOLLO</span><span style="color:#fff;font-weight:600;">10 chq · $7,1M</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;font-size:.78rem;"><span style="color:var(--text2);">CATENA</span><span style="color:#fff;font-weight:600;">9 chq · $6,2M</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 10px;background:rgba(255,255,255,.02);border-radius:6px;font-size:.78rem;"><span style="color:var(--text2);">VOLF</span><span style="color:#fff;font-weight:600;">1 chq · $6,0M</span></div>
+          </div>
+        </div>
+
+        <!-- Chart: Vencimientos mensuales -->
+        <div class="card" style="margin-top:14px;">
+          <div class="card-title" style="--accent-color:var(--red);">Cheques Impagos · Vencimientos por Mes</div>
+          <div style="height:260px;position:relative;">
+            <canvas id="finChequesVtoChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acuerdos Empleados -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(248,113,113,.15),rgba(248,113,113,.05));border:1px solid rgba(248,113,113,.2);">⚖️</div>
+          <div class="section-title">Acuerdos con Empleados</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+            <div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff;">Acuerdo Romano</div>
+              <div style="font-size:.75rem;color:var(--text3);margin-top:2px;">Capital + Honorarios Abogado</div>
+            </div>
+            <div style="padding:6px 14px;border-radius:10px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.15);font-size:.72rem;color:var(--green);font-weight:600;">100% PAGADO</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div>
+              <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);font-weight:500;margin-bottom:10px;">Capital (4 cuotas · IPC)</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 1 · Nov 2025</span><span style="margin-left:auto;color:#fff;font-weight:600;">$6.500.000</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 2 · Dic 2025</span><span style="margin-left:auto;color:#fff;font-weight:600;">$6.736.534</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 3 · Ene 2026</span><span style="margin-left:auto;color:#fff;font-weight:600;">$7.287.584</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 4 · Feb 2026</span><span style="margin-left:auto;color:#fff;font-weight:600;">IPC acum.</span></div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);font-weight:500;margin-bottom:10px;">Honorarios Abogado (3 cuotas)</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 1 · Nov 2025</span><span style="margin-left:auto;color:#fff;font-weight:600;">$1.733.333</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 2 · Dic 2025</span><span style="margin-left:auto;color:#fff;font-weight:600;">$1.733.333</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 3 · Ene 2026</span><span style="margin-left:auto;color:#fff;font-weight:600;">$1.733.333</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+            <div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff;">Acuerdo Nivas</div>
+              <div style="font-size:.75rem;color:var(--text3);margin-top:2px;">6 cuotas · Sin ajuste</div>
+            </div>
+            <div style="padding:6px 14px;border-radius:10px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.15);font-size:.72rem;color:var(--amber);font-weight:600;">3 de 6 PAGADAS</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 1 · Nov 2025</span><span style="margin-left:auto;color:#fff;font-weight:600;">$6.000.000</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 2 · Dic 2025</span><span style="margin-left:auto;color:#fff;font-weight:600;">$5.000.000</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 3 · Ene 2026</span><span style="margin-left:auto;color:#fff;font-weight:600;">$5.000.000</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--amber);">⏳</span><span style="color:var(--text2);">Cuota 4 · Feb 2026</span><span style="margin-left:auto;color:var(--text3);font-weight:600;">$5.000.000</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--amber);">⏳</span><span style="color:var(--text2);">Cuota 5 · Mar 2026</span><span style="margin-left:auto;color:var(--text3);font-weight:600;">$5.000.000</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--amber);">⏳</span><span style="color:var(--text2);">Cuota 6 · Abr 2026</span><span style="margin-left:auto;color:var(--text3);font-weight:600;">$4.000.000</span></div>
+          </div>
+          <div style="margin-top:12px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden;"><div style="width:50%;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--green2));"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:.7rem;color:var(--text3);"><span>Pagado: $16.000.000</span><span>Pendiente: $14.000.000</span></div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+            <div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff;">Acuerdo Cano</div>
+              <div style="font-size:.75rem;color:var(--text3);margin-top:2px;">6 cuotas · Sin ajuste</div>
+            </div>
+            <div style="padding:6px 14px;border-radius:10px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.15);font-size:.72rem;color:var(--amber);font-weight:600;">3 de 6 PAGADAS</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 1 · Ene 2026</span><span style="margin-left:auto;color:#fff;font-weight:600;">$1.333.333</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 2 · Feb 2026</span><span style="margin-left:auto;color:#fff;font-weight:600;">$1.333.333</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 3 · Mar 2026</span><span style="margin-left:auto;color:#fff;font-weight:600;">$1.333.333</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--amber);">⏳</span><span style="color:var(--text2);">Cuota 4 · Abr 2026</span><span style="margin-left:auto;color:var(--text3);font-weight:600;">$1.333.333</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--amber);">⏳</span><span style="color:var(--text2);">Cuota 5 · May 2026</span><span style="margin-left:auto;color:var(--text3);font-weight:600;">$1.333.333</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--amber);">⏳</span><span style="color:var(--text2);">Cuota 6 · Jun 2026</span><span style="margin-left:auto;color:var(--text3);font-weight:600;">$1.333.333</span></div>
+          </div>
+          <div style="margin-top:12px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden;"><div style="width:50%;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--green2));"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:.7rem;color:var(--text3);"><span>Pagado: $4.000.000</span><span>Pendiente: $4.000.000</span></div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+            <div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff;">Acuerdo Natalia</div>
+              <div style="font-size:.75rem;color:var(--text3);margin-top:2px;">3 cuotas · Sin ajuste</div>
+            </div>
+            <div style="padding:6px 14px;border-radius:10px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.15);font-size:.72rem;color:var(--amber);font-weight:600;">2 de 3 PAGADAS</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 1 · Feb 2026</span><span style="margin-left:auto;color:#fff;font-weight:600;">$1.200.000</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--green);">✓</span><span style="color:var(--text2);">Cuota 2 · Mar 2026</span><span style="margin-left:auto;color:#fff;font-weight:600;">$1.200.000</span></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;"><span style="color:var(--amber);">⏳</span><span style="color:var(--text2);">Cuota 3 · Abr 2026</span><span style="margin-left:auto;color:var(--text3);font-weight:600;">$1.200.000</span></div>
+          </div>
+          <div style="margin-top:12px;height:4px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden;"><div style="width:66.7%;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--green2));"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:.7rem;color:var(--text3);"><span>Pagado: $2.400.000</span><span>Pendiente: $1.200.000</span></div>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg,rgba(248,113,113,.04),rgba(251,191,36,.04));border-color:rgba(248,113,113,.12);">
+          <div class="card-title" style="--accent-color:var(--red);">Resumen de Obligaciones</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center;">
+            <div>
+              <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:6px;">Total Comprometido</div>
+              <div style="font-size:1.4rem;font-weight:800;color:#fff;">$49,7M</div>
+            </div>
+            <div>
+              <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:6px;">Total Pagado</div>
+              <div style="font-size:1.4rem;font-weight:800;color:var(--green);">$30,5M</div>
+            </div>
+            <div>
+              <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:6px;">Pendiente</div>
+              <div style="font-size:1.4rem;font-weight:800;color:var(--amber);">$19,2M</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Planes de Pago -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(167,139,250,.15),rgba(167,139,250,.05));border:1px solid rgba(167,139,250,.2);">📋</div>
+          <div class="section-title">Planes de Pago AFIP</div>
+          <div class="section-line"></div>
+        </div>
+
+        <!-- KPIs Planes -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;">
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--red),transparent);"></div>
+            <div class="kpi-label">Cuotas Impagas</div>
+            <div class="kpi-value" style="color:var(--red);">19</div>
+            <div class="kpi-sub">Vencidas sin pagar · 9 planes</div>
+          </div>
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--green),transparent);"></div>
+            <div class="kpi-label">Total Pagado</div>
+            <div class="kpi-value" style="color:var(--green);">$36,5M</div>
+            <div class="kpi-sub">21 cuotas canceladas</div>
+          </div>
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--amber),transparent);"></div>
+            <div class="kpi-label">Deuda Restante</div>
+            <div class="kpi-value" style="color:var(--amber);">$76,3M</div>
+            <div class="kpi-sub">24 cuotas pendientes (19 vencidas + 5 próximas)</div>
+          </div>
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--blue),transparent);"></div>
+            <div class="kpi-label">Próximo Vto</div>
+            <div class="kpi-value">16/04</div>
+            <div class="kpi-sub">5 cuotas vencen · Todos los planes V*</div>
+          </div>
+        </div>
+
+        <!-- Alerta cuotas impagas -->
+        <div style="background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.15);border-radius:14px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;">
+          <div style="font-size:1.5rem;">⚠️</div>
+          <div>
+            <div style="font-weight:700;color:var(--red);font-size:.88rem;">19 cuotas vencidas sin pagar</div>
+            <div style="font-size:.78rem;color:var(--text2);margin-top:2px;">Los 4 planes más nuevos (V861602, V692857, V544040, V477290) no registran ningún pago. Los planes U924873, U726099 y U726112 tienen cuotas de Ene-Mar 2026 impagas. Se acumulan intereses resarcitorios.</div>
+          </div>
+        </div>
+
+        <!-- Tabla de Planes con Estado de Pago -->
+        <div class="card">
+          <div class="card-title" style="--accent-color:var(--purple);">Mis Facilidades · Estado de Pagos al 13/04/2026</div>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:separate;border-spacing:0;font-size:.8rem;">
+              <thead>
+                <tr>
+                  <th style="text-align:left;padding:10px 8px;font-size:.62rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Plan</th>
+                  <th style="text-align:right;padding:10px 8px;font-size:.62rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Consolidado</th>
+                  <th style="text-align:center;padding:10px 8px;font-size:.62rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Progreso</th>
+                  <th style="text-align:right;padding:10px 8px;font-size:.62rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Pagado</th>
+                  <th style="text-align:right;padding:10px 8px;font-size:.62rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Deuda Rest.</th>
+                  <th style="text-align:center;padding:10px 8px;font-size:.62rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text3);font-weight:600;border-bottom:1px solid var(--card-border);">Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- V861602 — 0/1, recién consolidado -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);">
+                  <td style="padding:10px 8px;"><span style="color:var(--text);font-weight:600;font-family:monospace;font-size:.78rem;">V861602</span><br><span style="font-size:.65rem;color:var(--text3);">20/03/2026 · RG 5321</span></td>
+                  <td style="padding:10px 8px;text-align:right;color:#fff;font-weight:700;">$32,7M</td>
+                  <td style="padding:10px 8px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+                      <div style="width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex;">
+                        <div style="width:0%;background:var(--green);"></div>
+                        <div style="width:0%;background:var(--red);"></div>
+                      </div>
+                      <span style="font-size:.68rem;color:var(--text3);">0/1</span>
+                    </div>
+                  </td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--text3);">$0</td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--amber);font-weight:600;">$4,6M</td>
+                  <td style="padding:10px 8px;text-align:center;"><span style="padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(251,191,36,.1);color:var(--amber);border:1px solid rgba(251,191,36,.15);">1 próxima</span></td>
+                </tr>
+                <!-- V692857 — 0/2 -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);">
+                  <td style="padding:10px 8px;"><span style="color:var(--text);font-weight:600;font-family:monospace;font-size:.78rem;">V692857</span><br><span style="font-size:.65rem;color:var(--text3);">11/02/2026 · RG 5321</span></td>
+                  <td style="padding:10px 8px;text-align:right;color:#fff;font-weight:700;">$23,8M</td>
+                  <td style="padding:10px 8px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+                      <div style="width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex;">
+                        <div style="width:0%;background:var(--green);"></div>
+                        <div style="width:50%;background:var(--red);"></div>
+                      </div>
+                      <span style="font-size:.68rem;color:var(--text3);">0/2</span>
+                    </div>
+                  </td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--text3);">$0</td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--red);font-weight:600;">$8,7M</td>
+                  <td style="padding:10px 8px;text-align:center;"><span style="padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.15);">1 impaga</span></td>
+                </tr>
+                <!-- V544040 — 0/3 -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);">
+                  <td style="padding:10px 8px;"><span style="color:var(--text);font-weight:600;font-family:monospace;font-size:.78rem;">V544040</span><br><span style="font-size:.65rem;color:var(--text3);">08/01/2026 · RG 5321</span></td>
+                  <td style="padding:10px 8px;text-align:right;color:#fff;font-weight:700;">$37,2M</td>
+                  <td style="padding:10px 8px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+                      <div style="width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex;">
+                        <div style="width:0%;background:var(--green);"></div>
+                        <div style="width:66%;background:var(--red);"></div>
+                      </div>
+                      <span style="font-size:.68rem;color:var(--text3);">0/3</span>
+                    </div>
+                  </td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--text3);">$0</td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--red);font-weight:600;">$11,0M</td>
+                  <td style="padding:10px 8px;text-align:center;"><span style="padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.15);">2 impagas</span></td>
+                </tr>
+                <!-- V477290 — 0/4 -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);">
+                  <td style="padding:10px 8px;"><span style="color:var(--text);font-weight:600;font-family:monospace;font-size:.78rem;">V477290</span><br><span style="font-size:.65rem;color:var(--text3);">22/12/2025 · RG 5321</span></td>
+                  <td style="padding:10px 8px;text-align:right;color:#fff;font-weight:700;">$20,8M</td>
+                  <td style="padding:10px 8px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+                      <div style="width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex;">
+                        <div style="width:0%;background:var(--green);"></div>
+                        <div style="width:75%;background:var(--red);"></div>
+                      </div>
+                      <span style="font-size:.68rem;color:var(--text3);">0/4</span>
+                    </div>
+                  </td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--text3);">$0</td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--red);font-weight:600;">$15,3M</td>
+                  <td style="padding:10px 8px;text-align:center;"><span style="padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.15);">3 impagas</span></td>
+                </tr>
+                <!-- V345156 — 1/5 -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);">
+                  <td style="padding:10px 8px;"><span style="color:var(--text);font-weight:600;font-family:monospace;font-size:.78rem;">V345156</span><br><span style="font-size:.65rem;color:var(--text3);">19/11/2025 · RG 5321</span></td>
+                  <td style="padding:10px 8px;text-align:right;color:#fff;font-weight:700;">$27,7M</td>
+                  <td style="padding:10px 8px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+                      <div style="width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex;">
+                        <div style="width:20%;background:var(--green);"></div>
+                        <div style="width:60%;background:var(--red);"></div>
+                      </div>
+                      <span style="font-size:.68rem;color:var(--text3);">1/5</span>
+                    </div>
+                  </td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--green);font-weight:600;">$5,1M</td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--red);font-weight:600;">$20,3M</td>
+                  <td style="padding:10px 8px;text-align:center;"><span style="padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.15);">3 impagas</span></td>
+                </tr>
+                <!-- V277506 — 3/6 (+PAC) -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);">
+                  <td style="padding:10px 8px;"><span style="color:var(--text);font-weight:600;font-family:monospace;font-size:.78rem;">V277506</span><br><span style="font-size:.65rem;color:var(--text3);">30/10/2025 · RG 5711</span></td>
+                  <td style="padding:10px 8px;text-align:right;color:#fff;font-weight:700;">$19,4M</td>
+                  <td style="padding:10px 8px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+                      <div style="width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex;">
+                        <div style="width:50%;background:var(--green);"></div>
+                        <div style="width:50%;background:var(--red);"></div>
+                      </div>
+                      <span style="font-size:.68rem;color:var(--text3);">3/6</span>
+                    </div>
+                  </td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--green);font-weight:600;">$5,1M</td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--red);font-weight:600;">$4,8M</td>
+                  <td style="padding:10px 8px;text-align:center;"><span style="padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.15);">3 impagas</span></td>
+                </tr>
+                <!-- U924873 — 5/8 -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);">
+                  <td style="padding:10px 8px;"><span style="color:var(--text);font-weight:600;font-family:monospace;font-size:.78rem;">U924873</span><br><span style="font-size:.65rem;color:var(--text3);">25/07/2025 · RG 5321</span></td>
+                  <td style="padding:10px 8px;text-align:right;color:#fff;font-weight:700;">$15,7M</td>
+                  <td style="padding:10px 8px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+                      <div style="width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex;">
+                        <div style="width:62.5%;background:var(--green);"></div>
+                        <div style="width:37.5%;background:var(--red);"></div>
+                      </div>
+                      <span style="font-size:.68rem;color:var(--text3);">5/8</span>
+                    </div>
+                  </td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--green);font-weight:600;">$11,1M</td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--red);font-weight:600;">$6,6M</td>
+                  <td style="padding:10px 8px;text-align:center;"><span style="padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.15);">3 impagas</span></td>
+                </tr>
+                <!-- U726639 — Cancelado -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);opacity:.45;">
+                  <td style="padding:10px 8px;"><span style="color:var(--text3);font-weight:600;font-family:monospace;font-size:.78rem;">U726639</span><br><span style="font-size:.65rem;color:var(--text3);">17/06/2025 · RG 5321</span></td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--text3);font-weight:700;text-decoration:line-through;">$2,0M</td>
+                  <td style="padding:10px 8px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+                      <div style="width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex;">
+                        <div style="width:100%;background:var(--green);opacity:.4;"></div>
+                      </div>
+                      <span style="font-size:.68rem;color:var(--text3);">5/5</span>
+                    </div>
+                  </td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--text3);">—</td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--text3);">$0</td>
+                  <td style="padding:10px 8px;text-align:center;"><span style="padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(52,211,153,.08);color:var(--text3);border:1px solid rgba(255,255,255,.06);">Cancelado</span></td>
+                </tr>
+                <!-- U726099 — 6/8 -->
+                <tr style="border-bottom:1px solid rgba(255,255,255,.03);">
+                  <td style="padding:10px 8px;"><span style="color:var(--text);font-weight:600;font-family:monospace;font-size:.78rem;">U726099</span><br><span style="font-size:.65rem;color:var(--text3);">17/06/2025 · RG 5321</span></td>
+                  <td style="padding:10px 8px;text-align:right;color:#fff;font-weight:700;">$10,2M</td>
+                  <td style="padding:10px 8px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+                      <div style="width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex;">
+                        <div style="width:75%;background:var(--green);"></div>
+                        <div style="width:25%;background:var(--red);"></div>
+                      </div>
+                      <span style="font-size:.68rem;color:var(--text3);">6/8</span>
+                    </div>
+                  </td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--green);font-weight:600;">$9,2M</td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--red);font-weight:600;">$3,0M</td>
+                  <td style="padding:10px 8px;text-align:center;"><span style="padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.15);">2 impagas</span></td>
+                </tr>
+                <!-- U726112 — 6/8 -->
+                <tr>
+                  <td style="padding:10px 8px;"><span style="color:var(--text);font-weight:600;font-family:monospace;font-size:.78rem;">U726112</span><br><span style="font-size:.65rem;color:var(--text3);">17/06/2025 · RG 5321</span></td>
+                  <td style="padding:10px 8px;text-align:right;color:#fff;font-weight:700;">$6,7M</td>
+                  <td style="padding:10px 8px;text-align:center;">
+                    <div style="display:flex;align-items:center;gap:6px;justify-content:center;">
+                      <div style="width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;display:flex;">
+                        <div style="width:75%;background:var(--green);"></div>
+                        <div style="width:25%;background:var(--red);"></div>
+                      </div>
+                      <span style="font-size:.68rem;color:var(--text3);">6/8</span>
+                    </div>
+                  </td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--green);font-weight:600;">$6,0M</td>
+                  <td style="padding:10px 8px;text-align:right;color:var(--red);font-weight:600;">$2,0M</td>
+                  <td style="padding:10px 8px;text-align:center;"><span style="padding:3px 8px;border-radius:6px;font-size:.65rem;font-weight:600;background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.15);">2 impagas</span></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td style="padding:12px 8px;font-size:.72rem;font-weight:700;color:var(--text);border-top:1px solid var(--card-border);">TOTALES (9 vigentes)</td>
+                  <td style="padding:12px 8px;text-align:right;font-size:.88rem;font-weight:800;color:var(--text);border-top:1px solid var(--card-border);">$194,1M</td>
+                  <td style="padding:12px 8px;text-align:center;font-size:.72rem;color:var(--text2);border-top:1px solid var(--card-border);">21/45 cuotas</td>
+                  <td style="padding:12px 8px;text-align:right;font-size:.88rem;font-weight:800;color:var(--green);border-top:1px solid var(--card-border);">$36,5M</td>
+                  <td style="padding:12px 8px;text-align:right;font-size:.88rem;font-weight:800;color:var(--red);border-top:1px solid var(--card-border);">$76,3M</td>
+                  <td style="border-top:1px solid var(--card-border);"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+        <!-- Detalle de Cuotas por Plan -->
+        <div class="card" style="margin-top:14px;">
+          <div class="card-title" style="--accent-color:var(--purple);">Detalle de Cuotas · Línea de Tiempo</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;" class="fin-planes-grid">
+            <!-- V477290 -->
+            <div style="background:rgba(255,255,255,.02);border:1px solid var(--card-border);border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-family:monospace;font-weight:700;font-size:.82rem;">V477290</span>
+                <span style="font-size:.65rem;color:var(--text3);">Dic 2025 · 4 cuotas</span>
+              </div>
+              <div style="display:flex;gap:4px;margin-bottom:8px;">
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Ene ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Feb ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Mar ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:rgba(251,191,36,.3);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:var(--amber);">Abr</div>
+              </div>
+              <div style="font-size:.68rem;color:var(--text3);">Cuota: $3,8M · Pagado: $0</div>
+            </div>
+            <!-- V544040 -->
+            <div style="background:rgba(255,255,255,.02);border:1px solid var(--card-border);border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-family:monospace;font-weight:700;font-size:.82rem;">V544040</span>
+                <span style="font-size:.65rem;color:var(--text3);">Ene 2026 · 3 cuotas</span>
+              </div>
+              <div style="display:flex;gap:4px;margin-bottom:8px;">
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Feb ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Mar ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:rgba(251,191,36,.3);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:var(--amber);">Abr</div>
+              </div>
+              <div style="font-size:.68rem;color:var(--text3);">Cuota: $3,7M · Pagado: $0</div>
+            </div>
+            <!-- V692857 -->
+            <div style="background:rgba(255,255,255,.02);border:1px solid var(--card-border);border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-family:monospace;font-weight:700;font-size:.82rem;">V692857</span>
+                <span style="font-size:.65rem;color:var(--text3);">Feb 2026 · 2 cuotas</span>
+              </div>
+              <div style="display:flex;gap:4px;margin-bottom:8px;">
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Mar ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:rgba(251,191,36,.3);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:var(--amber);">Abr</div>
+              </div>
+              <div style="font-size:.68rem;color:var(--text3);">Cuota: $4,4M · Pagado: $0</div>
+            </div>
+            <!-- V345156 -->
+            <div style="background:rgba(255,255,255,.02);border:1px solid var(--card-border);border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-family:monospace;font-weight:700;font-size:.82rem;">V345156</span>
+                <span style="font-size:.65rem;color:var(--text3);">Nov 2025 · 5 cuotas</span>
+              </div>
+              <div style="display:flex;gap:4px;margin-bottom:8px;">
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Dic ✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Ene ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Feb ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Mar ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:rgba(251,191,36,.3);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:var(--amber);">Abr</div>
+              </div>
+              <div style="font-size:.68rem;color:var(--text3);">Cuota: $5,1M · Pagado: $5,1M</div>
+            </div>
+            <!-- V277506 -->
+            <div style="background:rgba(255,255,255,.02);border:1px solid var(--card-border);border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-family:monospace;font-weight:700;font-size:.82rem;">V277506</span>
+                <span style="font-size:.65rem;color:var(--text3);">Oct 2025 · PAC+6 cuotas</span>
+              </div>
+              <div style="display:flex;gap:4px;margin-bottom:8px;">
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Nov ✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Dic ✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Ene ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Feb ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:#fff;">Mar ✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:rgba(251,191,36,.3);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:var(--amber);">Abr</div>
+              </div>
+              <div style="font-size:.68rem;color:var(--text3);">Cuota: $1,6M · Pagado: $5,1M (PAC+2)</div>
+            </div>
+            <!-- V861602 -->
+            <div style="background:rgba(255,255,255,.02);border:1px solid var(--card-border);border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-family:monospace;font-weight:700;font-size:.82rem;">V861602</span>
+                <span style="font-size:.65rem;color:var(--text3);">Mar 2026 · 1 cuota</span>
+              </div>
+              <div style="display:flex;gap:4px;margin-bottom:8px;">
+                <div style="flex:1;height:20px;border-radius:4px;background:rgba(251,191,36,.3);border:1px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:.58rem;font-weight:600;color:var(--amber);">Abr</div>
+              </div>
+              <div style="font-size:.68rem;color:var(--text3);">Cuota: $4,6M · Pagado: $0</div>
+            </div>
+            <!-- U924873 -->
+            <div style="background:rgba(255,255,255,.02);border:1px solid var(--card-border);border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-family:monospace;font-weight:700;font-size:.82rem;">U924873</span>
+                <span style="font-size:.65rem;color:var(--text3);">Jul 2025 · 8 cuotas</span>
+              </div>
+              <div style="display:flex;gap:4px;margin-bottom:8px;">
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Ago✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Sep✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Oct✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Nov✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Dic✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Ene✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Feb✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Mar✗</div>
+              </div>
+              <div style="font-size:.68rem;color:var(--text3);">Cuota: $2,2M · Pagado: $11,1M</div>
+            </div>
+            <!-- U726099 -->
+            <div style="background:rgba(255,255,255,.02);border:1px solid var(--card-border);border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-family:monospace;font-weight:700;font-size:.82rem;">U726099</span>
+                <span style="font-size:.65rem;color:var(--text3);">Jun 2025 · 8 cuotas</span>
+              </div>
+              <div style="display:flex;gap:4px;margin-bottom:8px;">
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Jul✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Ago✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Sep✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Oct✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Nov✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Dic✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Ene✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Feb✗</div>
+              </div>
+              <div style="font-size:.68rem;color:var(--text3);">Cuota: $1,5M · Pagado: $9,2M</div>
+            </div>
+            <!-- U726112 -->
+            <div style="background:rgba(255,255,255,.02);border:1px solid var(--card-border);border-radius:10px;padding:14px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="font-family:monospace;font-weight:700;font-size:.82rem;">U726112</span>
+                <span style="font-size:.65rem;color:var(--text3);">Jun 2025 · 8 cuotas</span>
+              </div>
+              <div style="display:flex;gap:4px;margin-bottom:8px;">
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Jul✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Ago✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Sep✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Oct✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Nov✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Dic✓</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Ene✗</div>
+                <div style="flex:1;height:20px;border-radius:4px;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;color:#fff;">Feb✗</div>
+              </div>
+              <div style="font-size:.68rem;color:var(--text3);">Cuota: $1,0M · Pagado: $6,0M</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart: Pagado vs Deuda por plan -->
+        <div class="card" style="margin-top:14px;">
+          <div class="card-title" style="--accent-color:var(--purple);">Pagado vs Deuda Restante por Plan</div>
+          <div style="height:300px;position:relative;">
+            <canvas id="finPlanesChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Posición Impositiva -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(34,211,238,.15),rgba(34,211,238,.05));border:1px solid rgba(34,211,238,.2);">🏛️</div>
+          <div class="section-title">Posición Impositiva AFIP</div>
+          <div class="section-line"></div>
+        </div>
+
+        <!-- KPIs Impositivos -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;">
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--cyan),transparent);"></div>
+            <div class="kpi-label">Deuda CC 2025</div>
+            <div class="kpi-value">$30,5M</div>
+            <div class="kpi-sub">8 impuestos · SLD $4,9M</div>
+          </div>
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--red),transparent);"></div>
+            <div class="kpi-label">Deuda CC 2026</div>
+            <div class="kpi-value">$40,1M</div>
+            <div class="kpi-sub">7 impuestos · Multas $440K</div>
+          </div>
+          <div class="kpi-card reveal visible">
+            <div class="kpi-accent" style="background:linear-gradient(90deg,var(--amber),transparent);"></div>
+            <div class="kpi-label">Deuda Total Consolidada</div>
+            <div class="kpi-value" style="color:var(--red);">$70,6M</div>
+            <div class="kpi-sub">Saldo Técnico a favor: $15,2M</div>
+          </div>
+        </div>
+
+        <!-- CC Consolidada 2025 vs 2026 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+
+          <!-- CC 2025 -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+              <div>
+                <div class="card-title" style="margin-bottom:0;--accent-color:var(--cyan);">Cuenta Corriente 2025</div>
+                <div style="font-size:.7rem;color:var(--text3);margin-top:4px;">MADERO TOWN S.R.L. · CUIT 30-71753241-0</div>
+              </div>
+              <div style="padding:4px 12px;border-radius:8px;font-size:.68rem;font-weight:700;background:var(--red-bg);color:var(--red);">$30,5M</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">352 · Contrib. Obra Social</div>
+                <div style="font-size:.82rem;color:var(--red);font-weight:700;">$20.436.034</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">302 · Aportes Obras Sociales</div>
+                <div style="font-size:.82rem;color:var(--red);font-weight:700;">$5.321.986</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">10 · Ganancias Sociedades</div>
+                <div style="font-size:.82rem;color:var(--red);font-weight:700;">$2.556.028</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">312 · ART L.24557</div>
+                <div style="font-size:.82rem;color:var(--red);font-weight:700;">$2.175.201</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">30 · IVA</div>
+                <div style="font-size:.82rem;color:var(--text3);font-weight:600;">$0 <span style="font-size:.68rem;color:var(--green);">(ST: $15,2M a favor)</span></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">301 · Empl. Aportes Seg. Social</div>
+                <div style="font-size:.82rem;color:var(--text3);font-weight:600;">$0</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">351 · Contrib. Seg. Social</div>
+                <div style="font-size:.82rem;color:var(--text3);font-weight:600;">$0</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">28 · Seg. Vida Colectivo</div>
+                <div style="font-size:.82rem;color:var(--text3);font-weight:600;">$0</div>
+              </div>
+              <div style="height:1px;background:var(--card-border);margin:6px 0;"></div>
+              <div style="display:flex;justify-content:space-between;padding:0 12px;">
+                <div style="font-size:.72rem;color:var(--text3);">SLD: <span style="color:var(--green);font-weight:600;">$4.917.118</span></div>
+                <div style="font-size:.72rem;color:var(--text3);">Otros Créd: <span style="color:var(--green);font-weight:600;">$9.263.272</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CC 2026 -->
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+              <div>
+                <div class="card-title" style="margin-bottom:0;--accent-color:var(--red);">Cuenta Corriente 2026</div>
+                <div style="font-size:.7rem;color:var(--text3);margin-top:4px;">Período Ene–Mar 2026 · Consulta 13/04/2026</div>
+              </div>
+              <div style="padding:4px 12px;border-radius:8px;font-size:.68rem;font-weight:700;background:var(--red-bg);color:var(--red);">$40,1M</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">352 · Contrib. Obra Social</div>
+                <div style="font-size:.82rem;color:var(--red);font-weight:700;">$11.135.708</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">30 · IVA</div>
+                <div style="font-size:.82rem;color:var(--red);font-weight:700;">$7.657.621 <span style="font-size:.68rem;color:var(--amber);">+Multa $440K</span></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">351 · Contrib. Seg. Social</div>
+                <div style="font-size:.82rem;color:var(--red);font-weight:700;">$7.035.706</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">302 · Aportes Obras Sociales</div>
+                <div style="font-size:.82rem;color:var(--red);font-weight:700;">$5.567.854</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">301 · Empl. Aportes Seg. Social</div>
+                <div style="font-size:.82rem;color:var(--red);font-weight:700;">$5.315.073</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">312 · ART L.24557</div>
+                <div style="font-size:.82rem;color:var(--red);font-weight:700;">$3.354.210</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);">
+                <div style="font-size:.8rem;color:var(--text2);">28 · Seg. Vida Colectivo</div>
+                <div style="font-size:.82rem;color:var(--amber);font-weight:600;">$34.827</div>
+              </div>
+              <div style="height:1px;background:var(--card-border);margin:6px 0;"></div>
+              <div style="display:flex;justify-content:space-between;padding:0 12px;">
+                <div style="font-size:.72rem;color:var(--text3);">Multas no firmes: <span style="color:var(--amber);font-weight:600;">$440.000</span></div>
+                <div style="font-size:.72rem;color:var(--text3);">IVA Ene: <span style="color:var(--amber);font-weight:600;">Fuera de término</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison Chart -->
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-title" style="--accent-color:var(--cyan);">Comparativo por Impuesto · 2025 vs 2026</div>
+          <div style="height:320px;position:relative;">
+            <canvas id="finTaxCompChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Alertas Impositivas -->
+        <div class="card" style="background:linear-gradient(135deg,rgba(34,211,238,.03),rgba(248,113,113,.03));border-color:rgba(34,211,238,.12);">
+          <div class="card-title" style="--accent-color:var(--cyan);">Alertas Impositivas</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:12px;background:var(--red-bg);border:1px solid rgba(248,113,113,.1);">
+              <div style="min-width:24px;height:24px;border-radius:6px;background:rgba(248,113,113,.15);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--red);font-weight:800;">!</div>
+              <div style="font-size:.82rem;color:var(--text);line-height:1.55;">IVA 2026 Enero: DDJJ presentada fuera de término con deuda de $5,19M + multa Art. 38° de $440K no firme. Período Marzo con obligación notificada por $5,32M.</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:12px;background:var(--amber-bg);border:1px solid rgba(251,191,36,.1);">
+              <div style="min-width:24px;height:24px;border-radius:6px;background:rgba(251,191,36,.15);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--amber);font-weight:800;">⚠</div>
+              <div style="font-size:.82rem;color:var(--text);line-height:1.55;">352 Contrib. Obra Social es el rubro más pesado: $20,4M en 2025 (acumula desde Ago) + $11,1M en 2026. Total combinado $31,6M (45% de la deuda total).</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:12px;background:var(--amber-bg);border:1px solid rgba(251,191,36,.1);">
+              <div style="min-width:24px;height:24px;border-radius:6px;background:rgba(251,191,36,.15);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--amber);font-weight:800;">⚠</div>
+              <div style="font-size:.82rem;color:var(--text);line-height:1.55;">Ganancias 2025: anticipos 8 y 9 con obligación notificada ($1,28M c/u). Saldo a favor de anticipos computables por $8,95M parcialmente compensa.</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:12px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.1);">
+              <div style="min-width:24px;height:24px;border-radius:6px;background:rgba(34,211,238,.12);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--cyan);font-weight:800;">i</div>
+              <div style="font-size:.82rem;color:var(--text);line-height:1.55;">IVA 2025 con saldo técnico a favor de $15,25M (períodos Abr-May). SLD disponible $4,92M entre ambos ejercicios. Total créditos computables: $14,2M.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Insights -->
+      <div class="section" style="margin-bottom:80px;">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(52,211,153,.15),rgba(52,211,153,.05));border:1px solid rgba(52,211,153,.2);">💡</div>
+          <div class="section-title">Insights Financieros</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-radius:14px;background:var(--red-bg);border:1px solid rgba(248,113,113,.1);">
+              <div style="min-width:28px;height:28px;border-radius:8px;background:rgba(248,113,113,.15);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--red);font-weight:800;">!</div>
+              <div style="font-size:.85rem;color:var(--text);line-height:1.6;">Febrero y Marzo concentran egresos extraordinarios. "Observaciones" por $126,5M en Feb y $90,5M en Mar generan un déficit acumulado que hunde el saldo caja hasta -$255,8M en la semana 4 de Marzo.</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-radius:14px;background:var(--amber-bg);border:1px solid rgba(251,191,36,.1);">
+              <div style="min-width:28px;height:28px;border-radius:8px;background:rgba(251,191,36,.15);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--amber);font-weight:800;">⚠</div>
+              <div style="font-size:.85rem;color:var(--text);line-height:1.6;">Acuerdos laborales activos suman $19,2M pendientes de pago entre Abr–Jun. Nivas ($14M) es la obligación más relevante con 3 cuotas restantes.</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-radius:14px;background:var(--green-bg);border:1px solid rgba(52,211,153,.1);">
+              <div style="min-width:28px;height:28px;border-radius:8px;background:rgba(52,211,153,.15);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--green);font-weight:800;">↑</div>
+              <div style="font-size:.85rem;color:var(--text);line-height:1.6;">Enero cerró cuasi-equilibrado (-$2,2M). El deterioro fuerte viene en Feb-Mar con egresos que duplican ingresos. Los cheques pasan de $196,8M en Ene a $248,9M en Mar (+26%).</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-radius:14px;background:var(--blue-bg);border:1px solid rgba(96,165,250,.1);">
+              <div style="min-width:28px;height:28px;border-radius:8px;background:rgba(96,165,250,.15);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--blue);font-weight:800;">i</div>
+              <div style="font-size:.85rem;color:var(--text);line-height:1.6;">El principal proveedor por volumen de cheques es NATY (69 cheques), seguido por MUGE (37) y CATENA (14). 23 cheques figuran como vencidos al cierre del trimestre — priorizar regularización.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -2908,6 +3931,387 @@ document.body.appendChild(scrollBtn);
 window.addEventListener('scroll', () => {
   scrollBtn.classList.toggle('visible', window.scrollY > 400);
 });
+
+// === FINANCIAL CHARTS ===
+let finChartsInitialized = false;
+const origSwitchView = switchView;
+switchView = function(view) {
+  origSwitchView(view);
+  if (view === 'financieros' && !finChartsInitialized) {
+    finChartsInitialized = true;
+    setTimeout(initFinancialCharts, 100);
+  }
+};
+
+function initFinancialCharts() {
+  // Saldo Bancario Evolution
+  const saldoCtx = document.getElementById('finSaldoChart');
+  if (saldoCtx) {
+    new Chart(saldoCtx, {
+      type: 'line',
+      data: {
+        labels: ['S1 Ene','S2 Ene','S3 Ene','S4 Ene','S5 Ene','S1 Feb','S2 Feb','S3 Feb','S4 Feb','S1 Mar','S2 Mar','S3 Mar','S4 Mar','31/3'],
+        datasets: [{
+          label: 'Saldo Caja',
+          data: [8.76,18.71,-12.09,1.57,-2.24,-25.84,-58.20,-37.62,-156.67,-181.01,-150.86,-215.07,-255.78,-246.75],
+          borderColor: '#60a5fa',
+          backgroundColor: function(context) {
+            const chart = context.chart;
+            const {ctx, chartArea} = chart;
+            if (!chartArea) return 'rgba(96,165,250,.1)';
+            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            gradient.addColorStop(0, 'rgba(96,165,250,.2)');
+            gradient.addColorStop(0.5, 'rgba(96,165,250,.02)');
+            gradient.addColorStop(1, 'rgba(248,113,113,.1)');
+            return gradient;
+          },
+          fill: true,
+          tension: .4,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          pointBackgroundColor: function(context) {
+            return context.raw >= 0 ? '#34d399' : '#f87171';
+          },
+          pointBorderColor: function(context) {
+            return context.raw >= 0 ? '#34d399' : '#f87171';
+          },
+          borderWidth: 2.5,
+          segment: {
+            borderColor: function(ctx) {
+              return ctx.p1.parsed.y < 0 ? 'rgba(248,113,113,.8)' : 'rgba(96,165,250,.9)';
+            }
+          }
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { intersect: false, mode: 'index' },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                return 'Saldo Caja: $' + ctx.parsed.y.toFixed(1) + 'M';
+              }
+            }
+          },
+          annotation: undefined
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 45, font: { size: 9 } } },
+          y: {
+            grid: { color: 'rgba(255,255,255,.04)' },
+            ticks: {
+              callback: function(v) { return '$' + v + 'M'; },
+              font: { size: 10 }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Ingresos vs Egresos Bar Chart
+  const flowCtx = document.getElementById('finFlowChart');
+  if (flowCtx) {
+    new Chart(flowCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Enero', 'Febrero', 'Marzo'],
+        datasets: [
+          {
+            label: 'Ingresos',
+            data: [341.5, 175.1, 249.4],
+            backgroundColor: 'rgba(52,211,153,.6)',
+            borderColor: '#34d399',
+            borderWidth: 1,
+            borderRadius: 6,
+            barPercentage: .4,
+            categoryPercentage: .8
+          },
+          {
+            label: 'Egresos',
+            data: [343.8, 326.3, 339.4],
+            backgroundColor: 'rgba(248,113,113,.5)',
+            borderColor: '#f87171',
+            borderWidth: 1,
+            borderRadius: 6,
+            barPercentage: .4,
+            categoryPercentage: .8
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { intersect: false, mode: 'index' },
+        plugins: {
+          legend: { position: 'top' },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                return ctx.dataset.label + ': $' + ctx.parsed.y.toFixed(1) + 'M';
+              }
+            }
+          }
+        },
+        scales: {
+          x: { grid: { display: false } },
+          y: {
+            grid: { color: 'rgba(255,255,255,.04)' },
+            ticks: {
+              callback: function(v) { return '$' + v + 'M'; }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Cheques Proveedores
+  const provCtx = document.getElementById('finChequesProvChart');
+  if (provCtx) {
+    new Chart(provCtx, {
+      type: 'bar',
+      data: {
+        labels: ['NATY','MUGE','CATENA','DE SANTOS','HORECA','FRIG. VAZQUES','OCC','MONTEVIEJO','CRIOLLO','LEYSECA'],
+        datasets: [{
+          label: 'Cantidad de cheques',
+          data: [69, 37, 14, 13, 11, 10, 9, 9, 9, 8],
+          backgroundColor: [
+            'rgba(251,191,36,.7)','rgba(251,191,36,.6)','rgba(251,191,36,.5)','rgba(251,191,36,.45)','rgba(251,191,36,.4)',
+            'rgba(251,191,36,.35)','rgba(251,191,36,.3)','rgba(251,191,36,.25)','rgba(251,191,36,.22)','rgba(251,191,36,.2)'
+          ],
+          borderColor: '#fbbf24',
+          borderWidth: 1,
+          borderRadius: 6
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { font: { size: 10 } } },
+          y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+        }
+      }
+    });
+  }
+
+  // Cheques Status
+  const statusCtx = document.getElementById('finChequesStatusChart');
+  if (statusCtx) {
+    new Chart(statusCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Entregado', 'Emitido', 'Aceptado', 'Vencido', 'Sin estado'],
+        datasets: [{
+          data: [60, 57, 44, 23, 189],
+          backgroundColor: [
+            'rgba(52,211,153,.7)',
+            'rgba(96,165,250,.7)',
+            'rgba(167,139,250,.7)',
+            'rgba(248,113,113,.7)',
+            'rgba(255,255,255,.1)'
+          ],
+          borderColor: 'rgba(8,9,13,.8)',
+          borderWidth: 3,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '55%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { padding: 14, font: { size: 11 } }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                const pct = (ctx.parsed / 373 * 100).toFixed(1);
+                return ctx.label + ': ' + ctx.parsed + ' (' + pct + '%)';
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Also update flow chart title
+  const flowTitle = document.querySelector('#finFlowChart')?.closest('.card')?.querySelector('.card-title');
+  if (flowTitle) flowTitle.textContent = 'Flujo de fondos Q1 · Enero a Marzo 2026';
+
+  // Cheques Impagos — Vencimientos por Mes
+  const chqVtoCtx = document.getElementById('finChequesVtoChart');
+  if (chqVtoCtx) {
+    new Chart(chqVtoCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Nov 25','Dic 25','Ene 26','Mar 26','Abr 26','May 26','Jun 26','Jul 26','Ago 26'],
+        datasets: [
+          {
+            label: 'Vencidos',
+            data: [8.5, 28.7, 5.1, 25.9, 0, 0, 0, 0, 0],
+            backgroundColor: 'rgba(248,113,113,.6)',
+            borderColor: '#f87171',
+            borderWidth: 1,
+            borderRadius: 4,
+            barPercentage: .7
+          },
+          {
+            label: 'Próximos',
+            data: [0, 0, 0, 0, 161.0, 128.6, 101.2, 6.0, 10.0],
+            backgroundColor: 'rgba(251,191,36,.5)',
+            borderColor: '#fbbf24',
+            borderWidth: 1,
+            borderRadius: 4,
+            barPercentage: .7
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top' },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) { return ctx.dataset.label + ': $' + ctx.parsed.y.toFixed(1) + 'M'; }
+            }
+          }
+        },
+        scales: {
+          x: { grid: { display: false } },
+          y: {
+            grid: { color: 'rgba(255,255,255,.04)' },
+            ticks: { callback: function(v) { return '$' + v + 'M'; } }
+          }
+        }
+      }
+    });
+  }
+
+  // Planes de Pago Chart — Pagado vs Deuda
+  const planesCtx = document.getElementById('finPlanesChart');
+  if (planesCtx) {
+    const planesLabels = ['V477290','V544040','V345156','V692857','V277506','V861602','U924873','U726099','U726112'];
+    const planesPagado = [0, 0, 5.1, 0, 5.1, 0, 11.1, 9.2, 6.0];
+    const planesDeuda =  [15.3, 11.0, 20.3, 8.7, 4.8, 4.6, 6.6, 3.0, 2.0];
+    new Chart(planesCtx, {
+      type: 'bar',
+      data: {
+        labels: planesLabels,
+        datasets: [
+          {
+            label: 'Pagado',
+            data: planesPagado,
+            backgroundColor: 'rgba(52,211,153,.5)',
+            borderColor: '#34d399',
+            borderWidth: 1,
+            borderRadius: 4,
+            barPercentage: .65
+          },
+          {
+            label: 'Deuda restante',
+            data: planesDeuda,
+            backgroundColor: 'rgba(248,113,113,.5)',
+            borderColor: '#f87171',
+            borderWidth: 1,
+            borderRadius: 4,
+            barPercentage: .65
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top' },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) { return ctx.dataset.label + ': $' + ctx.parsed.x.toFixed(1) + 'M'; }
+            }
+          }
+        },
+        scales: {
+          x: {
+            stacked: true,
+            grid: { color: 'rgba(255,255,255,.04)' },
+            ticks: { callback: function(v) { return '$' + v + 'M'; } }
+          },
+          y: {
+            stacked: true,
+            grid: { display: false },
+            ticks: { font: { size: 10, family: 'monospace' } }
+          }
+        }
+      }
+    });
+  }
+
+  // Tax Comparison Chart
+  const taxCtx = document.getElementById('finTaxCompChart');
+  if (taxCtx) {
+    new Chart(taxCtx, {
+      type: 'bar',
+      data: {
+        labels: ['352\nContrib. OS', '30\nIVA', '351\nContrib. SS', '302\nAportes OS', '301\nEmpl. Aportes', '312\nART', '10\nGanancias', '28\nSeg. Vida'],
+        datasets: [
+          {
+            label: '2025',
+            data: [20.44, 0, 0, 5.32, 0, 2.18, 2.56, 0],
+            backgroundColor: 'rgba(34,211,238,.5)',
+            borderColor: '#22d3ee',
+            borderWidth: 1,
+            borderRadius: 6,
+            barPercentage: .4,
+            categoryPercentage: .8
+          },
+          {
+            label: '2026',
+            data: [11.14, 7.66, 7.04, 5.57, 5.32, 3.35, 0, 0.03],
+            backgroundColor: 'rgba(248,113,113,.5)',
+            borderColor: '#f87171',
+            borderWidth: 1,
+            borderRadius: 6,
+            barPercentage: .4,
+            categoryPercentage: .8
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { intersect: false, mode: 'index' },
+        plugins: {
+          legend: { position: 'top' },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                return ctx.dataset.label + ': $' + ctx.parsed.y.toFixed(2) + 'M';
+              }
+            }
+          }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 0 } },
+          y: {
+            grid: { color: 'rgba(255,255,255,.04)' },
+            ticks: { callback: function(v) { return '$' + v + 'M'; } }
+          }
+        }
+      }
+    });
+  }
+}
 
 </script>
 </body>
