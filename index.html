@@ -781,19 +781,18 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 }
 @media(max-width:768px){
   /* Financial hero: stack the two saldo cards vertically */
-  #view-financieros > div > div > div > div[style*="inline-flex"][style*="gap:24px"] {
+  .fin-hero-cards {
     flex-direction: column !important; align-items: center !important; gap: 14px !important;
   }
-  /* Shrink financial hero cards */
-  #view-financieros > div > div > div > div[style*="inline-flex"][style*="gap:24px"] > div {
+  .fin-hero-card {
     padding: 20px 24px !important; border-radius: 18px !important; width: 100% !important; max-width: 340px !important;
   }
-  #view-financieros > div > div > div > div[style*="inline-flex"][style*="gap:24px"] > div > div[style*="font-size:2.8rem"] {
+  .fin-hero-amount {
     font-size: 2rem !important;
   }
+  .fin-hero-logo { font-size: 2rem !important; letter-spacing: 3px !important; }
+  .fin-hero-sub { font-size: .72rem !important; letter-spacing: 3px !important; }
   /* Financial chart heights on mobile */
-  #view-financieros > div > div > div > div[style*="font-size:3rem"] { font-size: 2rem !important; letter-spacing: 3px !important; }
-  #view-financieros > div > div > div > div[style*="font-size:.85rem"] { font-size: .72rem !important; letter-spacing: 3px !important; }
   #view-financieros .card [style*="height:360px"],
   #view-financieros .card [style*="height:340px"],
   #view-financieros .card [style*="height:300px"] {
@@ -803,20 +802,22 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 @media(max-width:700px){
   #view-financieros [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
   #view-financieros [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+  #view-financieros [style*="grid-template-columns:repeat(5"] { grid-template-columns: repeat(3,1fr) !important; }
 }
 @media(max-width:480px){
-  #view-financieros > div > div > div > div[style*="inline-flex"][style*="gap:24px"] > div {
+  .fin-hero-card {
     padding: 16px 18px !important;
   }
-  #view-financieros > div > div > div > div[style*="inline-flex"][style*="gap:24px"] > div > div[style*="font-size:2.8rem"] {
+  .fin-hero-amount {
     font-size: 1.6rem !important;
   }
-  #view-financieros > div > div > div > div[style*="font-size:3rem"] { font-size: 1.7rem !important; }
+  .fin-hero-logo { font-size: 1.7rem !important; }
   #view-financieros .card [style*="height:360px"],
   #view-financieros .card [style*="height:340px"],
   #view-financieros .card [style*="height:300px"] {
     height: 200px !important;
   }
+  #view-financieros [style*="grid-template-columns:repeat(5"] { grid-template-columns: repeat(2,1fr) !important; }
 }
 
 /* === WELCOME BANNER RESPONSIVE === */
@@ -892,7 +893,7 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
           onkeydown="if(event.key==='Enter')checkPwd()"
           style="
             width:100%;padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
-            background:rgba(255,255,255,.04);color:#e8e8eb;font-size:.9rem;font-family:'Inter',sans-serif;
+            background:rgba(255,255,255,.04);color:#e8e8eb;font-size:16px;font-family:'Inter',sans-serif;
             outline:none;transition:border-color .3s;box-sizing:border-box;
           "
           onfocus="this.style.borderColor='rgba(52,211,153,.3)'"
@@ -1270,21 +1271,21 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
     <!-- Hero Financiero -->
     <div style="position:relative;overflow:hidden;padding:0 0 60px;text-align:center;">
       <div style="position:relative;z-index:2;max-width:800px;margin:0 auto;padding:0 24px;">
-        <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:#fff;letter-spacing:4px;margin-bottom:12px;">CAUCE</div>
-        <div style="font-size:.85rem;color:var(--text3);font-weight:400;letter-spacing:4px;text-transform:uppercase;">Resultados Financieros · Enero–Junio 2026</div>
-        <div style="margin-top:36px;display:inline-flex;gap:24px;align-items:stretch;">
-          <div style="display:inline-flex;flex-direction:column;align-items:center;background:linear-gradient(135deg,rgba(248,113,113,.06),rgba(248,113,113,.02));border:1px solid rgba(248,113,113,.15);border-radius:24px;padding:28px 36px;backdrop-filter:blur(20px);box-shadow:0 0 60px rgba(248,113,113,.06),inset 0 1px 0 rgba(255,255,255,.05);">
+        <div class="fin-hero-logo" style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:#fff;letter-spacing:4px;margin-bottom:12px;">CAUCE</div>
+        <div class="fin-hero-sub" style="font-size:.85rem;color:var(--text3);font-weight:400;letter-spacing:4px;text-transform:uppercase;">Resultados Financieros · Enero–Junio 2026</div>
+        <div class="fin-hero-cards" style="margin-top:36px;display:inline-flex;gap:24px;align-items:stretch;">
+          <div class="fin-hero-card" style="display:inline-flex;flex-direction:column;align-items:center;background:linear-gradient(135deg,rgba(248,113,113,.06),rgba(248,113,113,.02));border:1px solid rgba(248,113,113,.15);border-radius:24px;padding:28px 36px;backdrop-filter:blur(20px);box-shadow:0 0 60px rgba(248,113,113,.06),inset 0 1px 0 rgba(255,255,255,.05);">
             <div style="font-size:.65rem;color:var(--red);text-transform:uppercase;letter-spacing:3px;font-weight:600;">Saldo Caja · 31 de Marzo 2026 · Real</div>
-            <div style="font-size:2.8rem;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,#f87171,#fca5a5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">-$396,8M</div>
+            <div class="fin-hero-amount" style="font-size:2.8rem;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,#f87171,#fca5a5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">-$396,8M</div>
             <div style="font-size:.75rem;color:var(--text3);margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);">
               Piso semestre: <span style="color:var(--red);font-weight:600;">-$443,8M</span> · Mayo
             </div>
           </div>
-          <div style="display:inline-flex;flex-direction:column;align-items:center;background:linear-gradient(135deg,rgba(52,211,153,.06),rgba(52,211,153,.02));border:1px solid rgba(52,211,153,.15);border-radius:24px;padding:28px 36px;backdrop-filter:blur(20px);box-shadow:0 0 60px rgba(52,211,153,.06),inset 0 1px 0 rgba(255,255,255,.05);">
-            <div style="font-size:.65rem;color:var(--green);text-transform:uppercase;letter-spacing:3px;font-weight:600;">Saldo Caja · 30 de Junio 2026 · Proyección</div>
-            <div style="font-size:2.8rem;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,#f87171,#fca5a5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">-$263,2M</div>
+          <div class="fin-hero-card" style="display:inline-flex;flex-direction:column;align-items:center;background:linear-gradient(135deg,rgba(251,191,36,.06),rgba(251,191,36,.02));border:1px solid rgba(251,191,36,.15);border-radius:24px;padding:28px 36px;backdrop-filter:blur(20px);box-shadow:0 0 60px rgba(251,191,36,.06),inset 0 1px 0 rgba(255,255,255,.05);">
+            <div style="font-size:.65rem;color:var(--amber);text-transform:uppercase;letter-spacing:3px;font-weight:600;">Saldo Caja · 30 de Junio 2026 · Proyección</div>
+            <div class="fin-hero-amount" style="font-size:2.8rem;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,#fbbf24,#fcd34d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">-$263,2M</div>
             <div style="font-size:.75rem;color:var(--text3);margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);">
-              Recuperación: <span style="color:var(--green);font-weight:600;">+$180,6M</span> vs piso Mayo
+              <span style="color:var(--green);font-weight:600;">↑ Mejora de +$180,6M</span> desde el piso de Mayo
             </div>
           </div>
         </div>
@@ -3215,7 +3216,7 @@ function renderResumenTab(e, f, m, totVenta, totCV, totCF, totSueldos, totCMV, t
 
     <div class="footer-bar">
       <div class="f-logo">CAUCE</div>
-      <div class="f-text">Consolidación 2026 — Enero · Febrero · Marzo · Generado el 12 de Abril de 2026</div>
+      <div class="f-text">Consolidación 2026 — Enero · Febrero · Marzo · Datos actualizados al 31/3/2026</div>
     </div>
   `;
   return html;
@@ -3793,7 +3794,7 @@ function renderMonthContent(tab, data) {
   let footerHTML = `
     <div class="footer-bar">
       <div class="f-logo">CAUCE</div>
-      <div class="f-text">Informe de Gestión ${data.month} — Generado el 12 de Abril de 2026</div>
+      <div class="f-text">Informe de Gestión ${data.month} — Datos actualizados al 31/3/2026</div>
     </div>
   `;
 
@@ -4030,14 +4031,16 @@ function positionTopNav() {
   topNav.style.top = bannerH + 'px';
   // Also update hero padding to account for both bars
   const totalFixed = bannerH + topNav.offsetHeight;
+  const isMobile = window.innerWidth <= 768;
+  const extraPad = isMobile ? 16 : 40;
   const hero = document.querySelector('.hero');
-  if (hero) hero.style.paddingTop = (totalFixed + 40) + 'px';
+  if (hero) hero.style.paddingTop = (totalFixed + extraPad) + 'px';
   // Update organigrama top padding
   const orgPad = document.querySelector('#view-organigrama > div');
-  if (orgPad) orgPad.style.paddingTop = (totalFixed + 20) + 'px';
+  if (orgPad) orgPad.style.paddingTop = (totalFixed + 12) + 'px';
   // Update financieros top padding
   const finPad = document.querySelector('#view-financieros > div');
-  if (finPad) finPad.style.marginTop = (totalFixed + 40) + 'px';
+  if (finPad) finPad.style.marginTop = (totalFixed + extraPad) + 'px';
 }
 
 function logout() {
@@ -4079,11 +4082,17 @@ async function checkPwd() {
   const user = USERS.find(u => u.hash === hash);
   if (user) {
     currentUser = user;
+    // Blur input to release iOS auto-zoom
+    document.getElementById('pwdInput').blur();
+    // Reset viewport zoom on iOS
+    var vp = document.querySelector('meta[name="viewport"]');
+    if (vp) { vp.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0'); setTimeout(function(){ vp.setAttribute('content', 'width=device-width, initial-scale=1.0'); }, 300); }
     document.getElementById('lockScreen').style.transition = 'opacity .5s';
     document.getElementById('lockScreen').style.opacity = '0';
     setTimeout(() => {
       document.getElementById('lockScreen').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
+      window.scrollTo(0, 0);
       showWelcomeBanner(user);
       applyPermissions(user);
       revealOnScroll();
@@ -4355,7 +4364,7 @@ function initFinancialCharts() {
           annotation: undefined
         },
         scales: {
-          x: { grid: { display: false }, ticks: { maxRotation: 45, font: { size: 9 } } },
+          x: { grid: { display: false }, ticks: { maxRotation: 45, font: { size: 9 }, callback: function(val, idx) { var l = this.getLabelForValue(val); return l.startsWith('S1 ') ? l.replace('S1 ','') : ''; } } },
           y: {
             grid: { color: 'rgba(255,255,255,.04)' },
             ticks: {
