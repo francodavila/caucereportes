@@ -404,6 +404,7 @@ tr:hover td { background: rgba(255,255,255,.02); }
 @media(max-width:768px){
   .side-index { display: none; }
   .hero { padding: 50px 0 70px; }
+  .hero-logo-img { width: 140px !important; }
   .hero-logo { font-size: 2rem; }
   .hero-result { padding: 20px 24px; border-radius: 18px; }
   .hero-result .big { font-size: 2rem; }
@@ -791,7 +792,7 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   .fin-hero-amount {
     font-size: 2rem !important;
   }
-  .fin-hero-logo { font-size: 2rem !important; letter-spacing: 3px !important; }
+  .fin-hero-logo { width: 140px !important; }
   .fin-hero-sub { font-size: .72rem !important; letter-spacing: 3px !important; }
   /* Financial chart heights on mobile */
   #view-financieros .card [style*="height:360px"],
@@ -804,6 +805,8 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   #view-financieros [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
   #view-financieros [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
   #view-financieros [style*="grid-template-columns:repeat(5"] { grid-template-columns: repeat(3,1fr) !important; }
+  #view-rrhh [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+  #view-rrhh .kpi-grid { grid-template-columns: repeat(2,1fr) !important; }
 }
 @media(max-width:480px){
   .fin-hero-card {
@@ -812,7 +815,7 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   .fin-hero-amount {
     font-size: 1.6rem !important;
   }
-  .fin-hero-logo { font-size: 1.7rem !important; }
+  .fin-hero-logo { width: 120px !important; }
   #view-financieros .card [style*="height:360px"],
   #view-financieros .card [style*="height:340px"],
   #view-financieros .card [style*="height:300px"] {
@@ -885,8 +888,7 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
     <div style="position:absolute;top:-60px;right:-60px;width:160px;height:160px;border-radius:50%;background:rgba(52,211,153,.06);filter:blur(40px);"></div>
     <div style="position:absolute;bottom:-40px;left:-40px;width:120px;height:120px;border-radius:50%;background:rgba(96,165,250,.04);filter:blur(40px);"></div>
     <div style="position:relative;z-index:1;">
-      <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:#fff;letter-spacing:4px;margin-bottom:4px;">CAUCE</div>
-      <div style="font-family:'Playfair Display',serif;font-size:.85rem;font-style:italic;color:#6b7280;margin-bottom:28px;">de los fuegos</div>
+      <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce de los fuegos" style="width:160px;margin-bottom:20px;">
       <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:#5a6070;margin-bottom:20px;font-weight:500;">Informe de Gestión · 2026</div>
       <div style="position:relative;">
         <input id="pwdInput" type="password" placeholder="Ingresá la contraseña"
@@ -940,8 +942,9 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 <!-- ======== TOP NAVIGATION ======== -->
 <div id="topNav" class="top-nav">
   <button class="top-nav-btn active-nav" onclick="switchView('economicos')">Resultados económicos</button>
-  <button class="top-nav-btn" onclick="switchView('organigrama')">Organigrama</button>
   <button class="top-nav-btn" onclick="switchView('financieros')">Resultados financieros</button>
+  <button class="top-nav-btn" onclick="switchView('rrhh')">RRHH</button>
+  <button class="top-nav-btn" onclick="switchView('inmobiliario')">Inmobiliario</button>
 </div>
 
 <!-- ======== VIEW: RESULTADOS ECONÓMICOS ======== -->
@@ -950,7 +953,7 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 <!-- ======== HERO ======== -->
 <div class="hero" style="padding-top:160px;">
   <div class="hero-content">
-    <div class="hero-logo">CAUCE</div>
+    <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce de los fuegos" class="hero-logo-img" style="width:180px;margin-bottom:16px;">
     <div class="hero-sub">Informe de Gestión Mensual</div>
     <div class="hero-result">
       <div class="tag">Resultado del mes</div>
@@ -995,8 +998,7 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 
     <!-- Header -->
     <div class="org-header">
-      <div class="org-title">CAUCE</div>
-      <div style="font-family:'Playfair Display',serif;font-size:.9rem;font-style:italic;color:var(--text3);margin-top:2px;">de los fuegos</div>
+      <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce de los fuegos" style="width:160px;margin-bottom:4px;">
       <div class="org-subtitle" style="margin-top:16px;">Organigrama Institucional · Abril 2026</div>
     </div>
 
@@ -1272,7 +1274,7 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
     <!-- Hero Financiero -->
     <div style="position:relative;overflow:hidden;padding:0 0 60px;text-align:center;">
       <div style="position:relative;z-index:2;max-width:800px;margin:0 auto;padding:0 24px;">
-        <div class="fin-hero-logo" style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:#fff;letter-spacing:4px;margin-bottom:12px;">CAUCE</div>
+        <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce de los fuegos" class="fin-hero-logo" style="width:200px;margin-bottom:12px;">
         <div class="fin-hero-sub" style="font-size:.85rem;color:var(--text3);font-weight:400;letter-spacing:4px;text-transform:uppercase;">Resultados Financieros · Enero–Junio 2026</div>
         <div class="fin-hero-cards" style="margin-top:36px;display:inline-flex;gap:24px;align-items:stretch;">
           <div class="fin-hero-card" style="display:inline-flex;flex-direction:column;align-items:center;background:linear-gradient(135deg,rgba(248,113,113,.06),rgba(248,113,113,.02));border:1px solid rgba(248,113,113,.15);border-radius:24px;padding:28px 36px;backdrop-filter:blur(20px);box-shadow:0 0 60px rgba(248,113,113,.06),inset 0 1px 0 rgba(255,255,255,.05);">
@@ -2402,6 +2404,301 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   </div>
 </div>
 
+<!-- ======== VIEW: RRHH ======== -->
+<div id="view-rrhh" class="view-section">
+  <div style="padding-top:160px;">
+
+    <!-- Hero RRHH -->
+    <div style="position:relative;overflow:hidden;padding:0 0 40px;text-align:center;">
+      <div style="position:relative;z-index:2;max-width:800px;margin:0 auto;padding:0 24px;">
+        <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce de los fuegos" class="fin-hero-logo" style="width:200px;margin-bottom:12px;">
+        <div class="fin-hero-sub" style="font-size:.85rem;color:var(--text3);font-weight:400;letter-spacing:4px;text-transform:uppercase;">Recursos Humanos · Nómina al 31/3/2026</div>
+      </div>
+    </div>
+
+    <!-- RRHH Tab Bar -->
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:20px auto 0;max-width:1220px;padding:0 28px;">
+      <button class="tab-pill rrhh-tab active-tab" onclick="switchRRHHTab('resumen')">Resumen</button>
+      <button class="tab-pill rrhh-tab" onclick="switchRRHHTab('organigrama')">Organigrama</button>
+      <button class="tab-pill rrhh-tab" onclick="switchRRHHTab('enero')">Enero</button>
+      <button class="tab-pill rrhh-tab" onclick="switchRRHHTab('febrero')">Febrero</button>
+      <button class="tab-pill rrhh-tab" onclick="switchRRHHTab('marzo')">Marzo</button>
+      <button class="tab-pill rrhh-tab" onclick="switchRRHHTab('abril')">Abril</button>
+    </div>
+
+    <!-- RRHH Tab: Resumen -->
+    <div id="rrhh-tab-resumen" style="max-width:1220px;margin:0 auto;padding:0 28px;position:relative;z-index:1;">
+      <div class="section" style="margin-top:24px;">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(96,165,250,.15),rgba(96,165,250,.05));border:1px solid rgba(96,165,250,.2);">📊</div>
+          <div class="section-title">Evolución Mensual RRHH</div>
+          <div class="section-line"></div>
+        </div>
+
+        <!-- KPI Summary Cards -->
+        <div class="kpi-grid" style="margin-bottom:32px;">
+          <div class="kpi-card"><div class="kpi-accent" style="background:linear-gradient(90deg,var(--blue),transparent);"></div><div class="kpi-glow" style="background:var(--blue);"></div><div class="kpi-label">Dotación Promedio</div><div class="kpi-value">65</div><div class="kpi-sub">empleados activos</div></div>
+          <div class="kpi-card"><div class="kpi-accent" style="background:linear-gradient(90deg,var(--green),transparent);"></div><div class="kpi-glow" style="background:var(--green);"></div><div class="kpi-label">Nómina Promedio</div><div class="kpi-value">$72,6M</div><div class="kpi-sub">sueldos base mensual</div></div>
+          <div class="kpi-card"><div class="kpi-accent" style="background:linear-gradient(90deg,var(--amber),transparent);"></div><div class="kpi-glow" style="background:var(--amber);"></div><div class="kpi-label">Costo Total Prom.</div><div class="kpi-value">$74,5M</div><div class="kpi-sub">con feriados y comisiones</div></div>
+          <div class="kpi-card"><div class="kpi-accent" style="background:linear-gradient(90deg,var(--red),transparent);"></div><div class="kpi-glow" style="background:var(--red);"></div><div class="kpi-label">Variación Base</div><div class="kpi-value">+10,7%</div><div class="kpi-sub">Ene→Abr</div></div>
+        </div>
+
+        <!-- Evolution Table -->
+        <div class="card">
+          <div class="card-title">Evolución Mensual de Indicadores</div>
+          <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr><th>Indicador</th><th>Enero</th><th>Febrero</th><th>Marzo</th><th>Abril</th><th>Variación</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="font-weight:600;">Sueldos Base</td><td>$67,2M</td><td>$66,3M</td><td>$72,3M</td><td>$74,4M</td><td style="color:var(--green);">+10,7%</td></tr>
+              <tr><td style="font-weight:600;">Total c/Feriados</td><td>$74,9M</td><td>$74,3M</td><td>$75,6M</td><td>—</td><td style="color:var(--red);">−0,4%</td></tr>
+              <tr><td style="font-weight:600;">Descuentos</td><td>$4,2M</td><td>$27,5M</td><td>$11,1M</td><td>—</td><td>—</td></tr>
+              <tr><td style="font-weight:600;">Total Banco</td><td>$26,7M</td><td>$29,6M</td><td>$29,6M</td><td>—</td><td>—</td></tr>
+              <tr><td style="font-weight:600;">Total Efectivo</td><td>$43,9M</td><td>$41,4M</td><td>$37,3M</td><td>—</td><td style="color:var(--red);">−15,2%</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <!-- Evolution Chart -->
+        <div class="card" style="margin-top:20px;">
+          <div class="card-title">Evolución Nómina Mensual</div>
+          <div style="height:300px;position:relative;"><canvas id="rrhhEvolutionChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <div class="f-logo"><img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce" style="height:28px;"></div>
+        <div class="f-text">RRHH — Evolución Mensual 2026</div>
+      </div>
+    </div>
+
+    <!-- RRHH Tab: Abril (current nómina) -->
+    <!-- RRHH Tab: Organigrama (populated dynamically) -->
+    <div id="rrhh-tab-organigrama" style="display:none;"></div>
+
+    <!-- RRHH Tab: Enero (rendered dynamically) -->
+    <div id="rrhh-tab-enero" style="display:none;"></div>
+
+    <!-- RRHH Tab: Febrero (rendered dynamically) -->
+    <div id="rrhh-tab-febrero" style="display:none;"></div>
+
+    <!-- RRHH Tab: Marzo (rendered dynamically) -->
+    <div id="rrhh-tab-marzo" style="display:none;"></div>
+
+    <!-- RRHH Tab: Abril (rendered dynamically) -->
+    <div id="rrhh-tab-abril" style="display:none;"></div>
+
+  </div>
+</div>
+</div><!-- /view-rrhh -->
+
+<!-- ======== VIEW: INMOBILIARIO ======== -->
+<div id="view-inmobiliario" class="view-section">
+  <div style="padding-top:160px;">
+
+    <!-- Hero Inmobiliario -->
+    <div style="position:relative;overflow:hidden;padding:0 0 40px;text-align:center;">
+      <div style="position:relative;z-index:2;max-width:800px;margin:0 auto;padding:0 24px;">
+        <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce de los fuegos" class="fin-hero-logo" style="width:200px;margin-bottom:12px;">
+        <div class="fin-hero-sub" style="font-size:.85rem;color:var(--text3);font-weight:400;letter-spacing:4px;text-transform:uppercase;">Inmobiliario · Madero Town SRL</div>
+      </div>
+    </div>
+
+    <div style="max-width:1220px;margin:0 auto;padding:0 28px;position:relative;z-index:1;">
+
+      <!-- KPIs Inmobiliario -->
+      <div class="kpi-grid" style="margin-top:0;">
+        <div class="kpi-card reveal visible">
+          <div class="kpi-accent" style="background:linear-gradient(90deg,var(--blue),transparent);"></div>
+          <div class="kpi-glow" style="background:var(--blue);"></div>
+          <div class="kpi-label">Alquiler Actual</div>
+          <div class="kpi-value">$15,7M</div>
+          <div class="kpi-sub">mensual</div>
+        </div>
+        <div class="kpi-card reveal visible">
+          <div class="kpi-accent" style="background:linear-gradient(90deg,var(--green),transparent);"></div>
+          <div class="kpi-glow" style="background:var(--green);"></div>
+          <div class="kpi-label">Expensas Promedio</div>
+          <div class="kpi-value">$10,2M</div>
+          <div class="kpi-sub">Cauce 50%</div>
+        </div>
+        <div class="kpi-card reveal visible">
+          <div class="kpi-accent" style="background:linear-gradient(90deg,var(--amber),transparent);"></div>
+          <div class="kpi-glow" style="background:var(--amber);"></div>
+          <div class="kpi-label">Total Mensual</div>
+          <div class="kpi-value">$25,9M</div>
+          <div class="kpi-sub">alquiler + expensas</div>
+        </div>
+        <div class="kpi-card reveal visible">
+          <div class="kpi-accent" style="background:linear-gradient(90deg,var(--purple),transparent);"></div>
+          <div class="kpi-glow" style="background:var(--purple);"></div>
+          <div class="kpi-label">Acumulado Q1 2026</div>
+          <div class="kpi-value">$77,4M</div>
+          <div class="kpi-sub">enero-marzo</div>
+        </div>
+      </div>
+
+      <!-- Evolution Chart -->
+      <div class="section" style="margin-top:48px;">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(96,165,250,.15),rgba(96,165,250,.05));border:1px solid rgba(96,165,250,.2);">📈</div>
+          <div class="section-title">Evolución Alquiler vs Expensas</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="card">
+          <div style="height:400px;position:relative;">
+            <canvas id="inmobiliarioChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="section" style="margin-top:48px;">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(52,211,153,.15),rgba(52,211,153,.05));border:1px solid rgba(52,211,153,.2);">📋</div>
+          <div class="section-title">Detalle Mensual 2025-2026</div>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="card" style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Mes/Año</th>
+                <th style="text-align:right;">Alquiler</th>
+                <th style="text-align:right;">Expensas (50%)</th>
+                <th style="text-align:right;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="color:var(--text3);font-size:.9rem;"><td colspan="4"><strong>2025</strong></td></tr>
+              <tr><td>Enero</td><td style="text-align:right;">$13.500.000</td><td style="text-align:right;">$10.875.880</td><td style="text-align:right;font-weight:600;">$24.375.880</td></tr>
+              <tr><td>Febrero</td><td style="text-align:right;">$13.500.000</td><td style="text-align:right;">$12.414.595</td><td style="text-align:right;font-weight:600;">$25.914.595</td></tr>
+              <tr><td>Marzo</td><td style="text-align:right;">$13.500.000</td><td style="text-align:right;">$13.237.754</td><td style="text-align:right;font-weight:600;">$26.737.754</td></tr>
+              <tr><td>Abril</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$13.489.598</td><td style="text-align:right;font-weight:600;">$29.184.268</td></tr>
+              <tr><td>Mayo</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$15.899.508</td><td style="text-align:right;font-weight:600;">$31.594.178</td></tr>
+              <tr><td>Junio</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$11.625.380</td><td style="text-align:right;font-weight:600;">$27.320.050</td></tr>
+              <tr><td>Julio</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$15.062.007</td><td style="text-align:right;font-weight:600;">$30.756.677</td></tr>
+              <tr><td>Agosto</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$16.129.094</td><td style="text-align:right;font-weight:600;">$31.823.764</td></tr>
+              <tr><td>Septiembre</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$10.107.990</td><td style="text-align:right;font-weight:600;">$25.802.660</td></tr>
+              <tr><td>Octubre</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$9.420.156</td><td style="text-align:right;font-weight:600;">$25.114.826</td></tr>
+              <tr><td>Noviembre</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$9.837.334</td><td style="text-align:right;font-weight:600;">$25.532.004</td></tr>
+              <tr><td>Diciembre</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$9.714.393</td><td style="text-align:right;font-weight:600;">$25.409.063</td></tr>
+              <tr style="color:var(--text3);font-size:.9rem;"><td colspan="4"><strong>2026</strong></td></tr>
+              <tr><td>Enero</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$9.852.574</td><td style="text-align:right;font-weight:600;">$25.547.244</td></tr>
+              <tr><td>Febrero</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$10.248.782</td><td style="text-align:right;font-weight:600;">$25.943.452</td></tr>
+              <tr><td>Marzo</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;">$10.248.782</td><td style="text-align:right;font-weight:600;">$25.943.452</td></tr>
+              <tr style="color:var(--text2);"><td>Abril</td><td style="text-align:right;">$15.694.670</td><td style="text-align:right;color:var(--text3);">—</td><td style="text-align:right;color:var(--text3);">pendiente</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Acuerdo Expensas Atrasadas -->
+      <div class="section" style="margin-top:48px;">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(251,191,36,.15),rgba(251,191,36,.05));border:1px solid rgba(251,191,36,.2);">📅</div>
+          <div class="section-title">Plan de Pago - Expensas Atrasadas</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="card">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+            <div style="padding:12px;background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:8px;text-align:center;">
+              <div style="font-size:.9rem;color:var(--text3);margin-bottom:4px;">Total Acuerdo</div>
+              <div style="font-size:1.2rem;font-weight:600;color:var(--text);">$70,6M</div>
+              <div style="font-size:.8rem;color:var(--text2);">6 cuotas de $11,77M</div>
+            </div>
+            <div style="padding:12px;background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:8px;text-align:center;">
+              <div style="font-size:.9rem;color:var(--text3);margin-bottom:4px;">Pagadas</div>
+              <div style="font-size:1.2rem;font-weight:600;color:var(--green);">6 de 6</div>
+              <div style="font-size:.8rem;color:var(--text2);">100%</div>
+            </div>
+            <div style="padding:12px;background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:8px;text-align:center;">
+              <div style="font-size:.9rem;color:var(--text3);margin-bottom:4px;">Estado</div>
+              <div style="font-size:1.2rem;font-weight:600;color:var(--green);">Completado</div>
+              <div style="font-size:.8rem;color:var(--text2);">Marzo 2026</div>
+            </div>
+          </div>
+          <table style="width:100%;font-size:.9rem;">
+            <thead>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <th style="text-align:left;padding:8px 0;">Cuota</th>
+                <th style="text-align:left;padding:8px 0;">Vencimiento</th>
+                <th style="text-align:right;padding:8px 0;">Monto</th>
+                <th style="text-align:center;padding:8px 0;">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:8px 0;">1</td><td>10/10/2025</td><td style="text-align:right;">$11.770.856</td><td style="text-align:center;"><span style="background:rgba(52,211,153,.2);color:var(--green);padding:4px 8px;border-radius:4px;font-size:.8rem;">Pagado</span></td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:8px 0;">2</td><td>10/11/2025</td><td style="text-align:right;">$11.770.856</td><td style="text-align:center;"><span style="background:rgba(52,211,153,.2);color:var(--green);padding:4px 8px;border-radius:4px;font-size:.8rem;">Pagado</span></td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:8px 0;">3</td><td>10/12/2025</td><td style="text-align:right;">$11.770.856</td><td style="text-align:center;"><span style="background:rgba(52,211,153,.2);color:var(--green);padding:4px 8px;border-radius:4px;font-size:.8rem;">Pagado</span></td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:8px 0;">4</td><td>10/01/2026</td><td style="text-align:right;">$11.770.856</td><td style="text-align:center;"><span style="background:rgba(52,211,153,.2);color:var(--green);padding:4px 8px;border-radius:4px;font-size:.8rem;">Pagado</span></td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:8px 0;">5</td><td>10/02/2026</td><td style="text-align:right;">$11.770.856</td><td style="text-align:center;"><span style="background:rgba(52,211,153,.2);color:var(--green);padding:4px 8px;border-radius:4px;font-size:.8rem;">Pagado</span></td></tr>
+              <tr><td style="padding:8px 0;">6</td><td>10/03/2026</td><td style="text-align:right;">$11.770.856</td><td style="text-align:center;"><span style="background:rgba(52,211,153,.2);color:var(--green);padding:4px 8px;border-radius:4px;font-size:.8rem;">Pagado</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Cuenta Corriente Resumen -->
+      <div class="section" style="margin-top:48px;">
+        <div class="section-header">
+          <div class="section-icon" style="background:linear-gradient(135deg,rgba(96,165,250,.15),rgba(96,165,250,.05));border:1px solid rgba(96,165,250,.2);">💳</div>
+          <div class="section-title">Cuenta Corriente - Últimos Movimientos</div>
+          <div class="section-line"></div>
+        </div>
+        <div class="card">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+            <div style="padding:12px;background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.2);border-radius:8px;">
+              <div style="font-size:.9rem;color:var(--text3);margin-bottom:4px;">Saldo Pendiente</div>
+              <div style="font-size:1.3rem;font-weight:600;color:var(--red);">$9.437.779</div>
+              <div style="font-size:.8rem;color:var(--text2);">al 6/04/2026</div>
+            </div>
+            <div style="padding:12px;background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:8px;">
+              <div style="font-size:.9rem;color:var(--text3);margin-bottom:4px;">Acumulado 2026</div>
+              <div style="font-size:1.3rem;font-weight:600;color:var(--green);">$93,0M</div>
+              <div style="font-size:.8rem;color:var(--text2);">alquiler + expensas</div>
+            </div>
+          </div>
+          <div style="overflow-x:auto;max-height:400px;overflow-y:auto;border:1px solid rgba(255,255,255,.05);border-radius:8px;">
+            <table style="width:100%;font-size:.85rem;">
+              <thead style="position:sticky;top:0;background:rgba(0,0,0,.2);">
+                <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                  <th style="text-align:left;padding:8px;">Fecha</th>
+                  <th style="text-align:left;padding:8px;">Concepto</th>
+                  <th style="text-align:right;padding:8px;">Monto</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:6px 8px;">06/04/2026</td><td>CHEQUES A JUNIO (Exp. Ene/Feb + Cuotas 5-6)</td><td style="text-align:right;">$59.396.468</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:6px 8px;">06/04/2026</td><td>E-CHEQUE (Alq. Feb/Mar/Abril)</td><td style="text-align:right;">$31.389.339</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:6px 8px;">06/04/2026</td><td>Metrogas Ene/Feb</td><td style="text-align:right;">$2.303.532</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:6px 8px;">09/02/2026</td><td>4ª cuota acuerdo expensas</td><td style="text-align:right;">$8.099.951</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:6px 8px;">09/02/2026</td><td>Expensas diciembre</td><td style="text-align:right;">$9.714.393</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:6px 8px;">09/02/2026</td><td>Alquiler B enero (cheques)</td><td style="text-align:right;">$7.847.335</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:6px 8px;">09/02/2026</td><td>Alquiler A enero (e-cheque)</td><td style="text-align:right;">$7.847.335</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:6px 8px;">31/12/2025</td><td>Metrogas jun-dic 2025</td><td style="text-align:right;">$7.429.533</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:6px 8px;">31/12/2025</td><td>3ª cuota acuerdo expensas</td><td style="text-align:right;">$11.770.856</td></tr>
+                <tr><td style="padding:6px 8px;">25/11/2025</td><td>Expensas octubre 2025 (cheques)</td><td style="text-align:right;">$9.600.000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer-bar">
+        <div class="f-logo"><img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce" style="height:28px;"></div>
+        <div class="f-text">Inmobiliario — Madero Town SRL — 2025-2026</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 </div><!-- /mainContent -->
 
 <!-- ======== CHARTS & DATA ======== -->
@@ -3216,7 +3513,7 @@ function renderResumenTab(e, f, m, totVenta, totCV, totCF, totSueldos, totCMV, t
     </div>
 
     <div class="footer-bar">
-      <div class="f-logo">CAUCE</div>
+      <div class="f-logo"><img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce" style="height:28px;"></div>
       <div class="f-text">Consolidación 2026 — Enero · Febrero · Marzo · Datos actualizados al 31/3/2026</div>
     </div>
   `;
@@ -3459,15 +3756,9 @@ function renderMonthContent(tab, data) {
           <div class="ms-sub">+ ${fmtN(data.nomina.feriados)} feriados</div>
         </div>
       </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-title">Distribución por Área</div>
-          <div class="chart-box" style="height:300px;"><canvas id="chartAreaNomina_${tab}"></canvas></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Distribución por Situación</div>
-          <div class="chart-box" style="height:300px;"><canvas id="chartSituacionNomina_${tab}"></canvas></div>
-        </div>
+      <div class="card">
+        <div class="card-title">Distribución por Área</div>
+        <div class="chart-box" style="height:300px;"><canvas id="chartAreaNomina_${tab}"></canvas></div>
       </div>
       <div class="grid-2">
         <div class="card">
@@ -3496,6 +3787,18 @@ function renderMonthContent(tab, data) {
             </tbody>
           </table>
         </div>
+      </div>
+      <div style="text-align:center;margin-top:20px;">
+        <button onclick="switchView('rrhh');setTimeout(()=>switchRRHHTab('${tab}'),150);" style="
+          display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:12px;
+          border:1px solid rgba(52,211,153,.25);background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(52,211,153,.03));
+          color:var(--green);font-size:.85rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;
+          transition:all .3s;letter-spacing:.3px;
+        " onmouseover="this.style.background='rgba(52,211,153,.15)';this.style.borderColor='rgba(52,211,153,.4)'"
+           onmouseout="this.style.background='linear-gradient(135deg,rgba(52,211,153,.08),rgba(52,211,153,.03))';this.style.borderColor='rgba(52,211,153,.25)'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Ver nómina completa del mes →
+        </button>
       </div>
     </div>
   `;
@@ -3794,7 +4097,7 @@ function renderMonthContent(tab, data) {
 
   let footerHTML = `
     <div class="footer-bar">
-      <div class="f-logo">CAUCE</div>
+      <div class="f-logo"><img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce" style="height:28px;"></div>
       <div class="f-text">Informe de Gestión ${data.month} — Datos actualizados al 31/3/2026</div>
     </div>
   `;
@@ -3804,7 +4107,6 @@ function renderMonthContent(tab, data) {
     { id: 'estado', label: 'Estado de Resultados', always: true },
     { id: 'cmv', label: 'Análisis CMV', always: true },
     { id: 'nomina', label: 'Dotación y Nómina', always: true },
-    { id: 'nomina-completa', label: 'Nómina Completa', always: !!(data.empleados && data.empleados.length > 0) },
     { id: 'sueldos', label: 'Composición Sueldos', always: !!data.sueldosSubDetail },
     { id: 'costos-fijos', label: 'Costos Fijos', always: !!data.cfSubDetail },
     { id: 'ventas', label: 'Ventas por Producto', always: !!data.ventasProducto },
@@ -3819,7 +4121,7 @@ function renderMonthContent(tab, data) {
     </nav>
   `;
 
-  return sidebarHTML + kpiHTML + insightsHTML + estadoHTML + cmvHTML + nominaHTML + nominaCompletaHTML + sueldosHTML + cfHTML + ventasProductoHTML + mediosPagoHTML + centroVentaHTML + otrosHTML + footerHTML;
+  return sidebarHTML + kpiHTML + insightsHTML + estadoHTML + cmvHTML + nominaHTML + sueldosHTML + cfHTML + ventasProductoHTML + mediosPagoHTML + centroVentaHTML + otrosHTML + footerHTML;
 }
 
 function initializeCharts(tab, data) {
@@ -3931,21 +4233,6 @@ function initializeCharts(tab, data) {
       });
     }
 
-    // Nomina Situacion Distribution
-    const situacionNominaEl = document.getElementById('chartSituacionNomina_' + tab);
-    if (situacionNominaEl && data.nomina) {
-      const sit = data.nomina.situacion;
-      chartInstances['situacionNomina_'+tab] = new Chart(situacionNominaEl, {
-        type:'doughnut',
-        data:{
-          labels:['Alta AFIP','Alta Seguro','Baja Csueldo','Extras','Baja Ssueldo'],
-          datasets:[{data:[sit.altaAFIP,sit.altaSeguro,sit.bajaCsueldo,sit.extras,sit.bajaSsueldo],backgroundColor:[blue,green,amber,purple,red],borderColor:'rgba(255,255,255,.1)',borderWidth:1}]
-        },
-        options:{responsive:true,maintainAspectRatio:true,
-          plugins:{legend:{position:'bottom'}}
-        }
-      });
-    }
   }
   } catch(e) { console.warn('Chart init error:', e); }
 }
@@ -3972,12 +4259,12 @@ window.addEventListener('resize', () => { positionTopNav(); });
 // allowedTabs: tabs dentro de Resultados Económicos (null = todas)
 let currentUser = null;
 const USERS = [
-  { hash: '3cbe9096ceb3ae197368e793ea762300bfa5d76988aff20f9f01b97539568a5f', name: 'Franco Davila', cargo: 'Administrador', allowedViews: ['economicos','organigrama','financieros'], allowedTabs: null },
-  { hash: '3a455292555407d0b78e78656aea8d176d93aa8670e2f4893c121a41b5ebd2f3', name: 'Sofía Maidana', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros'], allowedTabs: null },
-  { hash: '2e0b3f5ec08e5aefd612e3a1164da0436d7dea72de7bc20e293c51bc958ca9c9', name: 'Ramiro Maidana', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros'], allowedTabs: null },
-  { hash: 'f60edc98c64589132c727e38043182f4799137a23201717ce48d22f16a76f8b5', name: 'Patricia González', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros'], allowedTabs: null },
-  { hash: '3c8424f7b9e7c826c70fb16b30395cfcd036b8fe5e380a1fbc0de2363036f1b6', name: 'Leonardo La Regina', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros'], allowedTabs: null },
-  { hash: '68739f12714f92674cf6bc4211d4369c3abb2d0545231f195e1175a02e6119de', name: 'Agustín Del Valle', cargo: 'Administración', allowedViews: ['economicos','organigrama','financieros'], allowedTabs: null },
+  { hash: '3cbe9096ceb3ae197368e793ea762300bfa5d76988aff20f9f01b97539568a5f', name: 'Franco Davila', cargo: 'Administrador', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { hash: '3a455292555407d0b78e78656aea8d176d93aa8670e2f4893c121a41b5ebd2f3', name: 'Sofía Maidana', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { hash: '2e0b3f5ec08e5aefd612e3a1164da0436d7dea72de7bc20e293c51bc958ca9c9', name: 'Ramiro Maidana', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { hash: 'f60edc98c64589132c727e38043182f4799137a23201717ce48d22f16a76f8b5', name: 'Patricia González', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { hash: '3c8424f7b9e7c826c70fb16b30395cfcd036b8fe5e380a1fbc0de2363036f1b6', name: 'Leonardo La Regina', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { hash: '68739f12714f92674cf6bc4211d4369c3abb2d0545231f195e1175a02e6119de', name: 'Agustín Del Valle', cargo: 'Administración', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
   { hash: 'a84a9a3991169fd661fc3bffd25e96a84d593cd63810b3ab9640ae969e8145bc', name: 'Martín Tarallo', cargo: 'Gerente de Servicio', allowedViews: ['economicos','organigrama'], allowedTabs: ['resumen'] },
 ];
 
@@ -3996,6 +4283,7 @@ function showWelcomeBanner(user) {
   else if (hour >= 13 && hour < 20) greeting = 'Buenas tardes';
   banner.innerHTML = `
     <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce" style="height:34px;flex-shrink:0;">
       <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#10b981,#059669);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:#fff;flex-shrink:0;">
         ${user.name.split(' ').map(n => n[0]).slice(0,2).join('')}
       </div>
@@ -4042,6 +4330,12 @@ function positionTopNav() {
   // Update financieros top padding
   const finPad = document.querySelector('#view-financieros > div');
   if (finPad) finPad.style.marginTop = (totalFixed + extraPad) + 'px';
+  // Update rrhh top padding
+  const rrhhPad = document.querySelector('#view-rrhh > div');
+  if (rrhhPad) rrhhPad.style.marginTop = (totalFixed + extraPad) + 'px';
+  // Update inmobiliario top padding
+  const inmobPad = document.querySelector('#view-inmobiliario > div');
+  if (inmobPad) inmobPad.style.marginTop = (totalFixed + extraPad) + 'px';
 }
 
 function logout() {
@@ -4113,7 +4407,7 @@ function applyPermissions(user) {
   const tabs = user.allowedTabs; // null = all tabs allowed
 
   // Filter top nav buttons
-  const viewMap = { 'económicos': 'economicos', 'organigrama': 'organigrama', 'financieros': 'financieros' };
+  const viewMap = { 'económicos': 'economicos', 'organigrama': 'organigrama', 'financieros': 'financieros', 'rrhh': 'rrhh', 'inmobiliario': 'inmobiliario' };
   document.querySelectorAll('.top-nav-btn').forEach(btn => {
     const label = btn.textContent.toLowerCase().trim();
     const viewKey = Object.keys(viewMap).find(k => label.includes(k));
@@ -4153,14 +4447,19 @@ function applyPermissions(user) {
 let currentView = 'economicos';
 
 function switchView(view) {
-  if (view === currentView) return;
+  if (view === currentView && view !== 'organigrama') return;
   // Block access to unauthorized views
-  if (currentUser && currentUser.allowedViews && !currentUser.allowedViews.includes(view)) return;
+  if (currentUser && currentUser.allowedViews && !currentUser.allowedViews.includes(view) && view !== 'organigrama') return;
   currentView = view;
   // Update nav buttons
   document.querySelectorAll('.top-nav-btn').forEach(btn => btn.classList.remove('active-nav'));
   document.querySelectorAll('.top-nav-btn').forEach(btn => {
-    if (btn.textContent.toLowerCase().includes(view === 'economicos' ? 'económicos' : view === 'organigrama' ? 'organigrama' : 'financieros')) {
+    const viewLabel = {'economicos':'económicos','financieros':'financieros','rrhh':'rrhh','inmobiliario':'inmobiliario'}[view] || view;
+    if (view !== 'organigrama' && btn.textContent.toLowerCase().includes(viewLabel)) {
+      btn.classList.add('active-nav');
+    }
+    // When viewing organigrama, keep RRHH nav active
+    if (view === 'organigrama' && btn.textContent.toLowerCase().includes('rrhh')) {
       btn.classList.add('active-nav');
     }
   });
@@ -4262,14 +4561,566 @@ window.addEventListener('scroll', () => {
   scrollBtn.classList.toggle('visible', window.scrollY > 400);
 });
 
+// === RRHH FUNCTIONS ===
+function filterRRHH(q) {
+  const rows = document.querySelectorAll('#rrhhTable tbody tr');
+  const val = q.toLowerCase().trim();
+  rows.forEach(r => {
+    const txt = r.textContent.toLowerCase();
+    r.style.display = !val || txt.includes(val) ? '' : 'none';
+  });
+}
+
+let rrhhSortCol = -1, rrhhSortAsc = true;
+function sortRRHH(col) {
+  if (rrhhSortCol === col) { rrhhSortAsc = !rrhhSortAsc; } else { rrhhSortCol = col; rrhhSortAsc = true; }
+  const tbody = document.querySelector('#rrhhTable tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  rows.sort((a, b) => {
+    let va = a.cells[col].textContent.trim();
+    let vb = b.cells[col].textContent.trim();
+    if (col === 4) { va = parseInt(va.replace(/[^0-9]/g,'')) || 0; vb = parseInt(vb.replace(/[^0-9]/g,'')) || 0; return rrhhSortAsc ? va - vb : vb - va; }
+    return rrhhSortAsc ? va.localeCompare(vb, 'es') : vb.localeCompare(va, 'es');
+  });
+  rows.forEach(r => tbody.appendChild(r));
+}
+
+// initRRHHCharts removed — old Nómina Actual tab no longer exists
+
+// === RRHH EVOLUTION CHART ===
+let rrhhEvolutionChartInstance = null;
+function initRRHHEvolutionChart() {
+  if (rrhhEvolutionChartInstance) return;
+  const rrhhEvolutionCtx = document.getElementById('rrhhEvolutionChart');
+  if (rrhhEvolutionCtx) {
+    rrhhEvolutionChartInstance = new Chart(rrhhEvolutionCtx, {
+      type: 'line',
+      data: {
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+        datasets: [
+          {
+            label: 'Sueldos Base ($M)',
+            data: [67.2, 66.3, 72.3, 74.4],
+            borderColor: '#60a5fa',
+            backgroundColor: 'rgba(96, 165, 250, .1)',
+            tension: .4,
+            fill: true,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBackgroundColor: '#60a5fa'
+          },
+          {
+            label: 'Total c/Feriados ($M)',
+            data: [74.9, 74.3, 75.6, null],
+            borderColor: '#34d399',
+            backgroundColor: 'rgba(52, 211, 153, .05)',
+            tension: .4,
+            fill: true,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            pointBackgroundColor: '#34d399'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { padding: 16, font: { size: 12 } }
+          }
+        },
+        scales: {
+          y: {
+            grid: { color: 'rgba(255,255,255,.03)' },
+            ticks: { callback: v => '$' + v + 'M' }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  }
+}
+
+function initInmobiliarioCharts() {
+  const inmobCtx = document.getElementById('inmobiliarioChart');
+  if (inmobCtx) {
+    const data2025 = [
+      { mes: 'Ene', alquiler: 13.5, expensas: 10.875880 },
+      { mes: 'Feb', alquiler: 13.5, expensas: 12.414595 },
+      { mes: 'Mar', alquiler: 13.5, expensas: 13.237754 },
+      { mes: 'Abr', alquiler: 15.694670, expensas: 13.489598 },
+      { mes: 'May', alquiler: 15.694670, expensas: 15.899508 },
+      { mes: 'Jun', alquiler: 15.694670, expensas: 11.625380 },
+      { mes: 'Jul', alquiler: 15.694670, expensas: 15.062007 },
+      { mes: 'Ago', alquiler: 15.694670, expensas: 16.129094 },
+      { mes: 'Sep', alquiler: 15.694670, expensas: 10.107990 },
+      { mes: 'Oct', alquiler: 15.694670, expensas: 9.420156 },
+      { mes: 'Nov', alquiler: 15.694670, expensas: 9.837334 },
+      { mes: 'Dic', alquiler: 15.694670, expensas: 9.714393 },
+    ];
+    const data2026 = [
+      { mes: 'Ene', alquiler: 15.694670, expensas: 9.852574 },
+      { mes: 'Feb', alquiler: 15.694670, expensas: 10.248782 },
+      { mes: 'Mar', alquiler: 15.694670, expensas: 10.248782 },
+    ];
+    const allData = [...data2025, ...data2026];
+    const labels = allData.map(d => d.mes);
+    const alquilerData = allData.map(d => d.alquiler);
+    const expensasData = allData.map(d => d.expensas);
+
+    new Chart(inmobCtx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Alquiler',
+            data: alquilerData,
+            backgroundColor: 'rgba(60, 165, 250, 0.7)',
+            borderColor: 'rgba(60, 165, 250, 1)',
+            borderWidth: 1,
+            borderRadius: 6
+          },
+          {
+            label: 'Expensas (50%)',
+            data: expensasData,
+            backgroundColor: 'rgba(52, 211, 153, 0.7)',
+            borderColor: 'rgba(52, 211, 153, 1)',
+            borderWidth: 1,
+            borderRadius: 6
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 16,
+              font: { size: 12 }
+            }
+          }
+        },
+        scales: {
+          y: {
+            grid: { color: 'rgba(255,255,255,.03)' },
+            ticks: {
+              callback: v => '$' + v.toFixed(1) + 'M'
+            }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
+      }
+    });
+  }
+}
+
+// === RRHH MONTHLY DATA ===
+const rrhhMonthlyData = {
+  enero: {
+    title: 'Enero 2026',
+    summary: { base: 67194000, totalFer: 74869218, descuentos: 4200711, banco: 26747591, efectivo: 43920916, efectivoVales: 48121627, dotacion: 49 },
+    employees: [
+      ['BELARDINELLI','Emiliano Y.','ALTA AFIP','Chef',4200000,336000,4536000,3621466],
+      ['DEL VALLE PAZ','Thomás A.','ALTA AFIP','Compras',3250000,260000,3510000,2826934],
+      ['SOTO','Lucas A.','ALTA AFIP','Parrillero',2000000,160000,2160000,1139958],
+      ['BENITEZ RIOS','Natalia','ALTA AFIP','Administración',2000000,0,2000000,2000000],
+      ['ESPINOSA','Cesar','ALTA SEGURO','Cocinero',1800000,0,1800000,1607000],
+      ['SÁNCHEZ','Marcos U.','ALTA AFIP','Parrillero',1700000,136000,1836000,1096310],
+      ['GAUTO','Cesar L.','ALTA AFIP','Parrillero',1700000,136000,1836000,1145177],
+      ['PICHEL VERA','Laura','ALTA AFIP','Jefe Barra',1600000,128000,1728000,903286],
+      ['SILVEIRA','Alanis Y.','ALTA AFIP','Jefa Turno',1600000,128000,1728000,1040390],
+      ['RODRÍGUEZ','Eduardo C.','ALTA AFIP','Sommelier',1600000,128000,1728000,1538585],
+      ['RODRÍGUEZ','Diego E.','ALTA AFIP','Sommelier',1600000,128000,1728000,993521],
+      ['FLORES','Christian D.','ALTA AFIP','Meitre',1600000,128000,1728000,1044934],
+      ['GONZÁLEZ','Verónica','ALTA AFIP','Meitre',1600000,128000,1728000,848660],
+      ['PAZ','Silvana M.','ALTA AFIP','Meitre',1600000,128000,1728000,1014016],
+      ['MARTI','Patricia N.','ALTA AFIP','Meitre',1600000,128000,1728000,1118938],
+      ['MOREYRA','Marcelo I.','ALTA AFIP','Mozo',1600000,128000,1728000,1078792],
+      ['ROBLES','Marcos E.','ALTA AFIP','Cajero',1500000,120000,1620000,772044],
+      ['BRAZDA','Tiara','ALTA AFIP','Pastelera',1300000,104000,1404000,730466],
+      ['CÁCERES','Patricio A.','ALTA AFIP','Cocinero',1200000,96000,1296000,521728],
+      ['MAZZEO','Tomás A.','ALTA AFIP','Barman',1200000,96000,1296000,486907],
+      ['ACOSTA','Sebastián A.','ALTA AFIP','Cajero',1200000,96000,1296000,657087],
+      ['VALDEZ','Matías M.','ALTA AFIP','Cocina',1200000,96000,1296000,592286],
+      ['GONZALES','Gastón E.','ALTA AFIP','Cocina',1200000,96000,1296000,556439],
+      ['SERRANO','Daniela N.','ALTA AFIP','Administración',1200000,0,1200000,624957],
+      ['AGUIRRE DEL CORAZÓN','Griselda','ALTA AFIP','Recepcionista',1200000,96000,1296000,587005],
+      ['PARK','Gabriela C.','ALTA AFIP','Recepcionista',1200000,96000,1296000,617700],
+      ['LÓPEZ','Delfina V.','ALTA AFIP','Comisse',1200000,96000,1296000,690682],
+      ['FLORES','Ignacio R.','ALTA AFIP','Mozo',1200000,96000,1296000,622466],
+      ['MAIDANA','Lucas A.','ALTA AFIP','Mozo',1200000,96000,1296000,616888],
+      ['MALDONADO','Gabriel','ALTA AFIP','Mozo',1200000,96000,1296000,597581],
+      ['ROMERO','Iara A.','ALTA AFIP','Mozo',1200000,96000,1296000,614944],
+      ['VEGA','Iván','ALTA AFIP','Mozo',1200000,96000,1296000,617700],
+      ['CARDOZO RODA','Luciano E.','ALTA AFIP','Valet',1200000,96000,1296000,686907],
+      ['TORRES','Eduardo A.','ALTA AFIP','Valet',1200000,96000,1296000,686907],
+      ['CHAZARRETA','Karina S.','ALTA AFIP','Limpieza',1150000,92000,1242000,732439],
+      ['ESCUDERO ROJAS','Diana A.','ALTA AFIP','Limpieza',1150000,0,1150000,728858],
+      ['ORTIZ','Susana A.','ALTA AFIP','Cocina',1150000,92000,1242000,605344],
+      ['BATALLA TRONCOSO','Javier F.','ALTA AFIP','Barback',1100000,88000,1188000,448439],
+      ['SOSA','Marcelo D.','ALTA AFIP','Cocina',1100000,0,1100000,520888],
+      ['SANCHEZ','Alberto','ALTA AFIP','Panadero',1000000,80000,1080000,335060],
+      ['GONZALEZ','Roxana L.','ALTA AFIP','Bachero',975000,78000,1053000,501235],
+      ['NIETO','Alejandro J.','ALTA AFIP','Bachero',975000,78000,1053000,160992],
+      ['VEGA','Luis','ALTA SEGURO','Mantenimiento',975000,0,975000,975000],
+      ['MUÑOZ','Natalia A.','BAJA AFIP','Mozo',1200000,96000,1296000,946000],
+      ['ÁLVAREZ','Priscila N.','BAJA AFIP','Cocina',1200000,96000,1296000,1296000],
+      ['OCAMPO','Wilma S.','ALTA SEGURO','Comisse',38000,0,646000,646000],
+      ['MISENTA','Lola','BAJA SEGURO','Cajero',400000,0,400000,400000],
+      ['SOTO','Camila B.','BAJA SEGURO','Barback',315000,0,315000,0],
+      ['ELISIRI','Brisa M.','ALTA SEGURO','Pastelera',80000,0,80000,80000]
+    ]
+  },
+  febrero: {
+    title: 'Febrero 2026',
+    summary: { base: 66340000, totalFer: 74258000, descuentos: 27528000, banco: 29590791, efectivo: 41414060, efectivoVales: 45000000, dotacion: 48 },
+    employees: [
+      ['BELARDINELLI','Emiliano Y.','ALTA AFIP','Chef',4200000,336000,4536000,3456500],
+      ['DEL VALLE PAZ','Thomás A.','ALTA AFIP','Compras',3250000,260000,3510000,2826934],
+      ['SOTO','Lucas A.','ALTA AFIP','Parrillero',2000000,160000,2160000,0],
+      ['BENITEZ RIOS','Natalia','ALTA SEGURO','Administración',2000000,0,2000000,2000000],
+      ['ESPINOSA','Cesar','ALTA SEGURO','Cocinero',1800000,0,1800000,1607000],
+      ['SÁNCHEZ','Marcos U.','ALTA AFIP','Parrillero',1700000,136000,1836000,1096310],
+      ['GAUTO','Cesar L.','ALTA AFIP','Parrillero',1700000,136000,1836000,1145177],
+      ['PICHEL VERA','Laura','ALTA AFIP','Jefe Barra',1600000,128000,1728000,903286],
+      ['SILVEIRA','Alanis Y.','ALTA AFIP','Jefa Turno',1600000,128000,1728000,1040390],
+      ['RODRÍGUEZ','Eduardo C.','ALTA AFIP','Sommelier',1600000,128000,1728000,1538585],
+      ['RODRÍGUEZ','Diego E.','ALTA AFIP','Sommelier',1600000,128000,1728000,993521],
+      ['FLORES','Christian D.','ALTA AFIP','Meitre',1600000,128000,1728000,1044934],
+      ['GONZÁLEZ','Verónica','ALTA AFIP','Meitre',1600000,128000,1728000,848660],
+      ['PAZ','Silvana M.','ALTA AFIP','Meitre',1600000,128000,1728000,1014016],
+      ['MARTI','Patricia N.','ALTA AFIP','Meitre',1600000,128000,1728000,1118938],
+      ['MOREYRA','Marcelo I.','ALTA AFIP','Mozo',1600000,128000,1728000,1078792],
+      ['ROBLES','Marcos E.','ALTA AFIP','Cajero',1500000,120000,1620000,772044],
+      ['BRAZDA','Tiara','ALTA AFIP','Pastelera',1300000,104000,1404000,730466],
+      ['CÁCERES','Patricio A.','ALTA AFIP','Cocinero',1200000,96000,1296000,521728],
+      ['MAZZEO','Tomás A.','ALTA AFIP','Barman',1200000,96000,1296000,486907],
+      ['ACOSTA','Sebastián A.','ALTA AFIP','Cajero',1200000,96000,1296000,657087],
+      ['VALDEZ','Matías M.','ALTA AFIP','Cocina',1200000,96000,1296000,592286],
+      ['GONZALES','Gastón E.','ALTA AFIP','Cocina',1200000,96000,1296000,556439],
+      ['SERRANO','Daniela N.','ALTA AFIP','Administración',1200000,0,1200000,624957],
+      ['AGUIRRE DEL CORAZÓN','Griselda','ALTA AFIP','Recepcionista',1200000,96000,1296000,587005],
+      ['PARK','Gabriela C.','ALTA AFIP','Recepcionista',1200000,96000,1296000,617700],
+      ['LÓPEZ','Delfina V.','ALTA AFIP','Comisse',1200000,96000,1296000,690682],
+      ['FLORES','Ignacio R.','ALTA AFIP','Mozo',1200000,96000,1296000,622466],
+      ['MAIDANA','Lucas A.','ALTA AFIP','Mozo',1200000,96000,1296000,616888],
+      ['MALDONADO','Gabriel','ALTA AFIP','Mozo',1200000,96000,1296000,597581],
+      ['ROMERO','Iara A.','ALTA AFIP','Mozo',1200000,96000,1296000,614944],
+      ['VEGA','Iván','ALTA AFIP','Mozo',1200000,96000,1296000,617700],
+      ['CARDOZO RODA','Luciano E.','ALTA AFIP','Valet',1200000,96000,1296000,686907],
+      ['TORRES','Eduardo A.','ALTA AFIP','Valet',1200000,96000,1296000,686907],
+      ['CHAZARRETA','Karina S.','ALTA AFIP','Limpieza',1150000,92000,1242000,732439],
+      ['ESCUDERO ROJAS','Diana A.','ALTA AFIP','Limpieza',1150000,0,1150000,728858],
+      ['ORTIZ','Susana A.','ALTA AFIP','Cocina',1150000,92000,1242000,605344],
+      ['BATALLA TRONCOSO','Javier F.','ALTA AFIP','Barback',1100000,88000,1188000,448439],
+      ['SOSA','Marcelo D.','ALTA AFIP','Cocina',1100000,0,1100000,520888],
+      ['COPANI','Santiago M.','ALTA AFIP','Comisse',1100000,0,1100000,550000],
+      ['SANCHEZ','Alberto','ALTA AFIP','Panadero',1000000,80000,1080000,335060],
+      ['GONZALEZ','Roxana L.','ALTA AFIP','Bachero',975000,78000,1053000,501235],
+      ['NIETO','Alejandro J.','ALTA AFIP','Bachero',975000,78000,1053000,160992],
+      ['VEGA','Luis','ALTA SEGURO','Mantenimiento',975000,0,975000,975000],
+      ['ELISIRI','Brisa M.','ALTA SEGURO','Pastelera',80000,0,80000,80000]
+    ]
+  },
+  marzo: {
+    title: 'Marzo 2026',
+    summary: { base: 72328167, totalFer: 75638433, descuentos: 11114311, banco: 29590791, efectivo: 37252604, efectivoVales: 48449585, dotacion: 49 },
+    employees: [
+      ['BELARDINELLI','Emiliano Y.','ALTA AFIP','Chef',4500000,0,4500000,3859230],
+      ['DEL VALLE PAZ','Thomás A.','ALTA AFIP','Compras',3250000,260000,3510000,1098388],
+      ['SOTO','Lucas A.','ALTA AFIP','Parrillero',2000000,0,2000000,0],
+      ['BENITEZ RIOS','Natalia','ALTA SEGURO','Administración',2000000,0,2000000,2000000],
+      ['ESPINOSA','Cesar','ALTA SEGURO','Cocinero',1800000,208000,1888000,1806000],
+      ['SÁNCHEZ','Marcos U.','ALTA AFIP','Parrillero',1700000,272000,1302790,1138789],
+      ['GAUTO','Cesar L.','ALTA AFIP','Parrillero',1700000,136000,1836000,953119],
+      ['GÓMEZ','César L.','ALTA AFIP','Jefe Turno',1600000,128000,1541333,1337214],
+      ['PICHEL VERA','Laura','ALTA AFIP','Jefe Barra',1600000,128000,1728000,1201780],
+      ['SILVEIRA','Alanis Y.','ALTA AFIP','Jefa Turno',1600000,128000,1728000,1047086],
+      ['RODRÍGUEZ','Eduardo C.','ALTA AFIP','Sommelier',1600000,128000,1728000,1327456],
+      ['RODRÍGUEZ','Diego E.','ALTA AFIP','Sommelier',1600000,128000,1728000,1171580],
+      ['FLORES','Christian D.','ALTA AFIP','Meitre',1600000,128000,1728000,891462],
+      ['GONZÁLEZ','Verónica','ALTA AFIP','Meitre',1600000,128000,1728000,828226],
+      ['PAZ','Silvana M.','ALTA AFIP','Meitre',1600000,128000,1728000,1014016],
+      ['MARTI','Patricia N.','ALTA AFIP','Meitre',1600000,128000,1728000,1271270],
+      ['MOREYRA','Marcelo I.','ALTA AFIP','Mozo',1600000,256000,1856000,1157044],
+      ['ROBLES','Marcos E.','ALTA AFIP','Cajero',1500000,120000,1620000,1056139],
+      ['COPANI','Santiago M.','ALTA AFIP','Comisse',1100000,41687,554400,220453],
+      ['BRAZDA','Tiara','ALTA AFIP','Pastelera',1300000,104000,1308000,810032],
+      ['ELISIRI','Brisa M.','ALTA AFIP','Pastelera',1200000,96000,1296000,758124],
+      ['CÁCERES','Patricio A.','ALTA AFIP','Cocinero',1200000,96000,1296000,809891],
+      ['SOSA','Roberto Y.','ALTA AFIP','Cocinero',1040000,192000,898226,307774],
+      ['MAZZEO','Tomás A.','ALTA AFIP','Barman',1200000,96000,1296000,677001],
+      ['ACOSTA','Sebastián A.','ALTA AFIP','Cajero',1200000,96000,1296000,819876],
+      ['SERRANO','Daniela N.','ALTA AFIP','Administración',1200000,0,1200000,968417],
+      ['AGUIRRE DEL CORAZÓN','Griselda','ALTA AFIP','Recepcionista',1200000,96000,1620000,707132],
+      ['PARK','Gabriela C.','ALTA AFIP','Recepcionista',1200000,96000,1296000,670122],
+      ['LÓPEZ','Delfina V.','ALTA AFIP','Comisse',1200000,96000,1296000,867273],
+      ['FLORES','Ignacio R.','ALTA AFIP','Mozo',1200000,96000,1296000,519686],
+      ['MAIDANA','Lucas A.','ALTA AFIP','Mozo',1200000,96000,1296000,866864],
+      ['MALDONADO','Gabriel','ALTA AFIP','Mozo',1200000,96000,1296000,858364],
+      ['ROMERO','Iara A.','ALTA AFIP','Mozo',1200000,96000,1296000,756629],
+      ['VEGA','Iván','ALTA AFIP','Mozo',1200000,96000,1296000,707122],
+      ['CARDOZO RODA','Luciano E.','ALTA AFIP','Valet',1200000,96000,1296000,871344],
+      ['TORRES','Eduardo A.','ALTA AFIP','Valet',1200000,96000,1296000,777061],
+      ['CHAZARRETA','Karina S.','ALTA AFIP','Limpieza',1150000,92000,1242000,715767],
+      ['ESCUDERO ROJAS','Diana A.','ALTA AFIP','Limpieza',1150000,0,1150000,808423],
+      ['ORTIZ','Susana A.','ALTA AFIP','Cocina',1150000,96000,1242000,706521],
+      ['BATALLA TRONCOSO','Javier F.','ALTA AFIP','Barback',1100000,88000,1276000,529249],
+      ['GONZALEZ','Roxana L.','ALTA AFIP','Bachero',975000,78000,1131000,620194],
+      ['NIETO','Alejandro J.','ALTA AFIP','Bachero',975000,78000,1053000,371576],
+      ['SANCHEZ','Alberto','ALTA AFIP','Panadero',1200000,96000,1296000,423581],
+      ['VEGA','Luis','ALTA SEGURO','Mantenimiento',975000,0,975000,975000],
+      ['VILLANUEVA','Patricia N.','ALTA SEGURO','Recepción',1296000,0,1296000,0]
+    ]
+  },
+  abril: {
+    title: 'Abril 2026',
+    summary: { base: 74395000, totalFer: null, descuentos: null, banco: null, efectivo: null, efectivoVales: null, dotacion: null },
+    employees: [
+      ['BELARDINELLI','Emiliano Y.','ALTA AFIP','Chef',4500000,0,0,0],
+      ['DEL VALLE PAZ','Thomás A.','ALTA AFIP','Compras',3250000,0,0,0],
+      ['BENITEZ RIOS','Natalia','ALTA SEGURO','Administración',2000000,0,0,0],
+      ['SÁNCHEZ','Marcos U.','ALTA AFIP','Parrillero',1800000,0,0,0],
+      ['GAUTO','Cesar L.','ALTA AFIP','Parrillero',1800000,0,0,0],
+      ['GÓMEZ','César L.','ALTA AFIP','Jefe Turno',1600000,0,0,0],
+      ['PICHEL VERA','Laura','ALTA AFIP','Jefe Barra',1600000,0,0,0],
+      ['SILVEIRA','Alanis Y.','ALTA AFIP','Jefa Turno',1600000,0,0,0],
+      ['RODRÍGUEZ','Eduardo C.','ALTA AFIP','Sommelier',1600000,0,0,0],
+      ['RODRÍGUEZ','Diego E.','ALTA AFIP','Sommelier',1600000,0,0,0],
+      ['FLORES','Christian D.','ALTA AFIP','Meitre',1600000,0,0,0],
+      ['GONZÁLEZ','Verónica','ALTA AFIP','Meitre',1600000,0,0,0],
+      ['PAZ','Silvana M.','ALTA AFIP','Meitre',1600000,0,0,0],
+      ['MARTI','Patricia N.','ALTA AFIP','Meitre',1600000,0,0,0],
+      ['MOREYRA','Marcelo I.','ALTA AFIP','Mozo',1600000,0,0,0],
+      ['ROBLES','Marcos E.','ALTA AFIP','Cajero',1500000,0,0,0],
+      ['CÁCERES','Patricio A.','ALTA AFIP','Cocinero',1600000,0,0,0],
+      ['SOSA','Roberto Y.','ALTA AFIP','Cocinero',1300000,0,0,0],
+      ['BRAZDA','Tiara','ALTA AFIP','Pastelera',1300000,0,0,0],
+      ['ELISIRI','Brisa M.','ALTA AFIP','Pastelera',1200000,0,0,0],
+      ['MAZZEO','Tomás A.','ALTA AFIP','Barman',1200000,0,0,0],
+      ['ACOSTA','Sebastián A.','ALTA AFIP','Cajero',1200000,0,0,0],
+      ['SERRANO','Daniela N.','ALTA AFIP','Administración',600000,0,0,0],
+      ['AGUIRRE DEL CORAZÓN','Griselda','ALTA AFIP','Recepcionista',1200000,0,0,0],
+      ['PARK','Gabriela C.','ALTA AFIP','Recepcionista',1200000,0,0,0],
+      ['LÓPEZ','Delfina V.','ALTA AFIP','Comisse',1200000,0,0,0],
+      ['COPANI','Santiago M.','ALTA AFIP','Comisse',1100000,0,0,0],
+      ['FLORES','Ignacio R.','ALTA AFIP','Mozo',1200000,0,0,0],
+      ['MAIDANA','Lucas A.','ALTA AFIP','Mozo',1200000,0,0,0],
+      ['MALDONADO','Gabriel','ALTA AFIP','Mozo',1200000,0,0,0],
+      ['ROMERO','Iara A.','ALTA AFIP','Mozo',1200000,0,0,0],
+      ['VEGA','Iván','ALTA AFIP','Mozo',1200000,0,0,0],
+      ['CARDOZO RODA','Luciano E.','ALTA AFIP','Valet',1200000,0,0,0],
+      ['TORRES','Eduardo A.','ALTA AFIP','Valet',1200000,0,0,0],
+      ['CHAZARRETA','Karina S.','ALTA AFIP','Limpieza',1150000,0,0,0],
+      ['ESCUDERO ROJAS','Diana A.','ALTA AFIP','Limpieza',1150000,0,0,0],
+      ['ORTIZ','Susana A.','ALTA AFIP','Ayudante Cocina',1150000,0,0,0],
+      ['SOSA','Marcelo D.','ALTA AFIP','Ayudante Cocina',1200000,0,0,0],
+      ['BATALLA TRONCOSO','Javier F.','ALTA AFIP','Barback',1100000,0,0,0],
+      ['GONZALEZ','Roxana L.','ALTA AFIP','Bachero',975000,0,0,0],
+      ['NIETO','Alejandro J.','ALTA AFIP','Bachero',1200000,0,0,0],
+      ['SANCHEZ','Alberto','ALTA AFIP','Panadero',1200000,0,0,0],
+      ['VEGA','Luis','EXTRA','Mantenimiento',975000,0,0,0],
+      ['VILLANUEVA','Patricia N.','ALTA SEGURO','Recepción',915000,0,0,0],
+      ['LEZCANO','Jorge','ALTA SEGURO','Ayudante Cocina',1300000,0,0,0],
+      ['GUEVARA','Gabriel G.','ALTA SEGURO','Ayudante Cocina',1300000,0,0,0],
+      ['BREME','Damaris D.','ALTA SEGURO','Recepción',680000,0,0,0],
+      ['ZELINSKY','Milagros V.','ALTA SEGURO','Comisse',680000,0,0,0]
+    ]
+  }
+};
+
+function renderRRHHMonth(month) {
+  const d = rrhhMonthlyData[month];
+  if (!d) return;
+  const container = document.getElementById('rrhh-tab-' + month);
+  if (!container || container.getAttribute('data-rendered')) return;
+  container.setAttribute('data-rendered', '1');
+
+  const fmtN = v => v === null ? '—' : '$' + Math.round(v).toLocaleString('es-AR');
+  const fmtM = v => v === null ? '—' : '$' + (v/1e6).toFixed(1) + 'M';
+  const s = d.summary;
+  const emps = d.employees.filter(e => e[4] > 0).sort((a,b) => b[4] - a[4]);
+
+  // Calculate area stats
+  const areas = {};
+  emps.forEach(e => {
+    const area = e[3];
+    if (!areas[area]) areas[area] = { count: 0, total: 0 };
+    areas[area].count++;
+    areas[area].total += e[4];
+  });
+  const areasSorted = Object.entries(areas).sort((a,b) => b[1].total - a[1].total);
+  const totalSueldos = emps.reduce((a,e) => a + e[4], 0);
+
+  // Build situation counts
+  const sits = {};
+  emps.forEach(e => { sits[e[2]] = (sits[e[2]] || 0) + 1; });
+
+  let html = `<div style="max-width:1220px;margin:0 auto;padding:0 28px;position:relative;z-index:1;">`;
+
+  // KPIs
+  html += `<div class="section" style="margin-top:24px;">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,rgba(96,165,250,.15),rgba(96,165,250,.05));border:1px solid rgba(96,165,250,.2);">💰</div>
+      <div class="section-title">Liquidación ${d.title}</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-accent" style="background:linear-gradient(90deg,#60a5fa,#3b82f6);"></div><div class="kpi-glow" style="background:#3b82f6;"></div><div class="kpi-label">Sueldos Base</div><div class="kpi-value">${fmtM(s.base)}</div><div class="kpi-sub">${emps.length} empleados activos</div></div>
+      <div class="kpi-card"><div class="kpi-accent" style="background:linear-gradient(90deg,#34d399,#10b981);"></div><div class="kpi-glow" style="background:#10b981;"></div><div class="kpi-label">Total c/Feriados</div><div class="kpi-value">${fmtM(s.totalFer)}</div><div class="kpi-sub">con remuneración feriados</div></div>
+      <div class="kpi-card"><div class="kpi-accent" style="background:linear-gradient(90deg,#f87171,#ef4444);"></div><div class="kpi-glow" style="background:#ef4444;"></div><div class="kpi-label">Descuentos</div><div class="kpi-value">${fmtM(s.descuentos)}</div><div class="kpi-sub">aportes y embargos</div></div>
+      <div class="kpi-card"><div class="kpi-accent" style="background:linear-gradient(90deg,#fbbf24,#f59e0b);"></div><div class="kpi-glow" style="background:#f59e0b;"></div><div class="kpi-label">Total Banco</div><div class="kpi-value">${fmtM(s.banco)}</div><div class="kpi-sub">transferencias</div></div>
+      <div class="kpi-card"><div class="kpi-accent" style="background:linear-gradient(90deg,#a78bfa,#8b5cf6);"></div><div class="kpi-glow" style="background:#8b5cf6;"></div><div class="kpi-label">Total Efectivo</div><div class="kpi-value">${fmtM(s.efectivo)}</div><div class="kpi-sub">pagos en mano</div></div>
+    </div>
+  </div>`;
+
+  // Area analysis
+  html += `<div class="section" style="margin-top:32px;">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,rgba(96,165,250,.15),rgba(96,165,250,.05));border:1px solid rgba(96,165,250,.2);">📊</div>
+      <div class="section-title">Análisis por Área</div>
+      <div class="section-line"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="card">
+        <div class="card-title">Costo por Área</div>
+        <div style="overflow-x:auto;"><table style="font-size:.75rem;">
+          <thead><tr><th>Área</th><th>Personas</th><th>Costo Total</th><th>Promedio</th><th>% Total</th></tr></thead>
+          <tbody>`;
+  areasSorted.forEach(([area, data]) => {
+    html += '<tr><td>' + area + '</td><td>' + data.count + '</td><td>' + fmtN(data.total) + '</td><td>' + fmtN(Math.round(data.total/data.count)) + '</td><td>' + ((data.total/totalSueldos)*100).toFixed(1) + '%</td></tr>';
+  });
+  html += `</tbody></table></div></div>
+      <div class="card">
+        <div class="card-title">Top 10 Remuneraciones</div>
+        <div style="overflow-x:auto;"><table style="font-size:.75rem;">
+          <thead><tr><th>Nombre</th><th>Área</th><th>Sueldo</th><th>Feriados</th><th>Total</th></tr></thead>
+          <tbody>`;
+  emps.slice(0, 10).forEach(e => {
+    html += '<tr><td>' + e[0] + ' ' + e[1] + '</td><td>' + e[3] + '</td><td>' + fmtN(e[4]) + '</td><td>' + fmtN(e[5]) + '</td><td>' + fmtN(e[6]) + '</td></tr>';
+  });
+  html += `</tbody></table></div></div>
+    </div>
+  </div>`;
+
+  // Full employee table
+  const searchId = 'rrhhSearch_' + month;
+  html += `<div class="section" style="margin-top:32px;">
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,rgba(52,211,153,.15),rgba(52,211,153,.05));border:1px solid rgba(52,211,153,.2);">👥</div>
+      <div class="section-title">Nómina Completa ${d.title}</div>
+      <div class="section-line"></div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <input type="text" id="${searchId}" placeholder="Buscar..." oninput="filterRRHHMonth('${searchId}','rrhhTbody_${month}')" style="width:100%;max-width:400px;padding:10px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:var(--text);font-size:16px;font-family:'Inter',sans-serif;outline:none;">
+    </div>
+    <div class="card" style="overflow-x:auto;">
+      <table style="min-width:600px;font-size:.75rem;">
+        <thead><tr><th>#</th><th>Apellido</th><th>Nombre</th><th>Área</th><th>Situación</th><th style="text-align:right">Sueldo</th><th style="text-align:right">Feriados</th><th style="text-align:right">Total</th></tr></thead>
+        <tbody id="rrhhTbody_${month}">`;
+  emps.forEach((e, i) => {
+    const sitColor = e[2].includes('ALTA AFIP') ? 'var(--green)' : e[2].includes('SEGURO') ? 'var(--amber)' : e[2].includes('EXTRA') ? 'var(--purple)' : 'var(--red)';
+    html += '<tr data-search="' + (e[0]+' '+e[1]+' '+e[2]+' '+e[3]).toLowerCase() + '"><td style="color:var(--text3);">' + (i+1) + '</td><td style="font-weight:600;">' + e[0] + '</td><td>' + e[1] + '</td><td style="color:var(--text2);">' + e[3] + '</td><td><span style="color:' + sitColor + ';font-weight:600;">' + e[2] + '</span></td><td style="text-align:right">' + fmtN(e[4]) + '</td><td style="text-align:right">' + (e[5] > 0 ? fmtN(e[5]) : '—') + '</td><td style="text-align:right;font-weight:700;">' + fmtN(e[6]) + '</td></tr>';
+  });
+  html += `</tbody></table></div>
+  </div>`;
+
+  // Footer
+  html += `<div class="footer-bar">
+    <div class="f-logo"><img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce" style="height:28px;"></div>
+    <div class="f-text">RRHH — ${d.title}</div>
+  </div>`;
+
+  html += `</div>`;
+  container.innerHTML = html;
+}
+
+function filterRRHHMonth(searchId, tbodyId) {
+  const query = document.getElementById(searchId).value.toLowerCase().trim();
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  tbody.querySelectorAll('tr').forEach(row => {
+    const data = row.getAttribute('data-search') || '';
+    row.style.display = !query || data.includes(query) ? '' : 'none';
+  });
+}
+
+// === RRHH TAB SWITCHING ===
+function switchRRHHTab(tab) {
+  document.querySelectorAll('.rrhh-tab').forEach(b => b.classList.remove('active-tab'));
+
+  // Hide all RRHH tab content
+  document.querySelectorAll('[id^="rrhh-tab-"]').forEach(el => el.style.display = 'none');
+
+  if (tab === 'organigrama') {
+    // Clone organigrama content into RRHH tab container on first use
+    const orgContainer = document.getElementById('rrhh-tab-organigrama');
+    if (orgContainer && !orgContainer.hasChildNodes()) {
+      const orgSource = document.getElementById('view-organigrama');
+      if (orgSource) {
+        orgContainer.innerHTML = orgSource.querySelector(':scope > div').innerHTML;
+      }
+    }
+    if (orgContainer) orgContainer.style.display = '';
+  } else {
+    const target = document.getElementById('rrhh-tab-' + tab);
+    if (target) target.style.display = '';
+    // Render month content if not yet rendered
+    if (['enero','febrero','marzo','abril'].includes(tab)) {
+      renderRRHHMonth(tab);
+    }
+  }
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
+  document.querySelectorAll('.rrhh-tab').forEach(b => {
+    const txt = b.textContent.toLowerCase();
+    if ((tab === 'resumen' && txt.includes('resumen')) ||
+        (tab === 'organigrama' && txt.includes('organigrama')) ||
+        (tab === 'enero' && txt.includes('enero')) ||
+        (tab === 'febrero' && txt.includes('febrero')) ||
+        (tab === 'marzo' && txt.includes('marzo')) ||
+        (tab === 'abril' && txt.includes('abril'))) {
+      b.classList.add('active-tab');
+    }
+  });
+
+  // Initialize evolution chart for Resumen tab
+  if (tab === 'resumen') {
+    setTimeout(initRRHHEvolutionChart, 100);
+  }
+
+  // Re-trigger reveal animations for newly visible content
+  setTimeout(() => {
+    const container = document.getElementById('rrhh-tab-' + tab);
+    if (container) {
+      container.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+    }
+  }, 50);
+}
+
 // === FINANCIAL CHARTS ===
 let finChartsInitialized = false;
+let inmobChartsInitialized = false;
 const origSwitchView = switchView;
 switchView = function(view) {
   origSwitchView(view);
   if (view === 'financieros' && !finChartsInitialized) {
     finChartsInitialized = true;
     setTimeout(initFinancialCharts, 100);
+  }
+  // RRHH charts now initialized per-tab (evolution chart in switchRRHHTab)
+  if (view === 'inmobiliario' && !inmobChartsInitialized) {
+    inmobChartsInitialized = true;
+    setTimeout(initInmobiliarioCharts, 100);
   }
 };
 
