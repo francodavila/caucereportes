@@ -15,7 +15,8 @@ export const firebaseConfig = {
   appId: "1:147765697767:web:fff36ac8f3edb4ee999642"
 };
 
-// Mail del admin (debe coincidir con la firestore.rules)
+// Mails de admin (deben coincidir con la firestore.rules)
 export const ADMIN_EMAILS = [
-  'francodaviladj@gmail.com'
+  'francodaviladj@gmail.com',
+  'tomidvpaz@gmail.com'
 ];
