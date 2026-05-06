@@ -947,7 +947,8 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 }
 
 /* Tabla cheques */
-.caja-data-table { width: 100%; border-collapse: collapse; font-size:.76rem; }
+.caja-data-table { width: 100%; border-collapse: collapse; font-size:.76rem; table-layout: auto; }
+.caja-data-table th, .caja-data-table td { white-space: nowrap; }
 .caja-data-table thead th { background: rgba(255,255,255,.03); color: var(--text3); padding: 10px 8px;
   text-align:left; font-weight:600; font-size:.62rem; text-transform:uppercase; letter-spacing:1.5px;
   border-bottom: 1px solid rgba(255,255,255,.08); position:sticky; top:0; z-index:1; }
@@ -1131,6 +1132,15 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
     <button class="tab-pill" onclick="switchTab('enero', event)">Enero</button>
     <button class="tab-pill" onclick="switchTab('febrero', event)">Febrero</button>
     <button class="tab-pill" onclick="switchTab('marzo', event)">Marzo</button>
+    <button class="tab-pill" onclick="switchTab('abril', event)">Abril</button>
+    <button class="tab-pill" onclick="switchTab('mayo', event)">Mayo</button>
+    <button class="tab-pill" onclick="switchTab('junio', event)">Junio</button>
+    <button class="tab-pill" onclick="switchTab('julio', event)">Julio</button>
+    <button class="tab-pill" onclick="switchTab('agosto', event)">Agosto</button>
+    <button class="tab-pill" onclick="switchTab('septiembre', event)">Septiembre</button>
+    <button class="tab-pill" onclick="switchTab('octubre', event)">Octubre</button>
+    <button class="tab-pill" onclick="switchTab('noviembre', event)">Noviembre</button>
+    <button class="tab-pill" onclick="switchTab('diciembre', event)">Diciembre</button>
   </div>
 </div>
 
@@ -1149,6 +1159,42 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 
 <div id="marzo" class="tab-content">
   <div class="container" id="marzoContent"></div>
+</div>
+
+<div id="abril" class="tab-content">
+  <div class="container" id="abrilContent"></div>
+</div>
+
+<div id="mayo" class="tab-content">
+  <div class="container" id="mayoContent"></div>
+</div>
+
+<div id="junio" class="tab-content">
+  <div class="container" id="junioContent"></div>
+</div>
+
+<div id="julio" class="tab-content">
+  <div class="container" id="julioContent"></div>
+</div>
+
+<div id="agosto" class="tab-content">
+  <div class="container" id="agostoContent"></div>
+</div>
+
+<div id="septiembre" class="tab-content">
+  <div class="container" id="septiembreContent"></div>
+</div>
+
+<div id="octubre" class="tab-content">
+  <div class="container" id="octubreContent"></div>
+</div>
+
+<div id="noviembre" class="tab-content">
+  <div class="container" id="noviembreContent"></div>
+</div>
+
+<div id="diciembre" class="tab-content">
+  <div class="container" id="diciembreContent"></div>
 </div>
 
 </div><!-- /view-economicos -->
@@ -1443,13 +1489,6 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
             <div class="fin-hero-amount" style="font-size:2.8rem;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,#f87171,#fca5a5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">-$396,8M</div>
             <div style="font-size:.75rem;color:var(--text3);margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);">
               Piso semestre: <span style="color:var(--red);font-weight:600;">-$443,8M</span> · Mayo
-            </div>
-          </div>
-          <div class="fin-hero-card" style="display:inline-flex;flex-direction:column;align-items:center;background:linear-gradient(135deg,rgba(251,191,36,.06),rgba(251,191,36,.02));border:1px solid rgba(251,191,36,.15);border-radius:24px;padding:28px 36px;backdrop-filter:blur(20px);box-shadow:0 0 60px rgba(251,191,36,.06),inset 0 1px 0 rgba(255,255,255,.05);">
-            <div style="font-size:.65rem;color:var(--amber);text-transform:uppercase;letter-spacing:3px;font-weight:600;">Saldo Caja · 30 de Junio 2026 · Proyección</div>
-            <div class="fin-hero-amount" style="font-size:2.8rem;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,#fbbf24,#fcd34d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">-$263,2M</div>
-            <div style="font-size:.75rem;color:var(--text3);margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);">
-              <span style="color:var(--green);font-weight:600;">↑ Mejora de +$180,6M</span> desde el piso de Mayo
             </div>
           </div>
         </div>
@@ -2926,6 +2965,9 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
               <option value="rechazado">Rechazados</option>
               <option value="vencido">Vencidos</option>
             </select>
+            <input type="date" id="cajaFilterDesde" onchange="cajaRenderCheques()" title="Desde">
+            <input type="date" id="cajaFilterHasta" onchange="cajaRenderCheques()" title="Hasta">
+            <button onclick="cajaLimpiarFiltros()" style="padding:7px 12px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text2);font-size:.78rem;cursor:pointer;">Limpiar</button>
             <span class="caja-summary" id="cajaChequesSummary"></span>
           </div>
           <div style="max-height:600px;overflow-y:auto;overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,.04);">
@@ -3617,7 +3659,20 @@ function renderTab(tab) {
   }
 
   const data = reportData[tab];
-  if (!data) return;
+  if (!data) {
+    // Mes sin datos cargados → mostrar placeholder
+    const cont = document.getElementById(tab + 'Content');
+    if (cont) {
+      const mesNom = tab.charAt(0).toUpperCase() + tab.slice(1);
+      cont.innerHTML = `
+        <div style="text-align:center;padding:80px 24px;color:var(--text2);">
+          <div style="font-size:3rem;margin-bottom:16px;opacity:.4;">📅</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:600;color:var(--text);margin-bottom:8px;">${mesNom} 2026</div>
+          <div style="font-size:.95rem;line-height:1.6;max-width:480px;margin:0 auto;">Aún no hay datos cargados para este mes.<br>Cuando estén cargados aparecerán acá automáticamente.</div>
+        </div>`;
+    }
+    return;
+  }
 
   document.getElementById('heroResult').textContent = (data.resultado >= 0 ? '+' : '') + formatNumber(data.resultado);
   document.getElementById('heroResult').style.background = data.resultado >= 0 ? 'linear-gradient(135deg, #34d399, #6ee7b7)' : 'linear-gradient(135deg, #f87171, #fca5a5)';

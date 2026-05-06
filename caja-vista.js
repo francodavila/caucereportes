@@ -374,15 +374,14 @@ function renderCalendario() {
     }
     let html = `<div class="cdate">${d.getDate()}</div>`;
     const esPasado = fs < hoyStr;
-    // Ingreso (siempre se muestra, aunque sea 0 si no hay caja cargada para ese día)
+    // Ingreso: real / proyectado / 0
     const realBadge = data.ingresoReal ? ' <span class="real-pill">REAL</span>' : '';
+    const ingresoLabel = data.ingresoReal ? 'Ingreso' : (data.ingreso > 0 ? 'Ingreso proy.' : 'Ingreso');
     const ingresoStr = data.ingreso > 0 ? fmtMoneyCompact(data.ingreso) : '$0';
-    html += `<div class="crow"><span class="clbl">Ingreso</span><span class="cval ingresos">${ingresoStr}${realBadge}</span></div>`;
-    // Pagos (siempre 0 por ahora, futura mejora cuando registremos pagos directos)
+    html += `<div class="crow"><span class="clbl">${ingresoLabel}</span><span class="cval ingresos">${ingresoStr}${realBadge}</span></div>`;
+    // Pagos (siempre 0 por ahora)
     html += `<div class="crow"><span class="clbl">Pagos</span><span class="cval">$0</span></div>`;
-    // CH. Pagos:
-    //  - días pasados: cheques pagados ese día
-    //  - hoy/futuro: cheques emitidos rolling
+    // CH. Pagos: pasados=pagados ese día, futuros=emitidos rolling
     let chPagosMonto = 0;
     if (esPasado) {
       chPagosMonto = (data.chequesPagadosDelDia || []).reduce((s, c) => s + (c.monto || 0), 0);
@@ -391,9 +390,11 @@ function renderCalendario() {
     }
     const chPagosStr = chPagosMonto > 0 ? fmtMoneyCompact(chPagosMonto) : '$0';
     html += `<div class="crow"><span class="clbl">CH. Pagos</span><span class="cval cheques">${chPagosStr}</span></div>`;
-    // Saldo neto
+    // Saldo siempre que esté inicializado
     if (data.saldo != null) {
       html += `<div class="csaldo ${saldoCls}">Saldo ${fmtMoneyCompact(data.saldo)}</div>`;
+    } else {
+      html += `<div class="csaldo" style="color:var(--text3);">Saldo —</div>`;
     }
     cell.innerHTML = html;
     cont.appendChild(cell);
@@ -458,16 +459,19 @@ function renderCheques() {
   const fname = (document.getElementById('cajaFilterName')?.value || '').toLowerCase();
   const fmes = document.getElementById('cajaFilterMes')?.value || '';
   const festado = document.getElementById('cajaFilterEstado')?.value;
+  const fdesde = document.getElementById('cajaFilterDesde')?.value || '';
+  const fhasta = document.getElementById('cajaFilterHasta')?.value || '';
   const filtrados = CAJA_DATA.cheques.filter(ch => {
-    const f = ch.fecha;
+    const f = ch.fecha || '';
     if (fmes && !f.startsWith(fmes)) return false;
-    // Para filtros de estado: tratamos vencido-auto como "vencido"
+    if (fdesde && f < fdesde) return false;
+    if (fhasta && f > fhasta) return false;
     let estadoEfectivo = ch.estado;
     if (chequeVencidoAuto(ch, hoy)) estadoEfectivo = 'vencido';
     if (festado && estadoEfectivo !== festado) return false;
     if (fname && !(ch.destinatario || '').toLowerCase().includes(fname)) return false;
     return true;
-  }).sort((a, b) => a.fecha.localeCompare(b.fecha));
+  }).sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
 
   let total = 0;
   tbody.innerHTML = filtrados.map(ch => {
@@ -502,7 +506,7 @@ function renderCheques() {
 function renderCajasDiarias() {
   const tbody = document.getElementById('cajaCajasBody');
   if (!tbody) return;
-  const dias = Object.values(CAJA_DATA.cajasDiarias).sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 30);
+  const dias = Object.values(CAJA_DATA.cajasDiarias).sort((a, b) => (b.fecha || '').localeCompare(a.fecha || '')).slice(0, 30);
   tbody.innerHTML = dias.map(c => {
     const calc = c.calculado || {};
     return `<tr>
@@ -562,7 +566,7 @@ function renderChartIngresos() {
   if (_charts.ingresos) _charts.ingresos.destroy();
   // Últimos 30 días con caja cargada
   const dias = Object.values(CAJA_DATA.cajasDiarias)
-    .sort((a, b) => a.fecha.localeCompare(b.fecha))
+    .sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''))
     .slice(-30);
   const labels = dias.map(d => fmtFechaCorta(d.fecha));
   const data = dias.map(d => (d.calculado && d.calculado.ingresoNetoBanco) || 0);
@@ -699,6 +703,13 @@ window.cajaIrHoy = function() {
   renderCalendario();
 };
 window.cajaRenderCheques = renderCheques;
+window.cajaLimpiarFiltros = function() {
+  ['cajaFilterName','cajaFilterMes','cajaFilterEstado','cajaFilterDesde','cajaFilterHasta'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = (id === 'cajaFilterEstado' ? 'emitido' : '');
+  });
+  renderCheques();
+};
 
 // ============================================================
 // INICIALIZACIÓN
