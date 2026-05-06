@@ -14,6 +14,8 @@ let CAJA_DATA = {
   saldoInicial: 4000000,
   fechaSaldo: null,
   cheques: [],
+  transferencias: [],   // pagos con medio='transferencia' activos (egresos del banco reales)
+  proveedoresById: {},  // para mostrar el destinatario en el calendario
   cajasDiarias: {}, // { 'YYYY-MM-DD': { ingresoNetoBanco, ventaTotal, ... } }
   patronCaja: {},   // promedio por día de semana
 };
@@ -25,10 +27,12 @@ cajaMesActual.setDate(1);
 // ============================================================
 async function cargarTodoCaja() {
   try {
-    const [cfgSnap, chSnap, cdSnap] = await Promise.all([
+    const [cfgSnap, chSnap, cdSnap, pagSnap, provSnap] = await Promise.all([
       getDoc(doc(db, 'config', 'banco')),
       getDocs(query(collection(db, 'cheques'), orderBy('fecha', 'asc'))),
       getDocs(query(collection(db, 'cajas_diarias'), orderBy('fecha', 'asc'))),
+      getDocs(query(collection(db, 'pagos'), orderBy('fecha', 'asc'))).catch(() => null),
+      getDocs(query(collection(db, 'proveedores'), orderBy('nombre'))).catch(() => null),
     ]);
 
     if (cfgSnap.exists()) {
@@ -39,6 +43,21 @@ async function cargarTodoCaja() {
 
     CAJA_DATA.cheques = [];
     chSnap.forEach(d => CAJA_DATA.cheques.push({ _id: d.id, ...d.data() }));
+
+    // Proveedores (para mostrar el destinatario en el detalle del calendario)
+    CAJA_DATA.proveedoresById = {};
+    if (provSnap) provSnap.forEach(d => { CAJA_DATA.proveedoresById[d.id] = { _id: d.id, ...d.data() }; });
+
+    // Transferencias activas (egresos reales del banco — no proyectadas)
+    CAJA_DATA.transferencias = [];
+    if (pagSnap) {
+      pagSnap.forEach(d => {
+        const p = d.data();
+        if (p.medio === 'transferencia' && (p.estado || 'activo') === 'activo') {
+          CAJA_DATA.transferencias.push({ _id: d.id, ...p });
+        }
+      });
+    }
 
     CAJA_DATA.cajasDiarias = {};
     const cajasArray = [];
@@ -176,8 +195,14 @@ function calcularFlujoDia(fechaISO, hoyISO) {
     }
   }
 
-  const egresos = chequesDelDia.reduce((s, ch) => s + (ch.monto || 0), 0);
-  return { ingreso, ingresoReal, cheques: chequesDelDia, chequesPagadosDelDia, egresos };
+  // Transferencias: solo cuentan en la fecha real del pago, no se proyectan
+  // Aparecen tanto en pasado como en hoy. Para futuro NO proyectamos (por decisión de Franco).
+  const transferenciasDelDia = (CAJA_DATA.transferencias || []).filter(t => t.fecha === fechaISO);
+  const egresoTransferencias = transferenciasDelDia.reduce((s, t) => s + (Number(t.monto) || 0), 0);
+
+  const egresoCheques = chequesDelDia.reduce((s, ch) => s + (ch.monto || 0), 0);
+  const egresos = egresoCheques + egresoTransferencias;
+  return { ingreso, ingresoReal, cheques: chequesDelDia, chequesPagadosDelDia, transferencias: transferenciasDelDia, egresos };
 }
 
 function calcularProyeccion(desde, hasta) {
@@ -379,14 +404,17 @@ function renderCalendario() {
     const ingresoLabel = data.ingresoReal ? 'Ingreso' : (data.ingreso > 0 ? 'Ingreso proy.' : 'Ingreso');
     const ingresoStr = data.ingreso > 0 ? fmtMoneyCompact(data.ingreso) : '$0';
     html += `<div class="crow"><span class="clbl">${ingresoLabel}</span><span class="cval ingresos">${ingresoStr}${realBadge}</span></div>`;
-    // Pagos (siempre 0 por ahora)
-    html += `<div class="crow"><span class="clbl">Pagos</span><span class="cval">$0</span></div>`;
+    // Transferencias del día (egresos reales del banco — solo se muestran en su fecha real, no se proyectan)
+    const transfMonto = (data.transferencias || []).reduce((s, t) => s + (Number(t.monto) || 0), 0);
+    const transfStr = transfMonto > 0 ? fmtMoneyCompact(transfMonto) : '$0';
+    html += `<div class="crow"><span class="clbl">Transf.</span><span class="cval" style="color:${transfMonto > 0 ? 'var(--red)' : 'var(--text3)'};">${transfStr}</span></div>`;
     // CH. Pagos: pasados=pagados ese día, futuros=emitidos rolling
     let chPagosMonto = 0;
     if (esPasado) {
       chPagosMonto = (data.chequesPagadosDelDia || []).reduce((s, c) => s + (c.monto || 0), 0);
     } else {
-      chPagosMonto = data.egresos || 0;
+      // Para futuro, el calendario muestra solo cheques pendientes (las transferencias no se proyectan)
+      chPagosMonto = (data.cheques || []).reduce((s, c) => s + (c.monto || 0), 0);
     }
     const chPagosStr = chPagosMonto > 0 ? fmtMoneyCompact(chPagosMonto) : '$0';
     html += `<div class="crow"><span class="clbl">CH. Pagos</span><span class="cval cheques">${chPagosStr}</span></div>`;
@@ -425,6 +453,15 @@ function abrirModalDia(fs) {
       <strong>Ingreso al banco:</strong> ${fmtMoney(data.ingreso)} ${data.ingresoReal ? '<span style="color:var(--green);">(caja real)</span>' : (esPasado ? '<span style="color:var(--text3);">(sin caja cargada)</span>' : '<span style="color:var(--text3);">(proyectado)</span>')}<br>
       <strong>Egresos:</strong> ${fmtMoney(data.egresos)}<br>
     </div>
+    ${data.transferencias && data.transferencias.length > 0 ? `
+      <h3 style="font-size:1rem;">Transferencias ese día (${data.transferencias.length})</h3>
+      <table class="caja-data-table" style="font-size:.7rem;">
+        <thead><tr><th>Destinatario</th><th class="num">Monto</th><th>Notas</th></tr></thead>
+        <tbody>
+          ${data.transferencias.map(t => `<tr><td>${(CAJA_DATA.proveedoresById[t.proveedorId]?.nombre) || '—'}</td><td class="num">${fmtMoney(t.monto)}</td><td>${t.notas || ''}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    ` : ''}
     ${data.chequesPagadosDelDia && data.chequesPagadosDelDia.length > 0 ? `
       <h3 style="font-size:1rem;">Cheques pagados ese día (${data.chequesPagadosDelDia.length})</h3>
       <table class="caja-data-table" style="font-size:.7rem;">
