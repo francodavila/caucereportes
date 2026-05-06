@@ -1105,6 +1105,7 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   <button class="top-nav-btn" onclick="switchView('financieros')">Resultados financieros</button>
   <button class="top-nav-btn" onclick="switchView('rrhh')">RRHH</button>
   <button class="top-nav-btn" onclick="switchView('inmobiliario')">Inmobiliario</button>
+  <button class="top-nav-btn" onclick="switchView('caja')">Caja</button>
 </div>
 
 <!-- ======== VIEW: RESULTADOS ECONÓMICOS ======== -->
@@ -2560,100 +2561,6 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
         </div>
       </div>
 
-      <!-- ============= CAJA SECTION (live data desde Firestore) ============= -->
-      <div class="section" id="cajaSection" style="margin-top:60px;">
-        <div class="section-header">
-          <div class="section-icon" style="background:linear-gradient(135deg,rgba(52,211,153,.15),rgba(52,211,153,.05));border:1px solid rgba(52,211,153,.2);">💵</div>
-          <div class="section-title">Caja · Plan de Pagos & Proyección</div>
-          <div class="section-line"></div>
-        </div>
-
-        <div style="font-size:.78rem;color:var(--text3);margin-bottom:18px;line-height:1.6;" id="cajaSubtitle">
-          Datos en vivo desde el panel de carga.
-        </div>
-
-        <!-- KPIs Caja -->
-        <div class="kpi-grid" id="cajaKpis" style="margin-top:0;"></div>
-
-        <!-- Sub-tabs internos -->
-        <div class="caja-tabs" style="margin-top:24px;">
-          <button class="caja-tab-btn active" onclick="cajaSwitchTab('calendario',event)">Calendario</button>
-          <button class="caja-tab-btn" onclick="cajaSwitchTab('cheques',event)">Cheques</button>
-          <button class="caja-tab-btn" onclick="cajaSwitchTab('cajas',event)">Cajas Diarias</button>
-        </div>
-
-        <!-- Sub-tab: Calendario -->
-        <div class="caja-tab-content active" id="cajaTab-calendario">
-          <div class="card">
-            <div class="caja-cal-header">
-              <div class="caja-cal-nav">
-                <button onclick="cajaCambiarMes(-1)">‹</button>
-                <span class="caja-month-label" id="cajaMonthLabel"></span>
-                <button onclick="cajaCambiarMes(1)">›</button>
-                <button onclick="cajaIrHoy()" style="margin-left:10px;">Hoy</button>
-              </div>
-              <div style="font-size:.7rem;color:var(--text3);">Click en un día para ver detalle</div>
-            </div>
-            <div class="caja-calendar" id="cajaCalendario"></div>
-            <div style="margin-top:16px;display:flex;gap:18px;flex-wrap:wrap;font-size:.65rem;color:var(--text3);">
-              <span>Saldo: <span style="color:var(--green);font-weight:700;">verde &gt; $3M</span></span>
-              <span>· <span style="color:var(--amber);font-weight:700;">amarillo</span> entre 0 y $3M</span>
-              <span>· <span style="color:var(--red);font-weight:700;">rojo</span> negativo</span>
-              <span style="margin-left:auto;"><span class="real-pill">REAL</span> caja cargada del día</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sub-tab: Cheques -->
-        <div class="caja-tab-content" id="cajaTab-cheques">
-          <div class="card">
-            <div class="caja-toolbar">
-              <input type="text" id="cajaFilterName" placeholder="Buscar acreedor..." oninput="cajaRenderCheques()">
-              <select id="cajaFilterMes" onchange="cajaRenderCheques()">
-                <option value="">Todos los meses</option>
-              </select>
-              <select id="cajaFilterEstado" onchange="cajaRenderCheques()">
-                <option value="emitido">Emitidos</option>
-                <option value="">Todos los estados</option>
-                <option value="pagado">Pagados</option>
-                <option value="rechazado">Rechazados</option>
-                <option value="vencido">Vencidos</option>
-              </select>
-              <span class="caja-summary" id="cajaChequesSummary"></span>
-            </div>
-            <div style="max-height:600px;overflow-y:auto;overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,.04);">
-              <table class="caja-data-table">
-                <thead>
-                  <tr><th>Fecha</th><th>Día</th><th>Acreedor</th><th class="num">Monto</th><th>Banco</th><th>Estado</th><th>Notas</th></tr>
-                </thead>
-                <tbody id="cajaChequesBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sub-tab: Cajas Diarias -->
-        <div class="caja-tab-content" id="cajaTab-cajas">
-          <div class="card">
-            <div class="card-title">Histórico de cajas reales</div>
-            <div style="font-size:.72rem;color:var(--text3);margin-bottom:14px;line-height:1.6;">
-              Ingreso neto banco = (Cobros con tarjeta × % neto por tipo) − impuesto al crédito 0.6%. Efectivo y CtaCte no entran al banco.
-            </div>
-            <div style="overflow-x:auto;">
-              <table class="caja-data-table">
-                <thead>
-                  <tr><th>Fecha</th><th>Día</th><th class="num">Venta total</th><th class="num">Bruto banco</th><th class="num">Comisiones</th><th class="num">Imp. crédito</th><th class="num">Neto banco</th><th class="num">Efectivo</th></tr>
-                </thead>
-                <tbody id="cajaCajasBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <!-- ============= /CAJA SECTION ============= -->
-
-
     </div>
   </div>
 </div>
@@ -2951,6 +2858,131 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
     </div>
   </div>
 </div>
+
+
+<!-- ======== VIEW: CAJA ======== -->
+<div id="view-caja" class="view-section">
+  <div style="padding-top:160px;">
+
+    <!-- Hero Caja -->
+    <div style="position:relative;overflow:hidden;padding:0 0 40px;text-align:center;">
+      <div style="position:relative;z-index:2;max-width:800px;margin:0 auto;padding:0 24px;">
+        <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce de los fuegos" class="fin-hero-logo" style="width:200px;margin-bottom:12px;">
+        <div class="fin-hero-sub" style="font-size:.85rem;color:var(--text3);font-weight:400;letter-spacing:4px;text-transform:uppercase;">Caja · Plan de Pagos &amp; Proyección</div>
+      </div>
+    </div>
+
+    <div style="max-width:1220px;margin:0 auto;padding:0 28px 80px;position:relative;z-index:1;">
+
+      <div style="font-size:.85rem;color:var(--text2);margin-bottom:18px;line-height:1.6;text-align:center;" id="cajaSubtitle">
+        Datos en vivo desde el panel de carga.
+      </div>
+
+      <!-- KPIs Caja -->
+      <div class="kpi-grid" id="cajaKpis" style="margin-top:0;"></div>
+
+      <!-- Sub-tabs internos -->
+      <div class="caja-tabs" style="margin-top:32px;">
+        <button class="caja-tab-btn active" onclick="cajaSwitchTab('calendario',event)">Calendario</button>
+        <button class="caja-tab-btn" onclick="cajaSwitchTab('cheques',event)">Cheques</button>
+        <button class="caja-tab-btn" onclick="cajaSwitchTab('cajas',event)">Cajas Diarias</button>
+        <button class="caja-tab-btn" onclick="cajaSwitchTab('graficos',event)">Gráficos</button>
+      </div>
+
+      <!-- Sub-tab: Calendario -->
+      <div class="caja-tab-content active" id="cajaTab-calendario">
+        <div class="card">
+          <div class="caja-cal-header">
+            <div class="caja-cal-nav">
+              <button onclick="cajaCambiarMes(-1)">‹</button>
+              <span class="caja-month-label" id="cajaMonthLabel"></span>
+              <button onclick="cajaCambiarMes(1)">›</button>
+              <button onclick="cajaIrHoy()" style="margin-left:10px;">Hoy</button>
+            </div>
+            <div style="font-size:.7rem;color:var(--text3);">Click en un día para ver detalle</div>
+          </div>
+          <div class="caja-calendar" id="cajaCalendario"></div>
+          <div style="margin-top:16px;display:flex;gap:18px;flex-wrap:wrap;font-size:.65rem;color:var(--text3);">
+            <span>Saldo: <span style="color:var(--green);font-weight:700;">verde &gt; $3M</span></span>
+            <span>· <span style="color:var(--amber);font-weight:700;">amarillo</span> entre 0 y $3M</span>
+            <span>· <span style="color:var(--red);font-weight:700;">rojo</span> negativo</span>
+            <span style="margin-left:auto;"><span class="real-pill">REAL</span> caja cargada del día</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-tab: Cheques -->
+      <div class="caja-tab-content" id="cajaTab-cheques">
+        <div class="card">
+          <div class="caja-toolbar">
+            <input type="text" id="cajaFilterName" placeholder="Buscar acreedor..." oninput="cajaRenderCheques()">
+            <select id="cajaFilterMes" onchange="cajaRenderCheques()">
+              <option value="">Todos los meses</option>
+            </select>
+            <select id="cajaFilterEstado" onchange="cajaRenderCheques()">
+              <option value="emitido">Emitidos</option>
+              <option value="">Todos los estados</option>
+              <option value="pagado">Pagados</option>
+              <option value="rechazado">Rechazados</option>
+              <option value="vencido">Vencidos</option>
+            </select>
+            <span class="caja-summary" id="cajaChequesSummary"></span>
+          </div>
+          <div style="max-height:600px;overflow-y:auto;overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,.04);">
+            <table class="caja-data-table">
+              <thead>
+                <tr><th>Fecha</th><th>Día</th><th>Acreedor</th><th class="num">Monto</th><th>Banco</th><th>Estado</th><th>Notas</th></tr>
+              </thead>
+              <tbody id="cajaChequesBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-tab: Cajas Diarias -->
+      <div class="caja-tab-content" id="cajaTab-cajas">
+        <div class="card">
+          <div class="card-title">Histórico de cajas reales</div>
+          <div style="font-size:.72rem;color:var(--text3);margin-bottom:14px;line-height:1.6;">
+            Ingreso neto banco = (Cobros con tarjeta × % neto por tipo) − impuesto al crédito 0.6%. Efectivo y CtaCte no entran al banco.
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="caja-data-table">
+              <thead>
+                <tr><th>Fecha</th><th>Día</th><th class="num">Venta total</th><th class="num">Bruto banco</th><th class="num">Comisiones</th><th class="num">Imp. crédito</th><th class="num">Neto banco</th><th class="num">Efectivo</th></tr>
+              </thead>
+              <tbody id="cajaCajasBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-tab: Gráficos -->
+      <div class="caja-tab-content" id="cajaTab-graficos">
+        <div class="card">
+          <div class="card-title">Ingresos al banco · últimos 30 días</div>
+          <div style="height:260px;position:relative;"><canvas id="chartIngresos"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Egresos por cheques · próximos 30 días</div>
+          <div style="height:260px;position:relative;"><canvas id="chartEgresos"></canvas></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="card">
+            <div class="card-title">Cheques por estado</div>
+            <div style="height:260px;position:relative;"><canvas id="chartEstados"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Cheques pendientes por mes</div>
+            <div style="height:260px;position:relative;"><canvas id="chartChequesMes"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- ======== /VIEW: CAJA ======== -->
 
 </div><!-- /mainContent -->
 

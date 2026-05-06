@@ -137,35 +137,79 @@ function calcularFlujoDia(fechaISO, hoyISO) {
   const cajaDia = CAJA_DATA.cajasDiarias[fechaISO];
   let ingreso = 0;
   let ingresoReal = false;
+
   if (cajaDia && cajaDia.calculado) {
+    // Hay caja real cargada → usar el dato real
     ingreso = cajaDia.calculado.ingresoNetoBanco || 0;
     ingresoReal = true;
-  } else {
+  } else if (fechaISO > hoyISO) {
+    // Día futuro sin caja cargada → usar patrón promedio
     const dow = new Date(fechaISO + 'T00:00:00').getDay();
     ingreso = CAJA_DATA.patronCaja[dow] || 0;
   }
-  // Cheques que efectivamente impactan ese día (con rolling)
-  const chequesDelDia = CAJA_DATA.cheques.filter(ch => {
-    const fp = fechaProyectadaCheque(ch, hoyISO);
-    return fp === fechaISO;
-  });
+  // Día pasado o de hoy sin caja cargada: ingreso = 0 (no proyectar para atrás)
+
+  let chequesDelDia = [];
+  let chequesPagadosDelDia = [];
+
+  if (fechaISO < hoyISO) {
+    // DÍAS PASADOS: solo cheques que SE PAGARON ese día (debitaron del banco)
+    chequesPagadosDelDia = CAJA_DATA.cheques.filter(ch => {
+      if (ch.estado !== 'pagado') return false;
+      const f = ch.fechaPagoReal || ch.pagoEnBanco;
+      return f === fechaISO;
+    });
+    chequesDelDia = chequesPagadosDelDia;
+  } else {
+    // HOY o FUTURO: cheques emitidos pendientes (con rolling)
+    chequesDelDia = CAJA_DATA.cheques.filter(ch => {
+      const fp = fechaProyectadaCheque(ch, hoyISO);
+      return fp === fechaISO;
+    });
+    // Adicionalmente, si hoy hay cheques pagados HOY, también incluirlos como info
+    if (fechaISO === hoyISO) {
+      chequesPagadosDelDia = CAJA_DATA.cheques.filter(ch => {
+        if (ch.estado !== 'pagado') return false;
+        const f = ch.fechaPagoReal || ch.pagoEnBanco;
+        return f === hoyISO;
+      });
+    }
+  }
+
   const egresos = chequesDelDia.reduce((s, ch) => s + (ch.monto || 0), 0);
-  return { ingreso, ingresoReal, cheques: chequesDelDia, egresos };
+  return { ingreso, ingresoReal, cheques: chequesDelDia, chequesPagadosDelDia, egresos };
 }
 
 function calcularProyeccion(desde, hasta) {
   // Devuelve { fecha: { ingreso, egresos, saldo, ... } }
+  // Reglas:
+  //  - Antes de la fecha del saldo conocido: NO se proyecta saldo (saldo = null)
+  //  - Desde la fecha del saldo conocido en adelante: se acumula
+  //  - Para días pasados, solo cuenta lo realmente cargado/pagado
+  //  - Para días futuros, se usa el patrón + cheques rolling
   const flujo = {};
   const hoyISO = ymdISO(new Date());
-  let saldo = CAJA_DATA.saldoInicial;
   const fechaSaldoStr = CAJA_DATA.fechaSaldo;
-  let inicio = fechaSaldoStr ? new Date(fechaSaldoStr + 'T00:00:00') : new Date(desde);
-  if (inicio > hasta) inicio = new Date(desde);
-  for (let d = new Date(inicio); d <= hasta; d.setDate(d.getDate() + 1)) {
+  let saldo = CAJA_DATA.saldoInicial;
+  let saldoArrancado = false;
+
+  // Si la ventana 'desde' es anterior a la fechaSaldo, los días previos
+  // se renderizan sin saldo (solo info de cheques pagados/cajas reales).
+  for (let d = new Date(desde); d <= hasta; d.setDate(d.getDate() + 1)) {
     const fs = ymdISO(d);
     const flu = calcularFlujoDia(fs, hoyISO);
-    saldo += flu.ingreso - flu.egresos;
-    flujo[fs] = { ...flu, saldo, fecha: fs };
+
+    if (!saldoArrancado && fechaSaldoStr && fs >= fechaSaldoStr) {
+      saldoArrancado = true;
+      saldo = CAJA_DATA.saldoInicial;
+    }
+
+    if (saldoArrancado) {
+      saldo += flu.ingreso - flu.egresos;
+      flujo[fs] = { ...flu, saldo, fecha: fs };
+    } else {
+      flujo[fs] = { ...flu, saldo: null, fecha: fs };
+    }
   }
   return flujo;
 }
@@ -212,6 +256,7 @@ function renderCajaCompleta() {
   renderCheques();
   renderCajasDiarias();
   poblarMesesFiltro();
+  setTimeout(renderGraficos, 200); // dar tiempo al DOM
   // Subtitle
   const sub = document.getElementById('cajaSubtitle');
   if (sub) {
@@ -328,7 +373,14 @@ function renderCalendario() {
       else saldoCls = 'ok';
     }
     let html = `<div class="cdate">${d.getDate()}</div>`;
-    if (data.egresos > 0) {
+    const esPasado = fs < hoyStr;
+    // Si hay cheques pagados ese día (siempre histórico)
+    if (data.chequesPagadosDelDia && data.chequesPagadosDelDia.length > 0) {
+      const totalPagado = data.chequesPagadosDelDia.reduce((s, c) => s + (c.monto || 0), 0);
+      html += `<div class="crow"><span class="clbl">Pagados</span><span class="cval pagos">${fmtMoneyCompact(totalPagado)}</span></div>`;
+    }
+    // Cheques egresos (futuro: rolling, pasado: ya están como pagados arriba)
+    if (data.egresos > 0 && !esPasado) {
       html += `<div class="crow"><span class="clbl">Cheques</span><span class="cval cheques">${fmtMoneyCompact(data.egresos)}</span></div>`;
     }
     if (data.ingreso > 0) {
@@ -356,17 +408,28 @@ function abrirModalDia(fs) {
   }
   const cont = document.getElementById('cajaModalContent');
   const fechaLong = new Date(fs + 'T00:00:00').toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  const data = calcularFlujoDia(fs);
+  const hoyISO = ymdISO(new Date());
+  const data = calcularFlujoDia(fs, hoyISO);
   const cajaReal = CAJA_DATA.cajasDiarias[fs];
+  const esPasado = fs < hoyISO;
   cont.innerHTML = `
     <h3>${fechaLong}</h3>
     <div class="info-block">
-      <strong>Ingreso del día:</strong> ${fmtMoney(data.ingreso)} ${data.ingresoReal ? '<span style="color:var(--green);">(caja real)</span>' : '<span style="color:var(--text3);">(proyectado)</span>'}<br>
-      <strong>Egresos:</strong> ${fmtMoney(data.egresos)}<br>
       ${cajaReal && cajaReal.ventaTotal ? `<strong>Venta total:</strong> ${fmtMoney(cajaReal.ventaTotal)}<br>` : ''}
+      <strong>Ingreso al banco:</strong> ${fmtMoney(data.ingreso)} ${data.ingresoReal ? '<span style="color:var(--green);">(caja real)</span>' : (esPasado ? '<span style="color:var(--text3);">(sin caja cargada)</span>' : '<span style="color:var(--text3);">(proyectado)</span>')}<br>
+      <strong>Egresos:</strong> ${fmtMoney(data.egresos)}<br>
     </div>
-    ${data.cheques.length > 0 ? `
-      <h3 style="font-size:1rem;">Cheques del día (${data.cheques.length})</h3>
+    ${data.chequesPagadosDelDia && data.chequesPagadosDelDia.length > 0 ? `
+      <h3 style="font-size:1rem;">Cheques pagados ese día (${data.chequesPagadosDelDia.length})</h3>
+      <table class="caja-data-table" style="font-size:.7rem;">
+        <thead><tr><th>Acreedor</th><th class="num">Monto</th><th>Banco</th></tr></thead>
+        <tbody>
+          ${data.chequesPagadosDelDia.map(ch => `<tr><td>${ch.destinatario || ''}</td><td class="num">${fmtMoney(ch.monto)}</td><td>${ch.banco || ''}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    ` : ''}
+    ${data.cheques.length > 0 && !esPasado ? `
+      <h3 style="font-size:1rem;">Cheques pendientes del día (${data.cheques.length})</h3>
       <table class="caja-data-table" style="font-size:.7rem;">
         <thead><tr><th>Acreedor</th><th class="num">Monto</th><th>Banco</th></tr></thead>
         <tbody>
@@ -459,6 +522,140 @@ function poblarMesesFiltro() {
       const [y, mm] = m.split('-');
       return `<option value="${m}">${meses_es[parseInt(mm,10)-1]} ${y}</option>`;
     }).join('');
+}
+
+// ============================================================
+// GRÁFICOS (Chart.js global ya disponible en el informe)
+// ============================================================
+const _charts = {}; // referencias para destruir antes de re-render
+
+function renderGraficos() {
+  if (typeof Chart === 'undefined') return; // Chart.js no cargado
+  renderChartIngresos();
+  renderChartEgresos();
+  renderChartEstados();
+  renderChartChequesMes();
+}
+
+function renderChartIngresos() {
+  const c = document.getElementById('chartIngresos');
+  if (!c) return;
+  if (_charts.ingresos) _charts.ingresos.destroy();
+  // Últimos 30 días con caja cargada
+  const dias = Object.values(CAJA_DATA.cajasDiarias)
+    .sort((a, b) => a.fecha.localeCompare(b.fecha))
+    .slice(-30);
+  const labels = dias.map(d => fmtFechaCorta(d.fecha));
+  const data = dias.map(d => (d.calculado && d.calculado.ingresoNetoBanco) || 0);
+  _charts.ingresos = new Chart(c, {
+    type: 'bar',
+    data: { labels, datasets: [{ label: 'Neto banco', data, backgroundColor: 'rgba(52,211,153,.5)', borderColor: '#34d399', borderWidth: 1, borderRadius: 4 }] },
+    options: chartOptsBar('$')
+  });
+}
+
+function renderChartEgresos() {
+  const c = document.getElementById('chartEgresos');
+  if (!c) return;
+  if (_charts.egresos) _charts.egresos.destroy();
+  // Próximos 30 días: cheques emitidos pendientes agrupados por fecha proyectada
+  const hoy = ymdISO(new Date());
+  const fin = new Date(); fin.setDate(fin.getDate() + 30);
+  const finStr = ymdISO(fin);
+  const porFecha = {};
+  CAJA_DATA.cheques.forEach(ch => {
+    if (ch.estado !== 'emitido') return;
+    const fp = fechaProyectadaCheque(ch, hoy);
+    if (!fp || fp < hoy || fp > finStr) return;
+    porFecha[fp] = (porFecha[fp] || 0) + (ch.monto || 0);
+  });
+  const sorted = Object.entries(porFecha).sort((a, b) => a[0].localeCompare(b[0]));
+  const labels = sorted.map(([f]) => fmtFechaCorta(f));
+  const data = sorted.map(([, v]) => v);
+  _charts.egresos = new Chart(c, {
+    type: 'bar',
+    data: { labels, datasets: [{ label: 'Cheques', data, backgroundColor: 'rgba(248,113,113,.5)', borderColor: '#f87171', borderWidth: 1, borderRadius: 4 }] },
+    options: chartOptsBar('$')
+  });
+}
+
+function renderChartEstados() {
+  const c = document.getElementById('chartEstados');
+  if (!c) return;
+  if (_charts.estados) _charts.estados.destroy();
+  const hoy = ymdISO(new Date());
+  const counts = { emitido: 0, pagado: 0, rechazado: 0, vencido: 0 };
+  const monto = { emitido: 0, pagado: 0, rechazado: 0, vencido: 0 };
+  CAJA_DATA.cheques.forEach(ch => {
+    let est = ch.estado;
+    if (chequeVencidoAuto(ch, hoy)) est = 'vencido';
+    if (counts[est] != null) {
+      counts[est]++;
+      monto[est] += ch.monto || 0;
+    }
+  });
+  _charts.estados = new Chart(c, {
+    type: 'doughnut',
+    data: {
+      labels: [`Emitidos (${counts.emitido})`, `Pagados (${counts.pagado})`, `Rechazados (${counts.rechazado})`, `Vencidos (${counts.vencido})`],
+      datasets: [{
+        data: [monto.emitido, monto.pagado, monto.rechazado, monto.vencido],
+        backgroundColor: ['rgba(255,255,255,.15)', 'rgba(52,211,153,.6)', 'rgba(248,113,113,.6)', 'rgba(251,191,36,.6)'],
+        borderColor: '#0e1018',
+        borderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { color: '#9ca3af', font: { size: 11 } } },
+        tooltip: { callbacks: { label: (ctx) => `${ctx.label}: $${ctx.parsed.toLocaleString('es-AR')}` } }
+      }
+    }
+  });
+}
+
+function renderChartChequesMes() {
+  const c = document.getElementById('chartChequesMes');
+  if (!c) return;
+  if (_charts.chequesMes) _charts.chequesMes.destroy();
+  const hoy = ymdISO(new Date());
+  const porMes = {};
+  CAJA_DATA.cheques.forEach(ch => {
+    if (ch.estado !== 'emitido') return;
+    if (chequeVencidoAuto(ch, hoy)) return;
+    const ym = (ch.fecha || '').slice(0, 7);
+    if (!ym) return;
+    porMes[ym] = (porMes[ym] || 0) + (ch.monto || 0);
+  });
+  const sorted = Object.entries(porMes).sort((a, b) => a[0].localeCompare(b[0]));
+  const meses_es = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const labels = sorted.map(([m]) => {
+    const [y, mm] = m.split('-');
+    return `${meses_es[parseInt(mm,10)-1]} ${y.slice(2)}`;
+  });
+  const data = sorted.map(([, v]) => v);
+  _charts.chequesMes = new Chart(c, {
+    type: 'bar',
+    data: { labels, datasets: [{ label: 'Pendientes', data, backgroundColor: 'rgba(96,165,250,.5)', borderColor: '#60a5fa', borderWidth: 1, borderRadius: 4 }] },
+    options: chartOptsBar('$')
+  });
+}
+
+function chartOptsBar(prefix) {
+  return {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: { label: (ctx) => `${prefix}${ctx.parsed.y.toLocaleString('es-AR')}` }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#5a6070', font: { size: 10 }, maxRotation: 45, minRotation: 45 } },
+      y: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { color: '#5a6070', callback: (v) => prefix + (v / 1e6).toFixed(0) + 'M' } }
+    }
+  };
 }
 
 // ============================================================
