@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cauce — Cargar datos</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090d;
+  --bg2: #0e1018;
+  --card: rgba(18,20,34,.75);
+  --border: rgba(255,255,255,.08);
+  --text: #e8e8eb;
+  --text2: #9ca3af;
+  --text3: #5a6070;
+  --green: #34d399;
+  --green2: #10b981;
+  --green-bg: rgba(52,211,153,.08);
+  --red: #f87171;
+  --amber: #fbbf24;
+  --blue: #60a5fa;
+  --shadow: 0 8px 32px rgba(0,0,0,.4);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+button { font-family: inherit; cursor: pointer; }
+input, select, textarea { font-family: inherit; }
+
+/* === LOGIN === */
+.login-screen {
+  position: fixed; inset: 0; display: none; align-items: center; justify-content: center;
+  background: linear-gradient(170deg, #08090d 0%, #111528 50%, #08090d 100%);
+  z-index: 100;
+}
+.login-screen.show { display: flex; }
+.login-card {
+  background: rgba(18,20,34,.85); border: 1px solid var(--border);
+  border-radius: 24px; padding: 48px 44px; max-width: 420px; width: 92%;
+  text-align: center; backdrop-filter: blur(20px);
+  box-shadow: 0 16px 64px rgba(0,0,0,.5);
+}
+.login-card h1 {
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.8rem;
+  letter-spacing: 4px; margin-bottom: 8px;
+}
+.login-card .sub { font-size: .72rem; color: var(--text3); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 32px; }
+.btn-google {
+  display: inline-flex; align-items: center; gap: 12px; justify-content: center;
+  width: 100%; padding: 14px 22px; border-radius: 12px; border: 1px solid var(--border);
+  background: rgba(255,255,255,.04); color: var(--text); font-size: .9rem; font-weight: 600;
+  transition: all .2s;
+}
+.btn-google:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.15); }
+.btn-google svg { width: 20px; height: 20px; }
+.login-error { color: var(--red); margin-top: 18px; font-size: .82rem; min-height: 18px; }
+
+/* === APP === */
+.app { display: none; min-height: 100vh; }
+.app.show { display: flex; }
+
+/* Sidebar */
+.sidebar {
+  width: 260px; min-height: 100vh; background: var(--bg2);
+  border-right: 1px solid var(--border); padding: 24px 0;
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+.sidebar-logo {
+  font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700;
+  letter-spacing: 4px; padding: 0 24px 24px; border-bottom: 1px solid var(--border);
+}
+.sidebar-section { padding: 16px 24px 8px; font-size: .62rem; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--text3); font-weight: 600; }
+.sidebar-link {
+  display: flex; align-items: center; gap: 10px; padding: 10px 24px;
+  color: var(--text2); cursor: pointer; transition: all .2s; font-size: .88rem;
+  border-left: 3px solid transparent;
+}
+.sidebar-link:hover { color: var(--text); background: rgba(255,255,255,.02); }
+.sidebar-link.active { color: var(--green); background: var(--green-bg); border-left-color: var(--green); }
+.sidebar-link .num { font-size: .68rem; color: var(--text3); margin-right: 6px; }
+.sidebar-link.active .num { color: var(--green); }
+
+/* Main */
+.main { flex: 1; min-height: 100vh; }
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(8,9,13,.95); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); padding: 16px 32px;
+  display: flex; align-items: center; gap: 18px;
+}
+.month-selector {
+  display: flex; align-items: center; gap: 10px; padding: 8px 14px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px;
+}
+.month-selector select {
+  background: transparent; color: var(--text); border: none; outline: none;
+  font-size: .88rem; font-weight: 600; cursor: pointer;
+}
+.month-selector select option { background: var(--bg2); }
+.save-status {
+  display: flex; align-items: center; gap: 8px; font-size: .78rem; color: var(--text3);
+  margin-left: auto;
+}
+.save-status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text3); }
+.save-status.ok .dot { background: var(--green); box-shadow: 0 0 8px var(--green); }
+.save-status.saving .dot { background: var(--amber); }
+.save-status.err .dot { background: var(--red); }
+.user-pill {
+  display: flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 100px;
+  font-size: .8rem;
+}
+.user-pill .avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), var(--green2));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; color: #08090d; font-size: .78rem;
+}
+.btn-logout {
+  background: transparent; color: var(--text3); border: none;
+  font-size: .8rem; padding: 4px 8px; transition: color .2s;
+}
+.btn-logout:hover { color: var(--text); }
+
+/* Content */
+.content { padding: 32px 40px 80px; max-width: 1100px; margin: 0 auto; }
+.section-title {
+  font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700;
+  margin-bottom: 6px;
+}
+.section-sub { font-size: .9rem; color: var(--text2); margin-bottom: 28px; }
+.section { display: none; }
+.section.active { display: block; animation: fadeIn .25s ease-out; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* Form fields */
+.field { margin-bottom: 14px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.field-row.three { grid-template-columns: 1fr 1fr 1fr; }
+.field-row.four { grid-template-columns: repeat(4, 1fr); }
+.field label {
+  display: block; font-size: .68rem; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 6px;
+}
+.field input, .field select, .field textarea {
+  width: 100%; padding: 11px 14px; border-radius: 10px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border);
+  color: var(--text); font-size: .92rem; outline: none; transition: border-color .2s;
+  font-variant-numeric: tabular-nums;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: rgba(52,211,153,.35); }
+.field textarea { resize: vertical; min-height: 70px; font-family: inherit; }
+.field .hint { font-size: .72rem; color: var(--text3); margin-top: 4px; }
+
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px; margin-bottom: 22px;
+}
+.card-title { font-weight: 700; font-size: 1rem; margin-bottom: 14px; color: var(--text); }
+.card-sub { font-size: .82rem; color: var(--text2); margin-bottom: 18px; }
+
+/* Repeating rows (top10, empleados, etc) */
+.row-list { display: flex; flex-direction: column; gap: 8px; }
+.row-item {
+  display: grid; gap: 8px; align-items: center;
+  padding: 10px 12px; background: rgba(255,255,255,.02);
+  border: 1px solid var(--border); border-radius: 10px;
+}
+.row-item input, .row-item select {
+  padding: 8px 10px; background: rgba(255,255,255,.03); border: 1px solid transparent;
+  border-radius: 8px; color: var(--text); font-size: .82rem; outline: none;
+}
+.row-item input:focus, .row-item select:focus { border-color: rgba(52,211,153,.3); background: rgba(255,255,255,.05); }
+.row-item .row-num {
+  width: 24px; text-align: center; color: var(--text3); font-weight: 700; font-size: .82rem;
+}
+.btn-del {
+  background: transparent; border: 1px solid var(--border); color: var(--red);
+  padding: 6px 10px; border-radius: 8px; font-size: .72rem;
+}
+.btn-del:hover { background: rgba(248,113,113,.1); }
+.btn-add {
+  background: var(--green-bg); border: 1px solid rgba(52,211,153,.3); color: var(--green);
+  padding: 9px 16px; border-radius: 10px; font-size: .82rem; font-weight: 600; margin-top: 10px;
+}
+.btn-add:hover { background: rgba(52,211,153,.15); }
+
+/* Buttons primary */
+.btn-primary {
+  background: linear-gradient(135deg, var(--green), var(--green2));
+  color: #08090d; border: none; padding: 11px 22px; border-radius: 10px;
+  font-weight: 700; font-size: .88rem; transition: opacity .2s;
+}
+.btn-primary:hover { opacity: .9; }
+.btn-secondary {
+  background: rgba(255,255,255,.04); border: 1px solid var(--border); color: var(--text);
+  padding: 11px 18px; border-radius: 10px; font-size: .85rem; font-weight: 600;
+}
+.btn-secondary:hover { background: rgba(255,255,255,.08); }
+
+.banner {
+  padding: 14px 18px; border-radius: 12px; margin-bottom: 20px;
+  background: rgba(96,165,250,.06); border: 1px solid rgba(96,165,250,.15);
+  color: var(--text); font-size: .85rem; line-height: 1.55;
+}
+.banner.warn { background: rgba(251,191,36,.06); border-color: rgba(251,191,36,.15); }
+.banner strong { color: var(--blue); }
+.banner.warn strong { color: var(--amber); }
+
+.unauthorized {
+  text-align: center; padding: 60px 20px; color: var(--text2); font-size: .95rem;
+}
+.unauthorized .big { font-size: 1.4rem; color: var(--text); margin-bottom: 10px; font-weight: 600; }
+
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .content { padding: 24px 20px 80px; }
+  .field-row, .field-row.three, .field-row.four { grid-template-columns: 1fr; }
+  .topbar { flex-wrap: wrap; gap: 10px; padding: 14px 20px; }
+  .save-status { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div class="login-screen show" id="loginScreen">
+  <div class="login-card">
+    <h1>CAUCE</h1>
+    <div class="sub">Panel de Carga</div>
+    <button class="btn-google" id="btnGoogleLogin">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Continuar con Google
+    </button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div class="app" id="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">CAUCE</div>
+    <div class="sidebar-section">Económico</div>
+    <a class="sidebar-link active" data-section="kpis"><span class="num">A.1</span> KPIs y comparación</a>
+    <a class="sidebar-link" data-section="costos"><span class="num">B</span> Costos detalle</a>
+    <a class="sidebar-link" data-section="medios"><span class="num">C</span> Medios de pago</a>
+    <a class="sidebar-link" data-section="operacion"><span class="num">D</span> Operación</a>
+    <a class="sidebar-link" data-section="productos"><span class="num">E</span> Ventas producto</a>
+    <a class="sidebar-link" data-section="nomina"><span class="num">F</span> Nómina resumen</a>
+    <a class="sidebar-link" data-section="empleados"><span class="num">G</span> Empleados</a>
+    <a class="sidebar-link" data-section="insights"><span class="num">I</span> Insights</a>
+    <div class="sidebar-section">RRHH</div>
+    <a class="sidebar-link" data-section="rrhh"><span class="num">H</span> Detalle con neto</a>
+    <div class="sidebar-section">Caja</div>
+    <a class="sidebar-link" data-section="caja"><span class="num">J</span> Caja diaria</a>
+    <a class="sidebar-link" data-section="cheques"><span class="num">K</span> Cheques</a>
+    <a class="sidebar-link" data-section="banco"><span class="num">L</span> Saldo banco</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="month-selector">
+        <span style="font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;">Mes</span>
+        <select id="monthSelector"></select>
+      </div>
+      <button class="btn-secondary" id="btnCopyPrev" style="font-size:.78rem;padding:8px 14px;">↻ Copiar mes anterior</button>
+      <div class="save-status" id="saveStatus"><span class="dot"></span><span class="txt">Listo</span></div>
+      <div class="user-pill">
+        <div class="avatar" id="userAvatar">FD</div>
+        <span id="userName">—</span>
+      </div>
+      <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+    </div>
+
+    <div class="content" id="content">
+      <!-- Renderizado dinámicamente -->
+    </div>
+  </main>
+</div>
+
+<!-- Estado de "no autorizado" -->
+<div class="login-screen" id="unauthScreen">
+  <div class="login-card">
+    <h1>ACCESO RESTRINGIDO</h1>
+    <div class="sub">Solo Administradores</div>
+    <p style="color:var(--text2);font-size:.9rem;margin:24px 0;line-height:1.6;">
+      Tu mail (<span id="unauthMail" style="color:var(--text);font-weight:600;"></span>)
+      no está en la lista de administradores. Pedile a Franco que te agregue,
+      o cerrá sesión y entrá con la cuenta correcta.
+    </p>
+    <button class="btn-google" id="btnLogoutUnauth">Cerrar sesión</button>
+  </div>
+</div>
+
+
+<script type="module">
+// ============================================================
+// FIREBASE CARGA · CAUCE
+// ============================================================
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
+import {
+  getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut
+} from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
+import {
+  getFirestore, doc, getDoc, setDoc, serverTimestamp,
+  collection, query, orderBy, limit, getDocs, addDoc, deleteDoc, updateDoc, where
+} from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
+import { firebaseConfig, ADMIN_EMAILS } from './firebase-config.js';
+import { COMISIONES, IMPUESTO_CREDITO_PCT, calcularCajaDiaria } from './comisiones.js';
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+// ============================================================
+// ESTADO GLOBAL
+// ============================================================
+let currentUser = null;
+let currentMonth = null;          // ej. '2026-04'
+let datosEcon = {};               // contenido de informes_economicos/{mes}.data
+let datosRrhh = {};               // contenido de informes_rrhh/{mes}.data
+let saveTimer = null;
+let lastSaveOk = true;
+
+// Estado de caja diaria (vive aparte porque su modelo es por DÍA, no por mes)
+let currentCajaFecha = null;      // ej. '2026-05-06'
+let datosCaja = {};               // doc de cajas_diarias/{fecha}
+let cajaSaveTimer = null;
+let cajaUltimosDias = [];         // últimos N días cargados, para la lista
+
+// Estado de cheques
+let cheques = [];                  // array de docs de cheques (con .id)
+let chequeFiltro = { mes: '', acreedor: '', estado: 'emitido' };
+let chequesLoaded = false;
+
+// Estado de config bancaria
+let configBanco = { saldoActual: 4000000, fechaSaldo: '2026-05-05' };
+
+// ============================================================
+// HELPERS
+// ============================================================
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+
+function set(obj, path, value) {
+  const keys = path.split('.');
+  let o = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (!o[keys[i]] || typeof o[keys[i]] !== 'object') o[keys[i]] = {};
+    o = o[keys[i]];
+  }
+  o[keys[keys.length - 1]] = value;
+}
+
+function get(obj, path, defVal = '') {
+  const keys = path.split('.');
+  let o = obj;
+  for (const k of keys) {
+    if (o == null) return defVal;
+    o = o[k];
+  }
+  return o == null ? defVal : o;
+}
+
+function fmtMonth(yyyymm) {
+  const [y, m] = yyyymm.split('-');
+  const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  return meses[parseInt(m,10)-1] + ' ' + y;
+}
+
+function setSaveStatus(state, txt) {
+  const el = $('#saveStatus');
+  el.classList.remove('ok','saving','err');
+  if (state) el.classList.add(state);
+  el.querySelector('.txt').textContent = txt;
+}
+
+function debounceSave() {
+  clearTimeout(saveTimer);
+  setSaveStatus('saving', 'Guardando…');
+  saveTimer = setTimeout(saveAll, 1200);
+}
+
+async function saveAll() {
+  if (!currentUser || !currentMonth) return;
+  try {
+    const meta = {
+      mes: currentMonth,
+      actualizado_por: currentUser.email,
+      actualizado_en: serverTimestamp()
+    };
+    await Promise.all([
+      setDoc(doc(db, 'informes_economicos', currentMonth), { ...meta, data: datosEcon }),
+      setDoc(doc(db, 'informes_rrhh', currentMonth), { ...meta, data: datosRrhh })
+    ]);
+    setSaveStatus('ok', 'Guardado');
+    lastSaveOk = true;
+  } catch (e) {
+    console.error(e);
+    setSaveStatus('err', 'Error al guardar');
+    lastSaveOk = false;
+  }
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+$('#btnGoogleLogin').addEventListener('click', async () => {
+  $('#loginError').textContent = '';
+  try {
+    await signInWithPopup(auth, provider);
+  } catch (e) {
+    $('#loginError').textContent = 'No pudimos iniciar sesión: ' + (e.message || e.code);
+  }
+});
+
+$('#btnLogout').addEventListener('click', () => signOut(auth));
+$('#btnLogoutUnauth').addEventListener('click', () => signOut(auth));
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    currentUser = null;
+    $('#loginScreen').classList.add('show');
+    $('#unauthScreen').classList.remove('show');
+    $('#app').classList.remove('show');
+    return;
+  }
+  if (!ADMIN_EMAILS.includes(user.email)) {
+    $('#loginScreen').classList.remove('show');
+    $('#app').classList.remove('show');
+    $('#unauthScreen').classList.add('show');
+    $('#unauthMail').textContent = user.email;
+    return;
+  }
+  currentUser = user;
+  $('#loginScreen').classList.remove('show');
+  $('#unauthScreen').classList.remove('show');
+  $('#app').classList.add('show');
+  $('#userName').textContent = user.displayName || user.email.split('@')[0];
+  $('#userAvatar').textContent = (user.displayName || user.email).slice(0,2).toUpperCase();
+  initMonthSelector();
+  await loadMonth(currentMonth);
+});
+
+// ============================================================
+// MES SELECTOR
+// ============================================================
+function initMonthSelector() {
+  const sel = $('#monthSelector');
+  sel.innerHTML = '';
+  const now = new Date();
+  // Generamos opciones desde Enero 2026 hasta el mes próximo
+  const start = new Date(2026, 0, 1);
+  const end = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  const opts = [];
+  for (let d = new Date(start); d <= end; d.setMonth(d.getMonth()+1)) {
+    const ym = d.toISOString().slice(0,7); // YYYY-MM
+    opts.push(ym);
+  }
+  opts.reverse(); // mes más nuevo arriba
+  for (const ym of opts) {
+    const o = document.createElement('option');
+    o.value = ym;
+    o.textContent = fmtMonth(ym);
+    sel.appendChild(o);
+  }
+  // Default: mes actual o el más reciente
+  const thisMonth = now.toISOString().slice(0,7);
+  currentMonth = opts.includes(thisMonth) ? thisMonth : opts[0];
+  sel.value = currentMonth;
+  sel.addEventListener('change', async () => {
+    currentMonth = sel.value;
+    await loadMonth(currentMonth);
+  });
+}
+
+async function loadMonth(mes) {
+  setSaveStatus('saving', 'Cargando…');
+  try {
+    const [ecoSnap, rrhhSnap] = await Promise.all([
+      getDoc(doc(db, 'informes_economicos', mes)),
+      getDoc(doc(db, 'informes_rrhh', mes))
+    ]);
+    datosEcon = ecoSnap.exists() ? (ecoSnap.data().data || {}) : {};
+    datosRrhh = rrhhSnap.exists() ? (rrhhSnap.data().data || {}) : {};
+    if (!datosEcon.month) datosEcon.month = fmtMonth(mes);
+    setSaveStatus('ok', 'Listo');
+    renderActiveSection();
+  } catch (e) {
+    console.error(e);
+    setSaveStatus('err', 'Error al cargar');
+  }
+}
+
+$('#btnCopyPrev').addEventListener('click', async () => {
+  const opts = [...$('#monthSelector').options].map(o => o.value);
+  const idx = opts.indexOf(currentMonth);
+  const prev = opts[idx + 1]; // las opciones están en orden desc
+  if (!prev) { alert('No hay mes anterior cargado.'); return; }
+  if (!confirm(`¿Copiar todos los datos de ${fmtMonth(prev)} a ${fmtMonth(currentMonth)}? Los datos actuales se sobrescriben.`)) return;
+  setSaveStatus('saving', 'Copiando…');
+  const [ecoSnap, rrhhSnap] = await Promise.all([
+    getDoc(doc(db, 'informes_economicos', prev)),
+    getDoc(doc(db, 'informes_rrhh', prev))
+  ]);
+  if (ecoSnap.exists()) {
+    datosEcon = JSON.parse(JSON.stringify(ecoSnap.data().data || {}));
+    datosEcon.month = fmtMonth(currentMonth);
+  }
+  if (rrhhSnap.exists()) {
+    datosRrhh = JSON.parse(JSON.stringify(rrhhSnap.data().data || {}));
+    datosRrhh.title = fmtMonth(currentMonth);
+  }
+  await saveAll();
+  renderActiveSection();
+});
+
+// ============================================================
+// SIDEBAR NAV
+// ============================================================
+let activeSection = 'kpis';
+$$('.sidebar-link').forEach(link => {
+  link.addEventListener('click', () => {
+    $$('.sidebar-link').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    activeSection = link.dataset.section;
+    renderActiveSection();
+  });
+});
+
+function renderActiveSection() {
+  const fn = renderers[activeSection];
+  if (fn) {
+    $('#content').innerHTML = fn();
+    bindInputs();
+  }
+}
+
+// ============================================================
+// INPUT BINDING
+// ============================================================
+function bindInputs() {
+  $$('[data-bind]').forEach(el => {
+    const path = el.dataset.bind;       // ej. "ecoo.ventaTotal" o "rrhh.summary.base"
+    const [scope, ...rest] = path.split('.');
+    const subPath = rest.join('.');
+    const target = scope === 'eco' ? datosEcon : datosRrhh;
+    const cur = get(target, subPath);
+    if (el.type === 'number') {
+      el.value = (cur === '' || cur == null || isNaN(cur)) ? '' : cur;
+    } else {
+      el.value = cur ?? '';
+    }
+    el.addEventListener('input', () => {
+      let v = el.value;
+      if (el.type === 'number') {
+        v = v === '' ? null : Number(v);
+      }
+      set(target, subPath, v);
+      debounceSave();
+    });
+  });
+}
+
+// ============================================================
+// HELPERS DE RENDER
+// ============================================================
+function field(label, bind, type = 'number', hint = '') {
+  return `<div class="field">
+    <label>${label}</label>
+    <input type="${type}" data-bind="${bind}" placeholder="${type === 'number' ? '0' : ''}">
+    ${hint ? `<div class="hint">${hint}</div>` : ''}
+  </div>`;
+}
+function row(...fields) {
+  const cls = fields.length === 3 ? 'three' : (fields.length === 4 ? 'four' : '');
+  return `<div class="field-row ${cls}">${fields.join('')}</div>`;
+}
+function card(title, body, sub = '') {
+  return `<div class="card">
+    <div class="card-title">${title}</div>
+    ${sub ? `<div class="card-sub">${sub}</div>` : ''}
+    ${body}
+  </div>`;
+}
+
+// ============================================================
+// RENDERERS POR SECCIÓN
+// ============================================================
+const renderers = {
+
+  // ===== A · KPIs y comparación =====
+  kpis: () => `
+    <h1 class="section-title">KPIs y comparación</h1>
+    <div class="section-sub">Indicadores macro del mes y comparación contra el mes anterior.</div>
+
+    ${card('A.1 · KPIs principales del mes', `
+      ${field('Etiqueta del mes (ej. "Abril 2026")', 'eco.month', 'text')}
+      ${row(
+        field('Venta total', 'eco.ventaTotal'),
+        field('CMV', 'eco.cmv')
+      )}
+      ${row(
+        field('Costo Variable total', 'eco.costoVariable'),
+        field('Costo Fijo total', 'eco.costoFijo')
+      )}
+      ${row(
+        field('Sueldos total', 'eco.sueldos'),
+        field('Resultado neto', 'eco.resultado', 'number', 'Puede ser negativo')
+      )}
+      ${field('Retención IIBB', 'eco.retencionIIBB')}
+    `)}
+
+    ${card('A.2 · Comparación vs mes anterior', `
+      ${row(
+        field('Venta del mes anterior', 'eco.comparison.ventaTotal'),
+        field('Cambio (este − anterior)', 'eco.comparison.cambio'),
+        field('Porcentaje', 'eco.comparison.porcentaje', 'number', 'Ej: -16.75 = bajó 16.75%')
+      )}
+    `, 'Si querés que se calcule solo, dejá los campos vacíos y el informe lo computa.')}
+  `,
+
+  // ===== B · Costos detalle =====
+  costos: () => {
+    const cvCats = ['Carnes Rojas','Vinos y Champagnes','Almacén','Frutas y Verduras','Lácteos','Pescados y Mariscos','Bebidas sin Alcohol','Bebidas con Alcohol','Achuras','Carnes Blancas','Panificados','Cremas Heladas','Carbón y Leña','Fiambre y Embutidos','Hongos','Pastas','Mantelería','Bazar','Viático y Logística'];
+    const cvOther = ['Tarjetas Sistema','Operativo','Abonos Varios','Comida Personal','Mantenimiento'];
+    const cf = ['Impuestos','Inmobiliario','Alquileres','Honorarios Prof.','Servicios','Abonos Internet','Financiero'];
+
+    return `
+      <h1 class="section-title">Costos · Detalle</h1>
+      <div class="section-sub">Desglose de Costo Variable, Costo Fijo y Sueldos.</div>
+
+      ${card('B.1 · Costo Variable — Mercadería (cvDetail)',
+        cvCats.map(c => field(c, `eco.cvDetail.${c}`)).join('') +
+        renderListEditor('eco.cvDetail', 'Agregar categoría nueva', 'Categoría')
+      )}
+
+      ${card('B.2 · Costo Variable — Otros (cvOther)',
+        cvOther.map(c => field(c, `eco.cvOther.${c}`)).join(''))}
+
+      ${card('B.3 · Costo Fijo (cfDetail)',
+        cf.map(c => field(c, `eco.cfDetail.${c}`)).join(''))}
+
+      ${card('B.4 · Sueldos detallado (sueldosDetail)',
+        ['Sueldos base','Jubilación','Liquidaciones','Juicios y Acuerdos']
+          .map(c => field(c, `eco.sueldosDetail.${c}`)).join(''))}
+
+      ${card('B.5 · Liquidaciones individuales',
+        renderItemList('eco.sueldosSubDetail.Liquidaciones.items', ['nombre','monto']))}
+
+      ${card('B.6 · Juicios y Acuerdos individuales',
+        renderItemList('eco.sueldosSubDetail.Juicios y Acuerdos.items', ['nombre','monto']))}
+    `;
+  },
+
+  // ===== C · Medios de pago =====
+  medios: () => {
+    const medios = ['Tarjetas','Efectivo','Reservas','Cta Corriente','Cheques/Transfer','Prepagos'];
+    const tarjs = ['Visa','Master Card','American Express','Electron','Diners Club','Maestro','MerQR Débito','MerQR Crédito','MerPgo Débito','Cabal'];
+    const monedas = ['Pesos','Dólares','Euros','Reales'];
+    return `
+      <h1 class="section-title">Medios de Pago</h1>
+      <div class="section-sub">Tarjetas, efectivo (con detalle por moneda), reservas, cuenta corriente.</div>
+      ${card('C.1 · Medios de pago (mediosPago)',
+        medios.map(m => field(m, `eco.mediosPago.${m}`)).join(''))}
+      ${card('C.2 · Detalle de Tarjetas (tarjetasDetalle)',
+        tarjs.map(t => field(t, `eco.tarjetasDetalle.${t}`)).join(''))}
+      ${card('C.3 · Efectivo por moneda (efectivoPorMoneda)',
+        monedas.map(m => field(m, `eco.efectivoPorMoneda.${m}`)).join(''))}
+    `;
+  },
+
+  // ===== D · Operación =====
+  operacion: () => {
+    const desc = ['Descuento','Sin Cargo','Anulado/Reemplazado','Borrado/Devuelto','Control','Comisiones','Propinas'];
+    const res = ['Total','Efectivo','Transfer','Tarjetas','Canje Publicidad'];
+    return `
+      <h1 class="section-title">Operación</h1>
+      <div class="section-sub">Centro de venta, descuentos, reservas.</div>
+      ${card('D.1 · Centro de Venta (centroVenta)', `
+        ${row(
+          field('Personas totales', 'eco.centroVenta.total'),
+          field('Ticket promedio', 'eco.centroVenta.promedio')
+        )}
+        ${row(
+          field('Personas en Salón', 'eco.centroVenta.salon.personas'),
+          field('Promedio en Salón', 'eco.centroVenta.salon.promedio')
+        )}
+        ${row(
+          field('Personas en Barra', 'eco.centroVenta.barra.personas'),
+          field('Promedio en Barra', 'eco.centroVenta.barra.promedio')
+        )}
+      `)}
+      ${card('D.2 · Descuentos y propinas (descuentos)',
+        desc.map(d => field(d, `eco.descuentos.${d}`)).join(''))}
+      ${card('D.3 · Reservas (reservas)',
+        res.map(r => field(r, `eco.reservas.${r}`)).join(''))}
+    `;
+  },
+
+  // ===== E · Ventas Producto =====
+  productos: () => {
+    const cats = {
+      'Entradas y Charcuterie': ['Empanada de matambre','Mayonesa de ave','Stracciatella y gazpacho','Hongos con huevo frito','Jamón crudo ibérico','Lomito horneado casero'],
+      'Entradas de Parrilla': ['Longaniza calabresa','Chorizo casero','Morcilla','Molleja de Corazón','Molleja al romero demi-glace','Provoleta','Provoleta Cauce','Chinchulines al limón'],
+      'Parrilla (sin hueso)': ['Ojo de Bife','Bife de Chorizo','Entraña','Lomo','Vacío','Picaña','Corazón de cuadril'],
+      'Parrilla (con hueso)': ['Asado Banderita 5 Costillas','Asado Emperador'],
+      'Hamburguesas': ['Hamburguesa de la Casa'],
+      'Pesca': ['Trucha','Pacú Asado','Pesca del día'],
+      'Guarniciones': ['Papas Fritas','Papas Fritas Provenzal','Puré de boniato','Puré de papas','Puré de Papas demi-glace','Huevos Fritos','Boniato al rescoldo','Ensalada hojas verdes (cítrica)','Ensalada hojas verdes (balsámica)','Ensalada hojas verdes (parmesano)','Tomate y cebolla','Ensalada hojas amargas'],
+      'Horno y Fuegos': ['Steak Frites','Milanesa a caballo','Milanesa Napolitana','Suprema a la Suiza','Ravioles de ricota','Secreto porteño','Marucha demi-glace','Pollo Asado'],
+      'Postres': ['Volcán de chocolate','Arroz con leche','Frutillas con crema','Flan de vainilla','Panqueque de dulce de leche','Helado','Mousse de chocolate'],
+      'Bebidas': ['Agua Eco sin Gas','Agua Eco con Gas','Agua Aquapanna','Agua San Pellegrino','Red Bull','Jugo Exprimido','Limonada','Cerveza (todas)','Café (todos)']
+    };
+    return `
+      <h1 class="section-title">Ventas por Producto</h1>
+      <div class="section-sub">Cantidades vendidas (opcional). Si lo dejás vacío, el informe lo oculta.</div>
+      <div class="banner">Estos datos son <strong>cantidades</strong> (no montos).</div>
+      ${Object.entries(cats).map(([cat, prods]) => card(cat,
+        prods.map(p => field(p, `eco.ventasProducto.${cat}.${p}`)).join('')
+      )).join('')}
+    `;
+  },
+
+  // ===== F · Nómina Resumen =====
+  nomina: () => `
+    <h1 class="section-title">Nómina · Resumen</h1>
+    <div class="section-sub">KPIs de la nómina, top 10 sueldos, distribución por área y situación.</div>
+
+    ${card('F.1 · Indicadores de nómina (nomina)', `
+      ${row(
+        field('Dotación activa', 'eco.nomina.dotacionActiva'),
+        field('Altas AFIP', 'eco.nomina.altaAFIP'),
+        field('Altas Seguro', 'eco.nomina.altaSeguro')
+      )}
+      ${row(
+        field('Bajas con sueldo', 'eco.nomina.bajaCsueldo'),
+        field('Extras (cantidad)', 'eco.nomina.extras'),
+        field('Extras total $', 'eco.nomina.extrasTotal')
+      )}
+      ${row(
+        field('Bajas del mes', 'eco.nomina.bajasMes'),
+        field('Bajas AFIP', 'eco.nomina.bajaAFIP'),
+        field('Bajas Seguro', 'eco.nomina.bajaSeguro')
+      )}
+      ${row(
+        field('Sueldo promedio', 'eco.nomina.sueldoPromedio'),
+        field('Mediana', 'eco.nomina.mediana')
+      )}
+      ${row(
+        field('Nómina total (sin feriados)', 'eco.nomina.nominaTotal'),
+        field('Total feriados', 'eco.nomina.feriados')
+      )}
+    `)}
+
+    ${card('F.2 · Top 10 sueldos del mes (top10)',
+      renderItemList('eco.nomina.top10', ['nombre','area','sueldo','fer','total']))}
+
+    ${card('F.3 · Distribución por Área (porArea)',
+      renderItemList('eco.nomina.porArea', ['area','personas','costo','promedio','pct']))}
+
+    ${card('F.4 · Situación nómina (situacion)', `
+      ${row(
+        field('Alta AFIP', 'eco.nomina.situacion.altaAFIP'),
+        field('Alta Seguro', 'eco.nomina.situacion.altaSeguro')
+      )}
+      ${row(
+        field('Baja c/sueldo', 'eco.nomina.situacion.bajaCsueldo'),
+        field('Extras', 'eco.nomina.situacion.extras'),
+        field('Baja s/sueldo', 'eco.nomina.situacion.bajaSsueldo')
+      )}
+    `)}
+  `,
+
+  // ===== G · Empleados (lista resumen) =====
+  empleados: () => `
+    <h1 class="section-title">Empleados · Lista resumen</h1>
+    <div class="section-sub">Una fila por empleado. Se usa en la sección "empleados" del informe.</div>
+    <div class="banner warn">
+      Tip: usá el botón <strong>↻ Copiar mes anterior</strong> de arriba para arrancar con la lista del mes pasado.
+    </div>
+    ${card('G.1 · Empleados (empleados)',
+      renderItemList('eco.empleados', ['a','n','area','sit','s','f','t']))}
+  `,
+
+  // ===== I · Insights =====
+  insights: () => `
+    <h1 class="section-title">Insights del mes</h1>
+    <div class="section-sub">3-5 frases destacadas que aparecen en el resumen del mes.</div>
+    <div class="banner">Tipo: <strong>green</strong> (positivo), <strong>amber</strong> (cuidado), <strong>red</strong> (crítico).</div>
+    ${card('I.1 · Insights (insights)',
+      renderItemList('eco.insights', ['type','text']))}
+  `,
+
+  // ===== J · Caja diaria =====
+  caja: () => {
+    // Si entramos a caja por primera vez, inicializar fecha y traer datos
+    if (!currentCajaFecha) currentCajaFecha = todayISO();
+    setTimeout(() => {
+      cargarCajaDia(currentCajaFecha);
+      cargarCajaUltimosDias();
+    }, 50);
+    return `
+      <h1 class="section-title">Caja diaria</h1>
+      <div class="section-sub">Carga de cobros del día y cálculo del ingreso neto al banco.</div>
+
+      <div class="card" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <label style="font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;">Fecha</label>
+        <input type="date" id="cajaFechaInput" value="${currentCajaFecha}"
+          style="padding:9px 14px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text);font-size:.92rem;outline:none;">
+        <button class="btn-secondary" id="btnCajaHoy" style="font-size:.78rem;padding:8px 14px;">Hoy</button>
+        <span id="cajaStatus" style="margin-left:auto;font-size:.78rem;color:var(--text3);"></span>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Venta total del día</div>
+        <div class="field">
+          <input type="number" id="cajaVentaTotal" placeholder="0"
+            style="font-size:1.4rem;font-weight:700;font-variant-numeric:tabular-nums;padding:14px 18px;">
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Cobros del día</div>
+        <div class="card-sub">Cargá lo cobrado por cada medio. Si no se usó, dejá vacío.</div>
+        <div class="field-row">
+          ${cajaInputField('Débito', 'debito', '1.45%')}
+          ${cajaInputField('Crédito', 'credito', '5.45%')}
+        </div>
+        <div class="field-row">
+          ${cajaInputField('QR (Galicia)', 'qr', '5.45%')}
+          ${cajaInputField('Pix MP', 'pix', '3.93%')}
+        </div>
+        <div class="field-row">
+          ${cajaInputField('Dinero en cuenta', 'dineroEnCuenta', '0.97%')}
+          ${cajaInputField('Transferencias', 'transferencias', '0%')}
+        </div>
+        <div class="field-row">
+          ${cajaInputField('Propinas', 'propinas', '5.45%')}
+          ${cajaInputField('Cta Corriente', 'ctaCorriente', 'no entra al banco')}
+        </div>
+        <div class="field-row">
+          ${cajaInputField('Efectivo', 'efectivo', 'no entra al banco')}
+          <div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">No cobrado (informativo)</div>
+        <div class="field-row three">
+          ${cajaInputField('Devoluciones', 'devoluciones', '')}
+          ${cajaInputField('Descuentos', 'descuentos', '')}
+          ${cajaInputField('Sin cargo', 'sinCargo', '')}
+        </div>
+      </div>
+
+      <div class="card" style="background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(52,211,153,.02));border:1px solid rgba(52,211,153,.2);">
+        <div class="card-title" style="color:var(--green);">Cálculo automático</div>
+        <div id="cajaCalculo" style="font-variant-numeric:tabular-nums;">
+          <div style="color:var(--text2);">Cargá los cobros para ver el cálculo.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Notas del día (opcional)</div>
+        <textarea id="cajaNotas" placeholder="Cualquier observación: feriado, evento, problemas, etc."
+          style="width:100%;padding:11px 14px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text);font-size:.9rem;outline:none;min-height:60px;resize:vertical;font-family:inherit;"></textarea>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Últimos días cargados</div>
+        <div class="card-sub">Click en una fila para abrir esa fecha.</div>
+        <div id="cajaListaUltimos" style="font-size:.85rem;">Cargando…</div>
+      </div>
+    `;
+  },
+
+  // ===== K · Cheques =====
+  cheques: () => {
+    setTimeout(() => { cargarCheques(); }, 50);
+    return `
+      <h1 class="section-title">Cheques</h1>
+      <div class="section-sub">Listado completo con filtros y acciones rápidas. Los cambios se guardan automáticamente.</div>
+
+      <div class="card" style="display:flex;gap:12px;flex-wrap:wrap;align-items:end;">
+        <div class="field" style="margin-bottom:0;flex:1;min-width:160px;">
+          <label>Filtrar por acreedor</label>
+          <input type="text" id="chFiltroAcreedor" placeholder="Ej: NATY, MUGE…" value="${chequeFiltro.acreedor}">
+        </div>
+        <div class="field" style="margin-bottom:0;min-width:140px;">
+          <label>Mes vencimiento</label>
+          <select id="chFiltroMes">
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0;min-width:140px;">
+          <label>Estado</label>
+          <select id="chFiltroEstado">
+            <option value="">Todos</option>
+            <option value="emitido" ${chequeFiltro.estado==='emitido'?'selected':''}>Emitido</option>
+            <option value="pagado" ${chequeFiltro.estado==='pagado'?'selected':''}>Pagado</option>
+            <option value="rechazado" ${chequeFiltro.estado==='rechazado'?'selected':''}>Rechazado</option>
+            <option value="vencido" ${chequeFiltro.estado==='vencido'?'selected':''}>Vencido</option>
+          </select>
+        </div>
+        <button class="btn-primary" onclick="window.__abrirNuevoCheque()" style="padding:11px 18px;font-size:.85rem;">+ Nuevo cheque</button>
+      </div>
+
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div id="chequesResumen" style="padding:14px 22px;border-bottom:1px solid var(--border);font-size:.85rem;color:var(--text2);">
+          Cargando…
+        </div>
+        <div id="chequesLista" style="max-height:600px;overflow-y:auto;"></div>
+      </div>
+    `;
+  },
+
+  // ===== L · Saldo banco =====
+  banco: () => {
+    setTimeout(() => { cargarConfigBanco(); }, 50);
+    return `
+      <h1 class="section-title">Saldo bancario</h1>
+      <div class="section-sub">Saldo actual de la cuenta del banco. Actualizalo cuando recibís el extracto o cuando cambia significativamente.</div>
+
+      <div class="card">
+        <div class="card-title">Saldo actual</div>
+        <div class="field-row">
+          <div class="field">
+            <label>Saldo (en pesos)</label>
+            <input type="number" id="bancoSaldo" placeholder="0">
+          </div>
+          <div class="field">
+            <label>Fecha del saldo</label>
+            <input type="date" id="bancoFecha">
+          </div>
+        </div>
+        <button class="btn-primary" id="btnGuardarSaldo">Guardar saldo</button>
+        <span id="bancoStatus" style="margin-left:14px;color:var(--text3);font-size:.85rem;"></span>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Para qué se usa</div>
+        <div style="font-size:.85rem;color:var(--text2);line-height:1.6;">
+          Este saldo es el <strong>punto de partida</strong> para la proyección del calendario de pagos.<br>
+          A partir de la fecha que pusiste, se proyecta día a día sumando ingresos (cajas reales o estimadas)
+          y restando egresos (cheques pendientes).<br><br>
+          <strong>Cuando actualizar:</strong> al recibir un extracto bancario o ante movimientos fuertes (transferencias grandes, etc.).
+        </div>
+      </div>
+    `;
+  },
+
+  // ===== H · RRHH Detalle =====
+  rrhh: () => `
+    <h1 class="section-title">RRHH · Detalle con neto</h1>
+    <div class="section-sub">Resumen del mes y planilla con neto cobrado por empleado.</div>
+
+    ${card('H.1 · Resumen del mes (summary)', `
+      ${field('Título (ej. "Abril 2026")', 'rrhh.title', 'text')}
+      ${row(
+        field('base', 'rrhh.summary.base'),
+        field('totalFer', 'rrhh.summary.totalFer')
+      )}
+      ${row(
+        field('descuentos', 'rrhh.summary.descuentos'),
+        field('banco', 'rrhh.summary.banco')
+      )}
+      ${row(
+        field('efectivo', 'rrhh.summary.efectivo'),
+        field('efectivoVales', 'rrhh.summary.efectivoVales'),
+        field('dotación', 'rrhh.summary.dotacion')
+      )}
+    `)}
+
+    ${card('H.2 · Planilla detallada (employees)',
+      renderRrhhEmployees('rrhh.employees'))}
+  `
+
+};
+
+// ============================================================
+// LISTAS REPETIBLES (top10, empleados, etc)
+// ============================================================
+function renderItemList(path, fields) {
+  // Para empleados o top10: arrays de objetos
+  // Para insights: arrays de objetos {type, text}
+  const target = path.startsWith('eco.') ? datosEcon : datosRrhh;
+  const key = path.replace(/^eco\.|^rrhh\./, '');
+  const arr = get(target, key, []);
+  const list = Array.isArray(arr) ? arr : [];
+
+  const cols = fields.length;
+  const tmplCols = `30px ${'1fr '.repeat(cols)} 50px`;
+  const html = `
+    <div class="row-list" id="list-${escId(path)}" data-path="${path}" data-fields="${fields.join(',')}">
+      ${list.map((item, idx) => renderRow(path, idx, item, fields, tmplCols)).join('')}
+    </div>
+    <button class="btn-add" onclick="window.__addRow('${path}', '${fields.join(',')}')">+ Agregar fila</button>
+  `;
+  return html;
+}
+
+function renderRow(path, idx, item, fields, tmplCols) {
+  return `<div class="row-item" style="grid-template-columns:${tmplCols};">
+    <div class="row-num">${idx + 1}</div>
+    ${fields.map(f => {
+      const isNum = ['monto','sueldo','fer','total','s','f','t','personas','costo','promedio','pct'].includes(f);
+      const isType = f === 'type';
+      if (isType) {
+        return `<select onchange="window.__editRow('${path}', ${idx}, '${f}', this.value)">
+          <option value="">—</option>
+          <option value="green" ${item[f]==='green'?'selected':''}>verde · positivo</option>
+          <option value="amber" ${item[f]==='amber'?'selected':''}>amarillo · cuidado</option>
+          <option value="red" ${item[f]==='red'?'selected':''}>rojo · crítico</option>
+        </select>`;
+      }
+      return `<input type="${isNum?'number':'text'}"
+        placeholder="${f}"
+        value="${item[f] != null ? String(item[f]).replace(/"/g,'&quot;') : ''}"
+        oninput="window.__editRow('${path}', ${idx}, '${f}', this.value)">`;
+    }).join('')}
+    <button class="btn-del" onclick="window.__delRow('${path}', ${idx})">×</button>
+  </div>`;
+}
+
+function renderListEditor(prefixPath, btnLabel, kindLabel) {
+  // Para objetos {clave: valor}: permite agregar nueva clave dinámica
+  return `<div style="margin-top:14px;">
+    <div style="display:flex;gap:8px;align-items:center;">
+      <input id="newkey-${escId(prefixPath)}" type="text" placeholder="${kindLabel}"
+        style="flex:1;padding:8px 12px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.85rem;">
+      <button class="btn-add" style="margin:0;" onclick="window.__addKey('${prefixPath}','newkey-${escId(prefixPath)}')">+ ${btnLabel}</button>
+    </div>
+  </div>`;
+}
+
+function renderRrhhEmployees(path) {
+  const list = get(datosRrhh, 'employees', []);
+  const fields = ['apellido','nombre','sit','cargo','base','fer','total','neto'];
+  const tmplCols = '30px 1.2fr 1.2fr 1fr 1.2fr 1fr 1fr 1fr 1fr 50px';
+  // Cada empleado en rrhhMonthlyData puede venir como array (legacy) u objeto (nuevo).
+  // Lo normalizamos a objeto para editar.
+  const toObj = (e) => {
+    if (Array.isArray(e)) {
+      const o = {}; fields.forEach((f, i) => o[f] = e[i]); return o;
+    }
+    return e || {};
+  };
+  return `
+    <div class="row-list" id="list-rrhh-emp">
+      ${list.map((raw, idx) => {
+        const emp = toObj(raw);
+        return `<div class="row-item" style="grid-template-columns:${tmplCols};">
+          <div class="row-num">${idx + 1}</div>
+          ${fields.map((f, i) => {
+            const isNum = i >= 4;
+            return `<input type="${isNum?'number':'text'}"
+              placeholder="${f}"
+              value="${emp[f] != null ? String(emp[f]).replace(/"/g,'&quot;') : ''}"
+              oninput="window.__editRrhhEmp(${idx}, '${f}', this.value)">`;
+          }).join('')}
+          <button class="btn-del" onclick="window.__delRrhhEmp(${idx})">×</button>
+        </div>`;
+      }).join('')}
+    </div>
+    <button class="btn-add" onclick="window.__addRrhhEmp()">+ Agregar empleado</button>
+  `;
+}
+
+function escId(s) { return s.replace(/[^a-zA-Z0-9]/g, '_'); }
+
+// Funciones globales para los handlers de las filas
+window.__addRow = (path, fieldsCsv) => {
+  const fields = fieldsCsv.split(',');
+  const target = path.startsWith('eco.') ? datosEcon : datosRrhh;
+  const key = path.replace(/^eco\.|^rrhh\./, '');
+  let arr = get(target, key, []);
+  if (!Array.isArray(arr)) arr = [];
+  const newItem = {};
+  fields.forEach(f => newItem[f] = ['monto','sueldo','fer','total','s','f','t','personas','costo','promedio','pct'].includes(f) ? null : '');
+  arr.push(newItem);
+  set(target, key, arr);
+  debounceSave();
+  renderActiveSection();
+};
+
+window.__editRow = (path, idx, field, val) => {
+  const target = path.startsWith('eco.') ? datosEcon : datosRrhh;
+  const key = path.replace(/^eco\.|^rrhh\./, '');
+  const arr = get(target, key, []);
+  const isNum = ['monto','sueldo','fer','total','s','f','t','personas','costo','promedio','pct'].includes(field);
+  arr[idx][field] = isNum ? (val === '' ? null : Number(val)) : val;
+  set(target, key, arr);
+  debounceSave();
+};
+
+window.__delRow = (path, idx) => {
+  const target = path.startsWith('eco.') ? datosEcon : datosRrhh;
+  const key = path.replace(/^eco\.|^rrhh\./, '');
+  const arr = get(target, key, []);
+  arr.splice(idx, 1);
+  set(target, key, arr);
+  debounceSave();
+  renderActiveSection();
+};
+
+window.__addKey = (prefixPath, inputId) => {
+  const input = document.getElementById(inputId);
+  const newKey = input.value.trim();
+  if (!newKey) return;
+  const target = prefixPath.startsWith('eco.') ? datosEcon : datosRrhh;
+  const key = prefixPath.replace(/^eco\.|^rrhh\./, '');
+  const obj = get(target, key, {});
+  obj[newKey] = 0;
+  set(target, key, obj);
+  input.value = '';
+  debounceSave();
+  renderActiveSection();
+};
+
+// Empleados RRHH ahora son ARRAY DE OBJETOS (Firestore no acepta arrays anidados)
+const RRHH_EMP_FIELDS = ['apellido','nombre','sit','cargo','base','fer','total','neto'];
+function _normEmp(e) {
+  if (Array.isArray(e)) {
+    const o = {}; RRHH_EMP_FIELDS.forEach((f, i) => o[f] = e[i]); return o;
+  }
+  return e || {};
+}
+function _ensureEmpsAreObjects() {
+  if (!Array.isArray(datosRrhh.employees)) { datosRrhh.employees = []; return; }
+  // Convertir cualquier legacy array → objeto
+  datosRrhh.employees = datosRrhh.employees.map(_normEmp);
+}
+
+window.__addRrhhEmp = () => {
+  _ensureEmpsAreObjects();
+  datosRrhh.employees.push({apellido:'', nombre:'', sit:'ALTA AFIP', cargo:'', base:null, fer:null, total:null, neto:null});
+  debounceSave();
+  renderActiveSection();
+};
+
+window.__editRrhhEmp = (idx, field, val) => {
+  _ensureEmpsAreObjects();
+  if (!datosRrhh.employees[idx]) return;
+  const numFields = ['base','fer','total','neto'];
+  datosRrhh.employees[idx][field] = numFields.includes(field) ? (val === '' ? null : Number(val)) : val;
+  debounceSave();
+};
+
+window.__delRrhhEmp = (idx) => {
+  _ensureEmpsAreObjects();
+  datosRrhh.employees.splice(idx, 1);
+  debounceSave();
+  renderActiveSection();
+};
+
+// ============================================================
+// CAJA DIARIA · helpers + lógica
+// ============================================================
+function todayISO() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function fmtMoneda(n) {
+  if (n == null || isNaN(n)) return '$0';
+  const isNeg = n < 0;
+  const abs = Math.abs(Math.round(n));
+  const fmt = '$' + abs.toLocaleString('es-AR');
+  return isNeg ? `-${fmt}` : fmt;
+}
+
+function fmtFechaShort(iso) {
+  const [y, m, d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function cajaInputField(label, key, hint) {
+  return `<div class="field">
+    <label>${label}${hint ? ` <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0;">· ${hint}</span>` : ''}</label>
+    <input type="number" id="cajaInput-${key}" data-caja-key="${key}" placeholder="0">
+  </div>`;
+}
+
+async function cargarCajaDia(fecha) {
+  setCajaStatus('Cargando…');
+  try {
+    const snap = await getDoc(doc(db, 'cajas_diarias', fecha));
+    datosCaja = snap.exists() ? snap.data() : {};
+    fillCajaInputs();
+    recalcularCaja();
+    setCajaStatus(snap.exists() ? `Última edición: ${formatTimestamp(datosCaja.actualizado_en)}` : 'Día sin cargar');
+  } catch (e) {
+    console.error(e);
+    setCajaStatus('Error al cargar', 'err');
+  }
+}
+
+function formatTimestamp(ts) {
+  if (!ts) return '—';
+  try {
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleString('es-AR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+  } catch { return '—'; }
+}
+
+function setCajaStatus(text, kind) {
+  const el = document.getElementById('cajaStatus');
+  if (!el) return;
+  el.textContent = text;
+  el.style.color = kind === 'err' ? 'var(--red)' : kind === 'ok' ? 'var(--green)' : 'var(--text3)';
+}
+
+function fillCajaInputs() {
+  const keys = ['debito','credito','qr','pix','dineroEnCuenta','transferencias','propinas','ctaCorriente','efectivo','devoluciones','descuentos','sinCargo'];
+  for (const k of keys) {
+    const el = document.getElementById('cajaInput-' + k);
+    if (el) el.value = datosCaja[k] != null ? datosCaja[k] : '';
+  }
+  const vt = document.getElementById('cajaVentaTotal');
+  if (vt) vt.value = datosCaja.ventaTotal != null ? datosCaja.ventaTotal : '';
+  const nt = document.getElementById('cajaNotas');
+  if (nt) nt.value = datosCaja.notas || '';
+}
+
+function recalcularCaja() {
+  const cobros = {
+    debito: getCajaInputVal('debito'),
+    credito: getCajaInputVal('credito'),
+    qr: getCajaInputVal('qr'),
+    pix: getCajaInputVal('pix'),
+    dineroEnCuenta: getCajaInputVal('dineroEnCuenta'),
+    transferencias: getCajaInputVal('transferencias'),
+    propinas: getCajaInputVal('propinas'),
+    ctaCorriente: getCajaInputVal('ctaCorriente'),
+    efectivo: getCajaInputVal('efectivo'),
+  };
+  const r = calcularCajaDiaria(cobros);
+  const calcEl = document.getElementById('cajaCalculo');
+  if (!calcEl) return;
+  calcEl.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr auto;gap:6px 18px;font-size:.88rem;">
+      <span style="color:var(--text2);">Ingreso bruto banco</span>
+      <span style="font-weight:600;">${fmtMoneda(r.ingresoBrutoBanco)}</span>
+      <span style="color:var(--text3);font-size:.78rem;padding-left:14px;">  − Comisiones</span>
+      <span style="color:var(--red);font-weight:600;">−${fmtMoneda(r.totalComisiones)}</span>
+      <span style="color:var(--text3);font-size:.78rem;padding-left:14px;">  − Impuesto al crédito (${IMPUESTO_CREDITO_PCT}%)</span>
+      <span style="color:var(--red);font-weight:600;">−${fmtMoneda(r.impuestoCredito)}</span>
+      <span style="border-top:1px solid var(--border);padding-top:8px;color:var(--green);font-weight:700;font-size:1rem;">INGRESO NETO BANCO</span>
+      <span style="border-top:1px solid var(--border);padding-top:8px;color:var(--green);font-weight:800;font-size:1.2rem;">${fmtMoneda(r.ingresoNetoBanco)}</span>
+    </div>
+    <details style="margin-top:14px;font-size:.78rem;color:var(--text2);">
+      <summary style="cursor:pointer;color:var(--text3);">Ver desglose de comisiones</summary>
+      <div style="margin-top:8px;display:grid;grid-template-columns:1fr auto auto;gap:4px 14px;font-variant-numeric:tabular-nums;">
+        <span>Débito (${COMISIONES.debito}%)</span><span>${fmtMoneda(r.inputs.debito)}</span><span>−${fmtMoneda(r.comisiones.debito)}</span>
+        <span>Crédito (${COMISIONES.credito}%)</span><span>${fmtMoneda(r.inputs.credito)}</span><span>−${fmtMoneda(r.comisiones.credito)}</span>
+        <span>QR (${COMISIONES.qr}%)</span><span>${fmtMoneda(r.inputs.qr)}</span><span>−${fmtMoneda(r.comisiones.qr)}</span>
+        <span>Pix MP (${COMISIONES.pix}%)</span><span>${fmtMoneda(r.inputs.pix)}</span><span>−${fmtMoneda(r.comisiones.pix)}</span>
+        <span>Dinero en cuenta (${COMISIONES.dineroEnCuenta}%)</span><span>${fmtMoneda(r.inputs.dineroEnCuenta)}</span><span>−${fmtMoneda(r.comisiones.dineroEnCuenta)}</span>
+        <span>Transferencias (${COMISIONES.transferencias}%)</span><span>${fmtMoneda(r.inputs.transferencias)}</span><span>−${fmtMoneda(r.comisiones.transferencias)}</span>
+        <span>Propinas (${COMISIONES.propinas}%)</span><span>${fmtMoneda(r.inputs.propinas)}</span><span>−${fmtMoneda(r.comisiones.propinas)}</span>
+      </div>
+      <div style="margin-top:10px;color:var(--text3);">
+        Efectivo (queda en mano): ${fmtMoneda(r.inputs.efectivo)}<br>
+        Cta Corriente (cobro diferido): ${fmtMoneda(r.inputs.ctaCorriente)}<br>
+        <strong>Total operativo del día: ${fmtMoneda(r.totalOperativo)}</strong>
+      </div>
+    </details>
+  `;
+}
+
+function getCajaInputVal(key) {
+  const el = document.getElementById('cajaInput-' + key);
+  return el && el.value !== '' ? Number(el.value) : 0;
+}
+
+async function guardarCajaDia() {
+  if (!currentUser || !currentCajaFecha) return;
+  setCajaStatus('Guardando…');
+  try {
+    const cobros = {
+      debito: getCajaInputVal('debito'),
+      credito: getCajaInputVal('credito'),
+      qr: getCajaInputVal('qr'),
+      pix: getCajaInputVal('pix'),
+      dineroEnCuenta: getCajaInputVal('dineroEnCuenta'),
+      transferencias: getCajaInputVal('transferencias'),
+      propinas: getCajaInputVal('propinas'),
+      ctaCorriente: getCajaInputVal('ctaCorriente'),
+      efectivo: getCajaInputVal('efectivo'),
+    };
+    const ventaTotal = parseFloat(document.getElementById('cajaVentaTotal').value) || 0;
+    const devoluciones = getCajaInputVal('devoluciones');
+    const descuentos = getCajaInputVal('descuentos');
+    const sinCargo = getCajaInputVal('sinCargo');
+    const notas = (document.getElementById('cajaNotas').value || '').trim();
+    const calc = calcularCajaDiaria(cobros);
+
+    const payload = {
+      fecha: currentCajaFecha,
+      ventaTotal,
+      ...cobros,
+      devoluciones, descuentos, sinCargo,
+      notas,
+      calculado: {
+        ingresoBrutoBanco: calc.ingresoBrutoBanco,
+        totalComisiones: calc.totalComisiones,
+        impuestoCredito: calc.impuestoCredito,
+        ingresoNetoBanco: calc.ingresoNetoBanco,
+        totalOperativo: calc.totalOperativo,
+      },
+      actualizado_por: currentUser.email,
+      actualizado_en: serverTimestamp(),
+    };
+    await setDoc(doc(db, 'cajas_diarias', currentCajaFecha), payload);
+    datosCaja = payload;
+    setCajaStatus('Guardado ✓', 'ok');
+    cargarCajaUltimosDias();
+  } catch (e) {
+    console.error(e);
+    setCajaStatus('Error al guardar', 'err');
+  }
+}
+
+function debounceCajaSave() {
+  clearTimeout(cajaSaveTimer);
+  setCajaStatus('Guardando…');
+  cajaSaveTimer = setTimeout(guardarCajaDia, 1500);
+}
+
+async function cargarCajaUltimosDias() {
+  const cont = document.getElementById('cajaListaUltimos');
+  if (!cont) return;
+  try {
+    const q = query(collection(db, 'cajas_diarias'), orderBy('fecha', 'desc'), limit(10));
+    const snap = await getDocs(q);
+    const dias = [];
+    snap.forEach(d => dias.push(d.data()));
+    cajaUltimosDias = dias;
+    if (dias.length === 0) {
+      cont.innerHTML = '<div style="color:var(--text3);">Aún no cargaste ningún día.</div>';
+      return;
+    }
+    cont.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;font-size:.74rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;padding:0 12px 8px;">
+        <span>Fecha</span><span style="text-align:right;">Venta total</span><span style="text-align:right;">Bruto banco</span><span style="text-align:right;">Neto banco</span>
+      </div>
+      ${dias.map(d => `
+        <div onclick="window.__abrirCajaFecha('${d.fecha}')"
+          style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.02);margin-bottom:6px;cursor:pointer;font-variant-numeric:tabular-nums;transition:background .2s;"
+          onmouseover="this.style.background='rgba(255,255,255,.05)'"
+          onmouseout="this.style.background='rgba(255,255,255,.02)'">
+          <span>${fmtFechaShort(d.fecha)}</span>
+          <span style="text-align:right;">${fmtMoneda(d.ventaTotal || 0)}</span>
+          <span style="text-align:right;color:var(--text2);">${fmtMoneda((d.calculado && d.calculado.ingresoBrutoBanco) || 0)}</span>
+          <span style="text-align:right;color:var(--green);font-weight:600;">${fmtMoneda((d.calculado && d.calculado.ingresoNetoBanco) || 0)}</span>
+        </div>
+      `).join('')}
+    `;
+  } catch (e) {
+    console.error(e);
+    cont.innerHTML = '<div style="color:var(--red);">Error al cargar histórico.</div>';
+  }
+}
+
+// Event delegation para los inputs de caja
+document.addEventListener('input', (e) => {
+  if (e.target.matches('#cajaVentaTotal, #cajaNotas, [data-caja-key]')) {
+    recalcularCaja();
+    debounceCajaSave();
+  }
+});
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'cajaFechaInput') {
+    currentCajaFecha = e.target.value;
+    cargarCajaDia(currentCajaFecha);
+  }
+});
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'btnCajaHoy') {
+    const hoy = todayISO();
+    currentCajaFecha = hoy;
+    const inp = document.getElementById('cajaFechaInput');
+    if (inp) inp.value = hoy;
+    cargarCajaDia(hoy);
+  }
+});
+window.__abrirCajaFecha = (fecha) => {
+  currentCajaFecha = fecha;
+  const inp = document.getElementById('cajaFechaInput');
+  if (inp) inp.value = fecha;
+  cargarCajaDia(fecha);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// ============================================================
+// CHEQUES · CRUD + acciones rápidas
+// ============================================================
+async function cargarCheques(force = false) {
+  if (chequesLoaded && !force) {
+    renderCheques();
+    return;
+  }
+  const lista = document.getElementById('chequesLista');
+  if (lista) lista.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text3);">Cargando cheques…</div>';
+  try {
+    const snap = await getDocs(query(collection(db, 'cheques'), orderBy('fecha', 'asc')));
+    cheques = [];
+    snap.forEach(d => cheques.push({ _id: d.id, ...d.data() }));
+    chequesLoaded = true;
+    renderCheques();
+    populateMesFilter();
+  } catch (e) {
+    console.error(e);
+    if (lista) lista.innerHTML = '<div style="padding:24px;color:var(--red);">Error al cargar cheques.</div>';
+  }
+}
+
+function populateMesFilter() {
+  const sel = document.getElementById('chFiltroMes');
+  if (!sel) return;
+  const meses = new Set();
+  cheques.forEach(ch => {
+    if (ch.fecha) meses.add(ch.fecha.slice(0, 7));
+  });
+  const sorted = [...meses].sort();
+  sel.innerHTML = '<option value="">Todos</option>' +
+    sorted.map(m => `<option value="${m}" ${chequeFiltro.mes===m?'selected':''}>${fmtMesLargo(m)}</option>`).join('');
+}
+
+function fmtMesLargo(yyyymm) {
+  const [y, m] = yyyymm.split('-');
+  const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  return `${meses[parseInt(m,10)-1]} ${y}`;
+}
+
+function chequeFechaEfectiva(ch) {
+  return ch.fecha;
+}
+
+function aplicarFiltroCheques() {
+  const fname = (chequeFiltro.acreedor || '').toLowerCase();
+  const fmes = chequeFiltro.mes;
+  const festado = chequeFiltro.estado;
+  return cheques.filter(ch => {
+    const f = chequeFechaEfectiva(ch);
+    if (fmes && !f.startsWith(fmes)) return false;
+    if (festado && ch.estado !== festado) return false;
+    if (fname && !(ch.destinatario || '').toLowerCase().includes(fname)) return false;
+    return true;
+  }).sort((a, b) => chequeFechaEfectiva(a).localeCompare(chequeFechaEfectiva(b)));
+}
+
+function renderCheques() {
+  const lista = document.getElementById('chequesLista');
+  const resumen = document.getElementById('chequesResumen');
+  if (!lista) return;
+  const filtrados = aplicarFiltroCheques();
+  if (resumen) {
+    const total = filtrados.reduce((s, ch) => s + (ch.monto || 0), 0);
+    resumen.innerHTML = `<strong>${filtrados.length}</strong> cheques · <strong>${fmtMoneda(total)}</strong> total`;
+  }
+  if (filtrados.length === 0) {
+    lista.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text3);">No hay cheques con esos filtros.</div>';
+    return;
+  }
+  lista.innerHTML = filtrados.map(ch => renderChequeRow(ch)).join('');
+}
+
+function renderChequeRow(ch) {
+  const f = chequeFechaEfectiva(ch);
+  const fechaShort = fmtFechaShort(f);
+  const estadoColors = {
+    emitido: { bg: 'rgba(255,255,255,.04)', color: 'var(--text2)', label: 'Emitido' },
+    pagado: { bg: 'rgba(52,211,153,.1)', color: 'var(--green)', label: 'Pagado' },
+    rechazado: { bg: 'rgba(248,113,113,.1)', color: 'var(--red)', label: 'Rechazado' },
+    vencido: { bg: 'rgba(251,191,36,.1)', color: 'var(--amber)', label: 'Vencido' },
+  };
+  const est = estadoColors[ch.estado] || estadoColors.emitido;
+  return `
+    <div style="display:grid;grid-template-columns:90px 1fr 130px 100px auto;gap:12px;align-items:center;padding:12px 22px;border-bottom:1px solid var(--border);font-size:.85rem;font-variant-numeric:tabular-nums;">
+      <div>
+        <div style="font-weight:700;color:var(--text);">${fechaShort}</div>
+      </div>
+      <div>
+        <div style="font-weight:600;color:var(--text);">${escapeHtml(ch.destinatario || '—')}</div>
+        ${ch.notas ? `<div style="font-size:.74rem;color:var(--text3);">${escapeHtml(ch.notas)}</div>` : ''}
+        ${ch.fechaPagoReal ? `<div style="font-size:.7rem;color:var(--green);">Pagado ${fmtFechaShort(ch.fechaPagoReal)}</div>` : ''}
+      </div>
+      <div style="text-align:right;font-weight:700;color:var(--text);">${fmtMoneda(ch.monto || 0)}</div>
+      <div style="text-align:center;">
+        <span style="display:inline-block;padding:3px 10px;border-radius:100px;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;background:${est.bg};color:${est.color};">${est.label}</span>
+      </div>
+      <div style="display:flex;gap:4px;justify-content:flex-end;flex-wrap:wrap;">
+        ${ch.estado === 'emitido' ? `
+          <button onclick="window.__chPagar('${ch._id}')" title="Marcar pagado" style="padding:5px 10px;border-radius:8px;background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.25);font-size:.72rem;cursor:pointer;">✓ Pagar</button>
+          <button onclick="window.__chRechazar('${ch._id}')" title="Marcar rechazado" style="padding:5px 10px;border-radius:8px;background:rgba(248,113,113,.08);color:var(--red);border:1px solid rgba(248,113,113,.2);font-size:.72rem;cursor:pointer;">✗ Rechazar</button>
+        ` : ''}
+        <button onclick="window.__chEditar('${ch._id}')" title="Editar" style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.04);color:var(--text2);border:1px solid var(--border);font-size:.72rem;cursor:pointer;">✏️</button>
+        <button onclick="window.__chEliminar('${ch._id}')" title="Eliminar" style="padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.04);color:var(--red);border:1px solid var(--border);font-size:.72rem;cursor:pointer;">🗑</button>
+      </div>
+    </div>
+  `;
+}
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Filtros: re-render al cambiar
+document.addEventListener('input', (e) => {
+  if (e.target.id === 'chFiltroAcreedor') {
+    chequeFiltro.acreedor = e.target.value;
+    renderCheques();
+  }
+});
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'chFiltroMes') { chequeFiltro.mes = e.target.value; renderCheques(); }
+  if (e.target.id === 'chFiltroEstado') { chequeFiltro.estado = e.target.value; renderCheques(); }
+});
+
+// === Acciones rápidas sobre cheques ===
+window.__chPagar = async (id) => {
+  const ch = cheques.find(c => c._id === id);
+  if (!ch) return;
+  const fechaPago = prompt(`Marcar pagado a "${ch.destinatario}" ($${ch.monto.toLocaleString('es-AR')})\n\nFecha de pago real (YYYY-MM-DD):`, todayISO());
+  if (!fechaPago) return;
+  await actualizarCheque(id, { estado: 'pagado', fechaPagoReal: fechaPago });
+};
+
+window.__chRechazar = async (id) => {
+  const ch = cheques.find(c => c._id === id);
+  if (!ch) return;
+  if (!confirm(`¿Rechazar el cheque a "${ch.destinatario}" ($${ch.monto.toLocaleString('es-AR')})?`)) return;
+  await actualizarCheque(id, { estado: 'rechazado' });
+};
+
+window.__chEliminar = async (id) => {
+  const ch = cheques.find(c => c._id === id);
+  if (!ch) return;
+  if (!confirm(`¿ELIMINAR DEFINITIVAMENTE el cheque a "${ch.destinatario}" ($${ch.monto.toLocaleString('es-AR')})?\n\nEsta acción NO se puede deshacer.`)) return;
+  try {
+    await deleteDoc(doc(db, 'cheques', id));
+    cheques = cheques.filter(c => c._id !== id);
+    renderCheques();
+  } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.__chEditar = (id) => abrirFormCheque(id);
+window.__abrirNuevoCheque = () => abrirFormCheque(null);
+
+async function actualizarCheque(id, cambios) {
+  try {
+    await updateDoc(doc(db, 'cheques', id), {
+      ...cambios,
+      actualizado_por: currentUser.email,
+      actualizado_en: serverTimestamp()
+    });
+    const ch = cheques.find(c => c._id === id);
+    if (ch) Object.assign(ch, cambios);
+    renderCheques();
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+// === Modal de cheque (nuevo o edición) ===
+function abrirFormCheque(id) {
+  const ch = id ? cheques.find(c => c._id === id) : { fecha: todayISO(), destinatario: '', monto: 0, banco: 'Galicia', estado: 'emitido', modo: 'Electronico', notas: '' };
+  if (!ch) return;
+  const modal = document.createElement('div');
+  modal.id = 'chequeModal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);';
+  modal.innerHTML = `
+    <div style="background:#141620;border:1px solid var(--border);border-radius:20px;padding:28px;max-width:580px;width:92%;max-height:90vh;overflow-y:auto;">
+      <h3 style="font-family:'Playfair Display',serif;color:#fff;margin-bottom:18px;font-size:1.3rem;">${id ? 'Editar cheque' : 'Nuevo cheque'}</h3>
+      <div class="field-row">
+        <div class="field"><label>Modo</label>
+          <select id="chForm-modo">
+            <option value="Electronico" ${ch.modo==='Electronico'?'selected':''}>Electrónico</option>
+            <option value="Fisico" ${ch.modo==='Fisico'?'selected':''}>Físico</option>
+          </select>
+        </div>
+        <div class="field"><label>Número</label><input type="text" id="chForm-numero" value="${escapeHtml(ch.numero || '')}"></div>
+      </div>
+      <div class="field"><label>Destinatario</label><input type="text" id="chForm-destinatario" value="${escapeHtml(ch.destinatario || '')}"></div>
+      <div class="field-row">
+        <div class="field"><label>Monto</label><input type="number" id="chForm-monto" value="${ch.monto || ''}"></div>
+        <div class="field"><label>Banco</label><input type="text" id="chForm-banco" value="${escapeHtml(ch.banco || 'Galicia')}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Fecha emisión</label><input type="date" id="chForm-fechaEmision" value="${ch.fechaEmision || ''}"></div>
+        <div class="field"><label>Fecha de pago</label><input type="date" id="chForm-fecha" value="${ch.fecha || ''}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>FC Proveedor</label><input type="text" id="chForm-pagoFCProveedor" value="${escapeHtml(ch.pagoFCProveedor || '')}"></div>
+        <div class="field"><label>N° FC AFIP</label><input type="text" id="chForm-numeroFCAFIP" value="${escapeHtml(ch.numeroFCAFIP || '')}"></div>
+      </div>
+      <div class="field"><label>Estado</label>
+        <select id="chForm-estado">
+          <option value="emitido" ${ch.estado==='emitido'?'selected':''}>Emitido</option>
+          <option value="pagado" ${ch.estado==='pagado'?'selected':''}>Pagado</option>
+          <option value="rechazado" ${ch.estado==='rechazado'?'selected':''}>Rechazado</option>
+          <option value="vencido" ${ch.estado==='vencido'?'selected':''}>Vencido</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Pago en banco (real)</label><input type="date" id="chForm-pagoEnBanco" value="${ch.pagoEnBanco || ''}"></div>
+        <div class="field"><label>Fecha pago real (alias)</label><input type="date" id="chForm-fechaPagoReal" value="${ch.fechaPagoReal || ''}"></div>
+      </div>
+      <div class="field"><label>Notas</label><textarea id="chForm-notas" rows="2">${escapeHtml(ch.notas || '')}</textarea></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;">
+        <button class="btn-secondary" onclick="document.getElementById('chequeModal').remove()">Cancelar</button>
+        <button class="btn-primary" onclick="window.__chGuardar('${id || ''}')">${id ? 'Guardar cambios' : 'Crear cheque'}</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+window.__chGuardar = async (id) => {
+  const get = (k) => document.getElementById('chForm-' + k).value;
+  const data = {
+    destinatario: get('destinatario').trim(),
+    monto: Number(get('monto')) || 0,
+    banco: get('banco').trim() || 'Galicia',
+    fecha: get('fecha'),
+    estado: get('estado'),
+    fechaPagoReal: get('fechaPagoReal') || null,
+    notas: get('notas').trim(),
+    actualizado_por: currentUser.email,
+    actualizado_en: serverTimestamp()
+  };
+  if (!data.destinatario || !data.fecha) {
+    alert('Faltan campos: destinatario y fecha son obligatorios.');
+    return;
+  }
+  try {
+    if (id) {
+      await updateDoc(doc(db, 'cheques', id), data);
+      const ch = cheques.find(c => c._id === id);
+      if (ch) Object.assign(ch, data);
+    } else {
+      data.creado_por = currentUser.email;
+      data.creado_en = serverTimestamp();
+      const ref = await addDoc(collection(db, 'cheques'), data);
+      cheques.push({ _id: ref.id, ...data });
+    }
+    document.getElementById('chequeModal').remove();
+    renderCheques();
+    populateMesFilter();
+  } catch (e) { alert('Error: ' + e.message); }
+};
+
+// ============================================================
+// SALDO BANCARIO · config
+// ============================================================
+async function cargarConfigBanco() {
+  try {
+    const snap = await getDoc(doc(db, 'config', 'banco'));
+    if (snap.exists()) configBanco = snap.data();
+  } catch (e) { console.error(e); }
+  const inSaldo = document.getElementById('bancoSaldo');
+  const inFecha = document.getElementById('bancoFecha');
+  if (inSaldo) inSaldo.value = configBanco.saldoActual || 0;
+  if (inFecha) inFecha.value = configBanco.fechaSaldo || todayISO();
+  const btn = document.getElementById('btnGuardarSaldo');
+  if (btn && !btn._wired) {
+    btn._wired = true;
+    btn.addEventListener('click', guardarConfigBanco);
+  }
+}
+
+async function guardarConfigBanco() {
+  const status = document.getElementById('bancoStatus');
+  const saldo = Number(document.getElementById('bancoSaldo').value) || 0;
+  const fecha = document.getElementById('bancoFecha').value || todayISO();
+  if (status) status.textContent = 'Guardando…';
+  try {
+    await setDoc(doc(db, 'config', 'banco'), {
+      saldoActual: saldo,
+      fechaSaldo: fecha,
+      actualizado_por: currentUser.email,
+      actualizado_en: serverTimestamp()
+    });
+    configBanco = { saldoActual: saldo, fechaSaldo: fecha };
+    if (status) { status.textContent = '✓ Guardado'; status.style.color = 'var(--green)'; }
+  } catch (e) {
+    if (status) { status.textContent = 'Error: ' + e.message; status.style.color = 'var(--red)'; }
+  }
+}
+</script>
+
+</body>
+</html>

@@ -2931,7 +2931,7 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
           <div style="max-height:600px;overflow-y:auto;overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,.04);">
             <table class="caja-data-table">
               <thead>
-                <tr><th>Fecha</th><th>Día</th><th>Acreedor</th><th class="num">Monto</th><th>Banco</th><th>Estado</th><th>Notas</th></tr>
+                <tr><th>Fecha</th><th>N°</th><th>Modo</th><th>Acreedor</th><th class="num">Monto</th><th>Banco</th><th>Estado</th><th>Notas</th></tr>
               </thead>
               <tbody id="cajaChequesBody"></tbody>
             </table>
@@ -4581,6 +4581,19 @@ function showWelcomeBanner(user) {
         <div style="font-size:.75rem;color:#9ca3af;margin-top:2px;">${user.name} · <span style="color:#34d399;">${user.cargo}</span></div>
       </div>
     </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+    ${user.cargo === 'Administrador' || user.cargo === 'Administración' ? `
+    <a href="/cargar.html" style="
+      display:flex;align-items:center;gap:6px;text-decoration:none;
+      padding:8px 16px;border-radius:10px;border:1px solid rgba(52,211,153,.25);
+      background:rgba(52,211,153,.08);color:#34d399;font-size:.75rem;
+      font-family:'Inter',sans-serif;cursor:pointer;transition:all .3s;white-space:nowrap;
+    " onmouseover="this.style.background='rgba(52,211,153,.15)';this.style.borderColor='rgba(52,211,153,.4)'"
+       onmouseout="this.style.background='rgba(52,211,153,.08)';this.style.borderColor='rgba(52,211,153,.25)'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Administración
+    </a>
+    ` : ''}
     <button onclick="logout()" style="
       display:flex;align-items:center;gap:6px;
       padding:8px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.1);
@@ -4591,6 +4604,7 @@ function showWelcomeBanner(user) {
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       Cerrar sesión
     </button>
+    </div>
   `;
   banner.style.display = 'flex';
   // Show top nav and position it below welcome banner

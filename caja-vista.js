@@ -374,19 +374,24 @@ function renderCalendario() {
     }
     let html = `<div class="cdate">${d.getDate()}</div>`;
     const esPasado = fs < hoyStr;
-    // Si hay cheques pagados ese día (siempre histórico)
-    if (data.chequesPagadosDelDia && data.chequesPagadosDelDia.length > 0) {
-      const totalPagado = data.chequesPagadosDelDia.reduce((s, c) => s + (c.monto || 0), 0);
-      html += `<div class="crow"><span class="clbl">Pagados</span><span class="cval pagos">${fmtMoneyCompact(totalPagado)}</span></div>`;
+    // Ingreso (siempre se muestra, aunque sea 0 si no hay caja cargada para ese día)
+    const realBadge = data.ingresoReal ? ' <span class="real-pill">REAL</span>' : '';
+    const ingresoStr = data.ingreso > 0 ? fmtMoneyCompact(data.ingreso) : '$0';
+    html += `<div class="crow"><span class="clbl">Ingreso</span><span class="cval ingresos">${ingresoStr}${realBadge}</span></div>`;
+    // Pagos (siempre 0 por ahora, futura mejora cuando registremos pagos directos)
+    html += `<div class="crow"><span class="clbl">Pagos</span><span class="cval">$0</span></div>`;
+    // CH. Pagos:
+    //  - días pasados: cheques pagados ese día
+    //  - hoy/futuro: cheques emitidos rolling
+    let chPagosMonto = 0;
+    if (esPasado) {
+      chPagosMonto = (data.chequesPagadosDelDia || []).reduce((s, c) => s + (c.monto || 0), 0);
+    } else {
+      chPagosMonto = data.egresos || 0;
     }
-    // Cheques egresos (futuro: rolling, pasado: ya están como pagados arriba)
-    if (data.egresos > 0 && !esPasado) {
-      html += `<div class="crow"><span class="clbl">Cheques</span><span class="cval cheques">${fmtMoneyCompact(data.egresos)}</span></div>`;
-    }
-    if (data.ingreso > 0) {
-      const realBadge = data.ingresoReal ? ' <span class="real-pill">REAL</span>' : '';
-      html += `<div class="crow"><span class="clbl">Ingreso</span><span class="cval ingresos">${fmtMoneyCompact(data.ingreso)}${realBadge}</span></div>`;
-    }
+    const chPagosStr = chPagosMonto > 0 ? fmtMoneyCompact(chPagosMonto) : '$0';
+    html += `<div class="crow"><span class="clbl">CH. Pagos</span><span class="cval cheques">${chPagosStr}</span></div>`;
+    // Saldo neto
     if (data.saldo != null) {
       html += `<div class="csaldo ${saldoCls}">Saldo ${fmtMoneyCompact(data.saldo)}</div>`;
     }
@@ -448,6 +453,7 @@ function renderCheques() {
   const tbody = document.getElementById('cajaChequesBody');
   const sumEl = document.getElementById('cajaChequesSummary');
   if (!tbody) return;
+  poblarMesesFiltro(); // re-popular cada vez por si el DOM se reseteó
   const hoy = ymdISO(new Date());
   const fname = (document.getElementById('cajaFilterName')?.value || '').toLowerCase();
   const fmes = document.getElementById('cajaFilterMes')?.value || '';
@@ -478,9 +484,11 @@ function renderCheques() {
     const fechaMostrar = fp && fp !== ch.fecha ? `${fmtFechaCorta(ch.fecha)} → <strong>${fmtFechaCorta(fp)}</strong>` : fmtFechaCorta(ch.fecha);
     const notas = ch.notas || '';
     const notaPagado = ch.fechaPagoReal ? ` · Pagado ${fmtFechaCorta(ch.fechaPagoReal)}` : '';
+    const modoCorto = ch.modo === 'Electronico' ? 'Elec.' : (ch.modo === 'Fisico' ? 'Fís.' : (ch.modo || '—'));
     return `<tr>
       <td>${fechaMostrar}</td>
-      <td>${diaSemana(ch.fecha)}</td>
+      <td>${ch.numero || '—'}</td>
+      <td>${modoCorto}</td>
       <td>${ch.destinatario || ''}</td>
       <td class="num">${fmtMoney(ch.monto)}</td>
       <td>${ch.banco || ''}</td>
@@ -513,15 +521,26 @@ function renderCajasDiarias() {
 function poblarMesesFiltro() {
   const sel = document.getElementById('cajaFilterMes');
   if (!sel) return;
+  // Preservar selección actual
+  const seleccionActual = sel.value;
   const meses = new Set();
-  CAJA_DATA.cheques.forEach(ch => meses.add(fechaEfectivaCheque(ch).slice(0, 7)));
+  CAJA_DATA.cheques.forEach(ch => {
+    const f = ch.fecha;
+    if (f) meses.add(f.slice(0, 7));
+  });
   const sorted = [...meses].sort();
   const meses_es = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   sel.innerHTML = '<option value="">Todos los meses</option>' +
     sorted.map(m => {
       const [y, mm] = m.split('-');
-      return `<option value="${m}">${meses_es[parseInt(mm,10)-1]} ${y}</option>`;
+      const sel_attr = m === seleccionActual ? ' selected' : '';
+      return `<option value="${m}"${sel_attr}>${meses_es[parseInt(mm,10)-1]} ${y}</option>`;
     }).join('');
+}
+
+// fechaEfectivaCheque global helper (compatibilidad)
+function fechaEfectivaCheque(ch) {
+  return ch.fecha;
 }
 
 // ============================================================
