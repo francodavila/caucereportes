@@ -868,170 +868,6 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   .top-nav-btn { min-height: 38px; display: flex; align-items: center; justify-content: center; }
 }
 
-/* ===== CAJA TAB STYLES ===== */
-.caja-toolbar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
-.caja-toolbar input, .caja-toolbar select {
-  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
-  color: var(--text); padding: 8px 12px; border-radius: 10px; font-size: .82rem;
-  font-family: 'Inter',sans-serif; outline: none; transition: border-color .3s;
-}
-.caja-toolbar input:focus, .caja-toolbar select:focus { border-color: rgba(52,211,153,.3); }
-.caja-toolbar input { min-width: 200px; }
-.caja-toolbar select option { background: #141620; color: var(--text); }
-.caja-summary { margin-left:auto; font-weight:600; font-size:.78rem; color:var(--text2); }
-
-.caja-tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
-.caja-tab-btn { padding:8px 18px; border-radius:100px; background: rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06); color: var(--text3); font-size: .76rem; font-weight:600;
-  cursor:pointer; font-family:'Inter',sans-serif; transition: all .3s; }
-.caja-tab-btn:hover { color: var(--text2); border-color: rgba(255,255,255,.12); }
-.caja-tab-btn.active { color: #fff; background: rgba(52,211,153,.12); border-color: rgba(52,211,153,.3); box-shadow: 0 0 16px rgba(52,211,153,.08); }
-.caja-tab-content { display: none; }
-.caja-tab-content.active { display: block; }
-
-/* Calendario */
-.caja-cal-header { display:flex; gap:12px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
-.caja-cal-nav { display:flex; gap:6px; align-items:center; }
-.caja-cal-nav button { padding:7px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.03); color: var(--text2); cursor:pointer; font-size:.78rem;
-  font-family:'Inter',sans-serif; transition: all .3s; }
-.caja-cal-nav button:hover { background: rgba(255,255,255,.06); color: #fff; }
-.caja-month-label { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:600;
-  padding:0 14px; min-width:160px; text-align:center; color:#fff; }
-
-.caja-calendar { display:grid; grid-template-columns: repeat(7, 1fr); gap:4px; }
-.caja-dayheader { background: rgba(255,255,255,.04); color: var(--text3); padding: 6px 4px;
-  text-align:center; font-weight:600; font-size:.62rem; text-transform:uppercase; letter-spacing:1.5px;
-  border-radius:8px; }
-.caja-cell { background: rgba(18,20,34,.5); border:1px solid rgba(255,255,255,.04);
-  border-radius:10px; padding:8px; min-height:110px; font-size:.7rem; cursor:pointer; transition: all .3s; position:relative; }
-.caja-cell:hover { background: rgba(26,30,50,.7); border-color: rgba(255,255,255,.1); transform: translateY(-1px); }
-.caja-cell.empty { background: transparent; border:none; cursor:default; }
-.caja-cell.empty:hover { transform:none; }
-.caja-cell.today { background: rgba(251,191,36,.06); border-color: rgba(251,191,36,.3); box-shadow: 0 0 16px rgba(251,191,36,.05); }
-.caja-cell.past { opacity: .65; }
-.caja-cell .cdate { font-weight:700; font-size:.82rem; color:#fff; margin-bottom:4px; }
-.caja-cell .crow { display:flex; justify-content:space-between; align-items:baseline; gap:4px; padding:1px 0; }
-.caja-cell .clbl { font-size:.55rem; color: var(--text3); text-transform:uppercase; letter-spacing:1px; font-weight:600; }
-.caja-cell .cval { font-weight:700; font-size:.7rem; font-variant-numeric: tabular-nums; }
-.caja-cell .cval.cheques { color: var(--red); }
-.caja-cell .cval.pagos { color: var(--green); }
-.caja-cell .cval.ingresos { color: var(--cyan); }
-.caja-cell .cval.egresos { color: var(--red); }
-.caja-cell .csaldo { color:#fff; font-weight:800; padding-top:5px; border-top:1px solid rgba(255,255,255,.06); margin-top:5px; font-size:.72rem; }
-.caja-cell .csaldo.neg { color: var(--red); }
-.caja-cell .csaldo.warn { color: var(--amber); }
-.caja-cell .csaldo.ok { color: var(--green); }
-.caja-cell .real-pill { display:inline-block; background: rgba(52,211,153,.15); color: var(--green);
-  font-size:.5rem; padding:1px 5px; border-radius:4px; margin-left:3px; font-weight:700; letter-spacing:.5px; vertical-align:middle; }
-
-@media(max-width: 1100px) {
-  .caja-cell { min-height:90px; padding:5px; }
-  .caja-cell .cdate { font-size:.74rem; }
-  .caja-cell .cval { font-size:.62rem; }
-  .caja-cell .clbl { font-size:.48rem; }
-  .caja-cell .csaldo { font-size:.62rem; }
-}
-@media(max-width: 768px) {
-  .caja-calendar { gap:2px; }
-  .caja-dayheader { font-size:.5rem; padding: 4px 2px; }
-  .caja-cell { min-height:70px; padding:4px; border-radius:6px; }
-  .caja-cell .cdate { font-size:.66rem; margin-bottom:2px; }
-  .caja-cell .crow { padding: 0; }
-  .caja-cell .clbl { font-size:.42rem; letter-spacing:.5px; }
-  .caja-cell .cval { font-size:.56rem; }
-  .caja-cell .csaldo { font-size:.56rem; padding-top:3px; margin-top:3px; }
-  .caja-cell .real-pill { font-size:.42rem; padding:0 3px; }
-  .caja-month-label { font-size:.85rem; min-width:120px; padding: 0 8px; }
-  .caja-cal-nav button { padding:5px 10px; font-size:.7rem; }
-}
-
-/* Tabla cheques */
-.caja-data-table { width: 100%; border-collapse: collapse; font-size:.76rem; }
-.caja-data-table thead th { background: rgba(255,255,255,.03); color: var(--text3); padding: 10px 8px;
-  text-align:left; font-weight:600; font-size:.62rem; text-transform:uppercase; letter-spacing:1.5px;
-  border-bottom: 1px solid rgba(255,255,255,.08); position:sticky; top:0; z-index:1; }
-.caja-data-table thead th.num { text-align: right; }
-.caja-data-table tbody td { padding: 8px; border-bottom: 1px solid rgba(255,255,255,.025);
-  font-variant-numeric: tabular-nums; }
-.caja-data-table tbody td.num { text-align:right; }
-.caja-data-table tbody tr:hover td { background: rgba(255,255,255,.02); }
-
-.caja-pill { display:inline-block; padding: 3px 10px; border-radius: 100px; font-size: .58rem;
-  font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
-.caja-pill.pendiente { background: rgba(255,255,255,.06); color: var(--text2); border:1px solid rgba(255,255,255,.08); }
-.caja-pill.pagado { background: rgba(52,211,153,.1); color: var(--green); border:1px solid rgba(52,211,153,.2); }
-.caja-pill.postergado { background: rgba(251,191,36,.1); color: var(--amber); border:1px solid rgba(251,191,36,.2); }
-.caja-pill.rechazado { background: rgba(248,113,113,.1); color: var(--red); border:1px solid rgba(248,113,113,.2); }
-.caja-pill.canjeado { background: rgba(96,165,250,.1); color: var(--blue); border:1px solid rgba(96,165,250,.2); }
-
-.caja-btn { padding: 4px 10px; border-radius: 8px; font-size: .62rem; font-weight: 600;
-  font-family:'Inter',sans-serif; cursor:pointer; margin-right: 3px; transition: all .2s;
-  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); color: var(--text2); }
-.caja-btn:hover { background: rgba(255,255,255,.08); color:#fff; }
-.caja-btn.pagar { color: var(--green); border-color: rgba(52,211,153,.25); }
-.caja-btn.pagar:hover { background: rgba(52,211,153,.1); }
-.caja-btn.posterg { color: var(--amber); border-color: rgba(251,191,36,.25); }
-.caja-btn.posterg:hover { background: rgba(251,191,36,.1); }
-.caja-btn.rechazar { color: var(--red); border-color: rgba(248,113,113,.25); }
-.caja-btn.rechazar:hover { background: rgba(248,113,113,.1); }
-
-/* Form caja */
-.caja-form-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin-bottom:14px; }
-.caja-form-grid label { display:flex; flex-direction:column; gap:5px; font-size: .65rem;
-  color: var(--text3); text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600; }
-.caja-form-grid input { padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.03); color: var(--text); font-size: .85rem; font-family:'Inter',sans-serif;
-  outline: none; font-variant-numeric: tabular-nums; transition: border-color .3s; }
-.caja-form-grid input:focus { border-color: rgba(52,211,153,.3); }
-
-.caja-cta-btn { padding: 10px 22px; border-radius: 10px; border: 1px solid rgba(52,211,153,.3);
-  background: linear-gradient(135deg,rgba(52,211,153,.12),rgba(52,211,153,.05)); color: var(--green);
-  font-size:.82rem; font-weight: 700; cursor:pointer; font-family: 'Inter',sans-serif;
-  letter-spacing:.3px; transition: all .3s; }
-.caja-cta-btn:hover { background: rgba(52,211,153,.18); }
-
-/* Modal */
-.caja-modal-bg { display:none; position: fixed; inset: 0; background: rgba(0,0,0,.7);
-  z-index: 9000; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-.caja-modal-bg.show { display:flex; }
-.caja-modal { background: #141620; border:1px solid rgba(255,255,255,.08);
-  border-radius: 20px; padding: 24px; max-width: 600px; width: 92%; max-height: 90vh;
-  overflow-y: auto; box-shadow: 0 16px 64px rgba(0,0,0,.6); }
-.caja-modal h3 { font-family:'Playfair Display',serif; color:#fff; margin-bottom: 14px; font-size: 1.2rem; }
-.caja-modal .info-block { background: rgba(255,255,255,.03); padding: 12px 16px; border-radius: 12px;
-  margin-bottom: 14px; font-size: .82rem; line-height: 1.7; color: var(--text2); border: 1px solid rgba(255,255,255,.05); }
-.caja-modal .info-block strong { color: #fff; }
-.caja-modal .modal-actions { display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end; }
-.caja-modal label { display:block; font-size: .68rem; color: var(--text3); text-transform: uppercase;
-  letter-spacing: 1.2px; font-weight: 600; margin-bottom: 6px; margin-top: 10px; }
-.caja-modal input[type="date"], .caja-modal textarea { width: 100%; padding: 10px 14px; border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); color: var(--text);
-  font-family:'Inter',sans-serif; font-size: .85rem; outline: none; resize: vertical; }
-
-/* Acreedores */
-.caja-acreedor { background: rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06);
-  border-left: 4px solid var(--text3); border-radius: 12px; padding: 14px 18px;
-  display: grid; grid-template-columns: 32px 1fr auto auto; gap: 16px; align-items: center; margin-bottom: 8px; }
-.caja-acreedor.top1 { border-left-color: var(--red); background: rgba(248,113,113,.04); }
-.caja-acreedor.top2 { border-left-color: var(--amber); background: rgba(251,191,36,.04); }
-.caja-acreedor.top3 { border-left-color: var(--blue); background: rgba(96,165,250,.04); }
-.caja-acreedor .rank { font-family:'Playfair Display',serif; font-size: 1.4rem; font-weight: 700; color: var(--text3); }
-.caja-acreedor .acname { font-size: .9rem; font-weight: 700; color: #fff; }
-.caja-acreedor .acstat { text-align: right; }
-.caja-acreedor .acstat .ll { font-size: .58rem; color: var(--text3); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
-.caja-acreedor .acstat .vv { font-size: .92rem; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
-
-@media(max-width: 600px) {
-  .caja-acreedor { grid-template-columns: 28px 1fr 1fr; padding: 10px 12px; gap: 10px; }
-  .caja-acreedor .rank { font-size: 1.1rem; }
-  .caja-acreedor .acname { font-size: .78rem; grid-column: 2 / 4; }
-  .caja-acreedor .acstat { grid-column: span 1; }
-  .caja-acreedor .acstat:first-of-type { grid-column: 2; }
-  .caja-data-table { font-size: .68rem; }
-  .caja-data-table thead th { padding: 6px 4px; font-size: .54rem; }
-  .caja-data-table tbody td { padding: 6px 4px; }
-}
 </style>
 </head>
 <body>
@@ -1110,7 +946,6 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   <button class="top-nav-btn" onclick="switchView('financieros')">Resultados financieros</button>
   <button class="top-nav-btn" onclick="switchView('rrhh')">RRHH</button>
   <button class="top-nav-btn" onclick="switchView('inmobiliario')">Inmobiliario</button>
-  <button class="top-nav-btn" onclick="switchView('caja')">Caja</button>
 </div>
 
 <!-- ======== VIEW: RESULTADOS ECONÓMICOS ======== -->
@@ -2566,6 +2401,8 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
         </div>
       </div>
 
+
+
     </div>
   </div>
 </div>
@@ -2658,7 +2495,6 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
     <div id="rrhh-tab-abril" style="display:none;"></div>
 
   </div>
-</div>
 </div><!-- /view-rrhh -->
 
 <!-- ======== VIEW: INMOBILIARIO ======== -->
@@ -2861,193 +2697,6 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
         <div class="f-text">Inmobiliario — Madero Town SRL — 2025-2026</div>
       </div>
 
-    </div>
-  </div>
-</div>
-
-<!-- ======== VIEW: CAJA ======== -->
-<div id="view-caja" class="view-section">
-  <div style="padding-top:160px;">
-    <!-- Hero Caja -->
-    <div style="position:relative;overflow:hidden;padding:0 0 40px;text-align:center;">
-      <div style="position:relative;z-index:2;max-width:800px;margin:0 auto;padding:0 24px;">
-        <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce de los fuegos" class="fin-hero-logo" style="width:200px;margin-bottom:12px;">
-        <div class="fin-hero-sub" style="font-size:.85rem;color:var(--text3);font-weight:400;letter-spacing:4px;text-transform:uppercase;">Caja · Plan de Pagos & Proyección</div>
-        <div style="margin-top:24px;display:inline-flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center;">
-          <label style="display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;">
-            Hoy:
-            <input type="date" id="cajaFechaHoy" style="padding:7px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:var(--text);font-family:'Inter',sans-serif;font-size:.78rem;outline:none;">
-          </label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;">
-            Saldo actual:
-            <input type="number" id="cajaSaldoActual" step="1000" style="padding:7px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:var(--text);font-family:'Inter',sans-serif;font-size:.78rem;outline:none;width:140px;font-variant-numeric:tabular-nums;">
-          </label>
-          <button onclick="cajaExportar()" class="caja-btn" style="padding:7px 14px;font-size:.7rem;">Exportar backup</button>
-          <button onclick="document.getElementById('cajaImportFile').click()" class="caja-btn" style="padding:7px 14px;font-size:.7rem;">Importar backup</button>
-          <input type="file" id="cajaImportFile" accept=".json" style="display:none" onchange="cajaImportar(event)">
-          <button onclick="cajaResetear()" class="caja-btn rechazar" style="padding:7px 14px;font-size:.7rem;">Resetear</button>
-        </div>
-        <div id="cajaLastUpdate" style="margin-top:10px;font-size:.65rem;color:var(--text3);"></div>
-      </div>
-    </div>
-
-    <div style="max-width:1220px;margin:0 auto;padding:0 28px;position:relative;z-index:1;">
-
-      <!-- KPIs -->
-      <div class="kpi-grid" id="cajaKpis" style="margin-top:0;"></div>
-
-      <!-- Tabs internos -->
-      <div class="caja-tabs" style="margin-top:24px;">
-        <button class="caja-tab-btn active" onclick="cajaSwitchTab('calendario',event)">Calendario</button>
-        <button class="caja-tab-btn" onclick="cajaSwitchTab('cheques',event)">Cheques</button>
-        <button class="caja-tab-btn" onclick="cajaSwitchTab('cajas',event)">Cajas Diarias</button>
-        <button class="caja-tab-btn" onclick="cajaSwitchTab('acreedores',event)">Acreedores</button>
-        <button class="caja-tab-btn" onclick="cajaSwitchTab('ayuda',event)">Ayuda</button>
-      </div>
-
-      <!-- Tab: Calendario -->
-      <div class="caja-tab-content active" id="cajaTab-calendario">
-        <div class="card">
-          <div class="caja-cal-header">
-            <div class="caja-cal-nav">
-              <button onclick="cajaCambiarMes(-1)">‹</button>
-              <span class="caja-month-label" id="cajaMonthLabel"></span>
-              <button onclick="cajaCambiarMes(1)">›</button>
-              <button onclick="cajaIrHoy()" style="margin-left:10px;">Hoy</button>
-            </div>
-            <div style="font-size:.7rem;color:var(--text3);">Click en un día para ver detalle y marcar pagos</div>
-          </div>
-          <div class="caja-calendar" id="cajaCalendario"></div>
-          <div style="margin-top:16px;display:flex;gap:18px;flex-wrap:wrap;font-size:.65rem;color:var(--text3);">
-            <span>Saldo: <span style="color:var(--green);font-weight:700;">verde &gt; $3M</span></span>
-            <span>· <span style="color:var(--amber);font-weight:700;">amarillo</span> entre 0 y $3M</span>
-            <span>· <span style="color:var(--red);font-weight:700;">rojo</span> negativo</span>
-            <span style="margin-left:auto;"><span class="real-pill">REAL</span> caja cargada del día</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab: Cheques -->
-      <div class="caja-tab-content" id="cajaTab-cheques">
-        <div class="card">
-          <div class="caja-toolbar">
-            <input type="text" id="cajaFilterName" placeholder="Buscar acreedor..." oninput="cajaRenderCheques()">
-            <select id="cajaFilterEstado" onchange="cajaRenderCheques()">
-              <option value="">Todos los estados</option>
-              <option value="pendiente">Pendientes</option>
-              <option value="pagado">Pagados</option>
-              <option value="postergado">Postergados</option>
-              <option value="rechazado">Rechazados</option>
-              <option value="canjeado">Canjeados</option>
-            </select>
-            <select id="cajaFilterMes" onchange="cajaRenderCheques()">
-              <option value="">Todos los meses</option>
-              <option value="2026-05">Mayo 2026</option>
-              <option value="2026-06">Junio 2026</option>
-              <option value="2026-07">Julio 2026</option>
-              <option value="2026-08">Agosto 2026</option>
-              <option value="2026-09">Septiembre 2026</option>
-            </select>
-            <span class="caja-summary" id="cajaChequesSummary"></span>
-          </div>
-          <div style="max-height:600px;overflow-y:auto;overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,.04);">
-            <table class="caja-data-table">
-              <thead>
-                <tr><th>Fecha</th><th>Día</th><th>Acreedor</th><th class="num">Monto</th><th>Banco</th><th>Estado</th><th>Notas</th><th>Acciones</th></tr>
-              </thead>
-              <tbody id="cajaChequesBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab: Cajas Diarias -->
-      <div class="caja-tab-content" id="cajaTab-cajas">
-        <div class="card">
-          <div class="card-title">Cargar caja del día</div>
-          <div style="font-size:.72rem;color:var(--text3);margin-bottom:12px;line-height:1.6;">
-            Caja real = (Tarjetas brutas − Propinas) × 90% + Efectivo + CtaCte + Cheq/Transf + Reservas
-          </div>
-          <div class="caja-form-grid">
-            <label>Fecha<input type="date" id="cFecha"></label>
-            <label>Total ingresos (info)<input type="number" id="cTotal" step="1"></label>
-            <label>Tarjetas brutas<input type="number" id="cTarjBrutas" step="1"></label>
-            <label>Propinas<input type="number" id="cPropinas" step="1"></label>
-            <label>Efectivo<input type="number" id="cEfectivo" step="1"></label>
-            <label>CtaCte<input type="number" id="cCtacte" step="1"></label>
-            <label>Cheq/Transf<input type="number" id="cCheq" step="1"></label>
-            <label>Reservas<input type="number" id="cReservas" step="1"></label>
-          </div>
-          <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
-            <button class="caja-cta-btn" onclick="cajaGuardarCaja()">Guardar caja</button>
-            <span id="cajaCalc" style="font-weight:700;color:var(--green);font-size:.92rem;font-variant-numeric:tabular-nums;"></span>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title">Histórico de cajas reales</div>
-          <div style="overflow-x:auto;">
-            <table class="caja-data-table">
-              <thead>
-                <tr><th>Fecha</th><th>Día</th><th class="num">Total</th><th class="num">Propinas</th><th class="num">Efectivo</th><th class="num">Tarj. brutas</th><th class="num">CtaCte</th><th class="num">Cheq/Tran</th><th class="num">Reservas</th><th class="num">Caja real</th><th></th></tr>
-              </thead>
-              <tbody id="cajaCajasBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab: Acreedores -->
-      <div class="caja-tab-content" id="cajaTab-acreedores">
-        <div class="card">
-          <div class="card-title">Top acreedores</div>
-          <div style="font-size:.72rem;color:var(--text3);margin-bottom:14px;">Ordenados por monto pendiente. Llamar primero a los TOP 5.</div>
-          <div id="cajaAcreedoresList"></div>
-        </div>
-      </div>
-
-      <!-- Tab: Ayuda -->
-      <div class="caja-tab-content" id="cajaTab-ayuda">
-        <div class="card">
-          <div class="card-title">Cómo usar la pestaña Caja</div>
-          <div style="line-height:1.75;font-size:.85rem;color:var(--text2);">
-            <p style="margin-bottom:10px;"><strong style="color:#fff;">Calendario</strong> — Vista principal mensual. Cada día muestra cheques pendientes (rojo), pagos hechos (verde), ingreso del día y saldo proyectado. Click en un día para ver detalle y marcar cheques.</p>
-            <p style="margin-bottom:10px;"><strong style="color:#fff;">Cheques</strong> — Lista completa con filtros. Por cada cheque podés: <span style="color:var(--green);">Pagar</span> (descuenta del saldo), <span style="color:var(--amber);">Postergar</span> (renegociación con nueva fecha), <span style="color:var(--red);">Rechazar</span> (registra sin descontar saldo), <span style="color:var(--blue);">Canjear</span> (cambio por otro instrumento).</p>
-            <p style="margin-bottom:10px;"><strong style="color:#fff;">Cajas Diarias</strong> — Cargá la caja real cada noche con los datos del software del local. Calcula automáticamente la caja real (descontando propinas y aplicando 10% de comisión a tarjetas).</p>
-            <p style="margin-bottom:10px;"><strong style="color:#fff;">Persistencia</strong> — Los datos se guardan en el navegador (localStorage). <strong style="color:var(--amber);">Hacé "Exportar backup" cada semana</strong> y guardá el JSON. Si limpiás la caché del navegador o cambiás de máquina, sin backup perdés todo.</p>
-            <p style="margin-bottom:10px;"><strong style="color:#fff;">Proyección</strong> — Para días futuros sin caja cargada, usa el patrón promedio por día de semana (Lun $4,1M, Vie $8,9M, etc.). Cuando cargás la caja real, esa reemplaza la proyección.</p>
-            <p><strong style="color:#fff;">Datos precargados:</strong> 206 cheques del PDF (con los pre-5/5 reasignados al 6/5 según "Nueva fecha de Pago") + 7 días de cajas históricas (28/4 al 4/5).</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- Modal detalle día -->
-<div class="caja-modal-bg" id="cajaModalDia">
-  <div class="caja-modal">
-    <h3 id="cajaModalDiaTitle">Día</h3>
-    <div class="info-block" id="cajaModalDiaInfo"></div>
-    <div id="cajaModalDiaCheques"></div>
-    <div class="modal-actions">
-      <button class="caja-btn" onclick="cajaCerrarModal('cajaModalDia')">Cerrar</button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal postergar -->
-<div class="caja-modal-bg" id="cajaModalPosterg">
-  <div class="caja-modal">
-    <h3>Postergar cheque</h3>
-    <div class="info-block" id="cajaModalPostergInfo"></div>
-    <label>Nueva fecha de pago</label>
-    <input type="date" id="cajaModalPostergFecha">
-    <label>Notas</label>
-    <textarea id="cajaModalPostergNotas" rows="2" placeholder="Ej: Acordado con portador por WhatsApp"></textarea>
-    <div class="modal-actions">
-      <button class="caja-btn" onclick="cajaCerrarModal('cajaModalPosterg')">Cancelar</button>
-      <button class="caja-btn pagar" onclick="cajaConfirmarPostergar()">Postergar</button>
     </div>
   </div>
 </div>
@@ -4612,12 +4261,12 @@ window.addEventListener('resize', () => { positionTopNav(); });
 // allowedTabs: tabs dentro de Resultados Económicos (null = todas)
 let currentUser = null;
 const USERS = [
-  { hash: '3cbe9096ceb3ae197368e793ea762300bfa5d76988aff20f9f01b97539568a5f', name: 'Franco Davila', cargo: 'Administrador', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { hash: '3a455292555407d0b78e78656aea8d176d93aa8670e2f4893c121a41b5ebd2f3', name: 'Sofía Maidana', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { hash: '2e0b3f5ec08e5aefd612e3a1164da0436d7dea72de7bc20e293c51bc958ca9c9', name: 'Ramiro Maidana', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { hash: 'f60edc98c64589132c727e38043182f4799137a23201717ce48d22f16a76f8b5', name: 'Patricia González', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { hash: '3c8424f7b9e7c826c70fb16b30395cfcd036b8fe5e380a1fbc0de2363036f1b6', name: 'Leonardo La Regina', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { hash: '68739f12714f92674cf6bc4211d4369c3abb2d0545231f195e1175a02e6119de', name: 'Agustín Del Valle', cargo: 'Administración', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
+  { hash: '3cbe9096ceb3ae197368e793ea762300bfa5d76988aff20f9f01b97539568a5f', name: 'Franco Davila', cargo: 'Administrador', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { hash: '3a455292555407d0b78e78656aea8d176d93aa8670e2f4893c121a41b5ebd2f3', name: 'Sofía Maidana', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { hash: '2e0b3f5ec08e5aefd612e3a1164da0436d7dea72de7bc20e293c51bc958ca9c9', name: 'Ramiro Maidana', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { hash: 'f60edc98c64589132c727e38043182f4799137a23201717ce48d22f16a76f8b5', name: 'Patricia González', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { hash: '3c8424f7b9e7c826c70fb16b30395cfcd036b8fe5e380a1fbc0de2363036f1b6', name: 'Leonardo La Regina', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { hash: '68739f12714f92674cf6bc4211d4369c3abb2d0545231f195e1175a02e6119de', name: 'Agustín Del Valle', cargo: 'Administración', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
   { hash: 'a84a9a3991169fd661fc3bffd25e96a84d593cd63810b3ab9640ae969e8145bc', name: 'Martín Tarallo', cargo: 'Gerente de Servicio', allowedViews: ['economicos','organigrama'], allowedTabs: ['resumen'] },
 ];
 
@@ -5882,7 +5531,8 @@ function initFinancialCharts() {
     });
   }
 }
-
 </script>
+
+
 </body>
 </html>
