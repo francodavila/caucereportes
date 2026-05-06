@@ -14,7 +14,7 @@
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
-import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
+import { getFirestore, collection, getDocs, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
 import { firebaseConfig, ADMIN_EMAILS } from './firebase-config.js';
 
 const app = initializeApp(firebaseConfig);
@@ -29,6 +29,10 @@ window.__cauceAuth = { auth, signInWithPopup, signOut, provider };
 window.__cauceData = {
   reportData: null,    // Se llena en cargarTodo()
   rrhhMonthlyData: null,
+  // Plataforma de pagos (Bloque 5):
+  proveedores: [],
+  facturas: [],
+  pagos: [],
   ready: false
 };
 
@@ -37,9 +41,12 @@ window.__cauceData = {
 // ============================================================
 async function cargarTodo() {
   try {
-    const [ecoSnap, rrhhSnap] = await Promise.all([
+    const [ecoSnap, rrhhSnap, provSnap, factSnap, pagSnap] = await Promise.all([
       getDocs(collection(db, 'informes_economicos')),
-      getDocs(collection(db, 'informes_rrhh'))
+      getDocs(collection(db, 'informes_rrhh')),
+      getDocs(query(collection(db, 'proveedores'), orderBy('nombre'))).catch(() => null),
+      getDocs(query(collection(db, 'facturas'), orderBy('fecha', 'desc'))).catch(() => null),
+      getDocs(query(collection(db, 'pagos'), orderBy('fecha', 'desc'))).catch(() => null),
     ]);
 
     const reportData = {};
@@ -56,10 +63,21 @@ async function cargarTodo() {
       rrhhData[monthName] = rehydrateRrhh(docData.data || {});
     });
 
+    // Plataforma de pagos
+    const proveedores = [];
+    if (provSnap) provSnap.forEach(d => proveedores.push({ _id: d.id, ...d.data() }));
+    const facturas = [];
+    if (factSnap) factSnap.forEach(d => facturas.push({ _id: d.id, ...d.data() }));
+    const pagos = [];
+    if (pagSnap) pagSnap.forEach(d => pagos.push({ _id: d.id, ...d.data() }));
+
     window.__cauceData.reportData = reportData;
     window.__cauceData.rrhhMonthlyData = rrhhData;
+    window.__cauceData.proveedores = proveedores;
+    window.__cauceData.facturas = facturas;
+    window.__cauceData.pagos = pagos;
     window.__cauceData.ready = true;
-    console.log('[Cauce] Datos cargados desde Firestore:', Object.keys(reportData));
+    console.log('[Cauce] Datos cargados desde Firestore:', Object.keys(reportData), '· Proveedores:', proveedores.length, '· Compras:', facturas.length, '· Pagos:', pagos.length);
     return { reportData, rrhhMonthlyData: rrhhData };
   } catch (e) {
     console.warn('[Cauce] No se pudo cargar de Firestore, usando datos hardcoded:', e);

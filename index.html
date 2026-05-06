@@ -1107,6 +1107,8 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
   <button class="top-nav-btn" onclick="switchView('rrhh')">RRHH</button>
   <button class="top-nav-btn" onclick="switchView('inmobiliario')">Inmobiliario</button>
   <button class="top-nav-btn" onclick="switchView('caja')">Caja</button>
+  <button class="top-nav-btn" onclick="switchView('proveedores')">Proveedores</button>
+  <button class="top-nav-btn" onclick="switchView('compras')">Compras</button>
 </div>
 
 <!-- ======== VIEW: RESULTADOS ECONÓMICOS ======== -->
@@ -3026,6 +3028,86 @@ tr:hover td { background: rgba(52,211,153,.03) !important; }
 </div>
 <!-- ======== /VIEW: CAJA ======== -->
 
+
+<!-- ======== VIEW: PROVEEDORES (B5) ======== -->
+<div id="view-proveedores" class="view-section">
+  <div style="padding-top:160px;">
+    <div style="position:relative;overflow:hidden;padding:0 0 40px;text-align:center;">
+      <div style="position:relative;z-index:2;max-width:800px;margin:0 auto;padding:0 24px;">
+        <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce de los fuegos" class="fin-hero-logo" style="width:200px;margin-bottom:12px;">
+        <div class="fin-hero-sub" style="font-size:.85rem;color:var(--text3);font-weight:400;letter-spacing:4px;text-transform:uppercase;">Proveedores · Cuenta corriente</div>
+      </div>
+    </div>
+    <div style="max-width:1220px;margin:0 auto;padding:0 28px 80px;">
+      <div style="font-size:.85rem;color:var(--text2);margin-bottom:18px;line-height:1.6;text-align:center;">
+        Cuentas corrientes con proveedores. Datos en vivo desde el panel de carga.
+      </div>
+      <div class="kpi-grid" id="provKpis" style="margin-top:0;"></div>
+      <div class="card" style="margin-top:18px;">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
+          <div class="card-title" style="margin:0;flex:1;">Cuenta corriente por proveedor</div>
+          <input type="text" id="provBuscador" placeholder="Buscar proveedor o CUIT…" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:8px 12px;font-size:.85rem;outline:none;min-width:240px;">
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="caja-data-table" style="width:100%;">
+            <thead>
+              <tr><th>Proveedor</th><th>CUIT</th><th>Rubro</th><th class="num">Saldo cta cte</th><th>Última compra</th><th>Última transacción</th><th></th></tr>
+            </thead>
+            <tbody id="provTablaBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ======== /VIEW: PROVEEDORES ======== -->
+
+
+<!-- ======== VIEW: COMPRAS (B5) ======== -->
+<div id="view-compras" class="view-section">
+  <div style="padding-top:160px;">
+    <div style="position:relative;overflow:hidden;padding:0 0 40px;text-align:center;">
+      <div style="position:relative;z-index:2;max-width:800px;margin:0 auto;padding:0 24px;">
+        <img src="https://i.postimg.cc/fbLVkzqQ/LOGO-CAUCE-v4.png" alt="Cauce de los fuegos" class="fin-hero-logo" style="width:200px;margin-bottom:12px;">
+        <div class="fin-hero-sub" style="font-size:.85rem;color:var(--text3);font-weight:400;letter-spacing:4px;text-transform:uppercase;">Compras · Detalle mensual</div>
+      </div>
+    </div>
+    <div style="max-width:1220px;margin:0 auto;padding:0 28px 80px;">
+      <div style="display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:18px;">
+        <span style="font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;">Mes</span>
+        <select id="comprasMesSelector" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:8px 14px;font-size:.9rem;font-weight:600;outline:none;cursor:pointer;"></select>
+        <select id="comprasCategoriaFiltro" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:8px 14px;font-size:.9rem;outline:none;cursor:pointer;">
+          <option value="">Todas las categorías</option>
+        </select>
+      </div>
+      <div class="kpi-grid" id="comprasKpis" style="margin-top:0;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;">
+        <div class="card">
+          <div class="card-title">Gasto del mes por categoría</div>
+          <div style="height:300px;position:relative;"><canvas id="chartCompCategoria"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Top 10 proveedores del mes</div>
+          <div style="height:300px;position:relative;"><canvas id="chartCompTopProv"></canvas></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:18px;">
+        <div class="card-title">Detalle de compras</div>
+        <div style="overflow-x:auto;">
+          <table class="caja-data-table" style="width:100%;">
+            <thead>
+              <tr><th>Fecha</th><th>Proveedor</th><th>N° comprobante</th><th>Tipo</th><th>Categoría</th><th class="num">Neto</th><th class="num">IVA</th><th class="num">Bruto</th><th>Estado</th></tr>
+            </thead>
+            <tbody id="comprasTablaBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ======== /VIEW: COMPRAS ======== -->
+
+
 </div><!-- /mainContent -->
 
 <!-- ======== CHARTS & DATA ======== -->
@@ -4603,13 +4685,13 @@ let currentUser = null;
 // Para agregar un nuevo socio: sumar { email, name, cargo, allowedViews, allowedTabs }
 // IMPORTANTE: cambiar los placeholders 'TODO@gmail.com' por los mails reales de cada socio.
 const USERS = [
-  { email: 'francodaviladj@gmail.com', name: 'Franco Davila', cargo: 'Administrador', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { email: 'tomidvpaz@gmail.com', name: 'Tomás Del Valle Paz', cargo: 'Administrador', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { email: 'TODO_sofia@gmail.com', name: 'Sofía Maidana', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { email: 'TODO_ramiro@gmail.com', name: 'Ramiro Maidana', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { email: 'TODO_patricia@gmail.com', name: 'Patricia González', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { email: 'TODO_leonardo@gmail.com', name: 'Leonardo La Regina', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
-  { email: 'TODO_agustin@gmail.com', name: 'Agustín Del Valle', cargo: 'Administración', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
+  { email: 'francodaviladj@gmail.com', name: 'Franco Davila', cargo: 'Administrador', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja','proveedores','compras'], allowedTabs: null },
+  { email: 'tomidvpaz@gmail.com', name: 'Tomás Del Valle Paz', cargo: 'Administrador', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja','proveedores','compras'], allowedTabs: null },
+  { email: 'TODO_sofia@gmail.com', name: 'Sofía Maidana', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja','proveedores','compras'], allowedTabs: null },
+  { email: 'TODO_ramiro@gmail.com', name: 'Ramiro Maidana', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja','proveedores','compras'], allowedTabs: null },
+  { email: 'TODO_patricia@gmail.com', name: 'Patricia González', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja','proveedores','compras'], allowedTabs: null },
+  { email: 'TODO_leonardo@gmail.com', name: 'Leonardo La Regina', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja','proveedores','compras'], allowedTabs: null },
+  { email: 'TODO_agustin@gmail.com', name: 'Agustín Del Valle', cargo: 'Administración', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja','proveedores','compras'], allowedTabs: null },
   { email: 'TODO_martin@gmail.com', name: 'Martín Tarallo', cargo: 'Gerente de Servicio', allowedViews: ['economicos','organigrama'], allowedTabs: ['resumen'] },
 ];
 
@@ -4827,6 +4909,289 @@ function applyPermissions(user) {
   }
 }
 
+// ============================================================
+// PROVEEDORES & COMPRAS · render desde Firestore (B5)
+// ============================================================
+const CATEGORIAS_GASTO_INFORME = [
+  { key: 'alimentos', label: 'Alimentos', color: '#34d399' },
+  { key: 'bebidas', label: 'Bebidas', color: '#60a5fa' },
+  { key: 'limpieza', label: 'Limpieza e higiene', color: '#22d3ee' },
+  { key: 'servicios', label: 'Servicios', color: '#fbbf24' },
+  { key: 'alquiler', label: 'Alquiler', color: '#f87171' },
+  { key: 'mantenimiento', label: 'Mantenimiento', color: '#a78bfa' },
+  { key: 'marketing', label: 'Marketing', color: '#3b82f6' },
+  { key: 'impuestos', label: 'Impuestos y tasas', color: '#ef4444' },
+  { key: 'honorarios', label: 'Honorarios', color: '#10b981' },
+  { key: 'equipamiento', label: 'Equipamiento', color: '#9ca3af' },
+  { key: 'otros', label: 'Otros', color: '#6b7280' },
+];
+function catLabel(k) { const c = CATEGORIAS_GASTO_INFORME.find(x => x.key === k); return c ? c.label : (k || '—'); }
+function catColor(k) { const c = CATEGORIAS_GASTO_INFORME.find(x => x.key === k); return c ? c.color : '#9ca3af'; }
+function fmtMoneda$(n) {
+  const num = Number(n) || 0;
+  return num < 0 ? '-$' + Math.abs(num).toLocaleString('es-AR', { maximumFractionDigits: 0 }) : '$' + num.toLocaleString('es-AR', { maximumFractionDigits: 0 });
+}
+function fmtFechaShort$(iso) { if (!iso) return '—'; const [y,m,d] = iso.split('-'); return `${d}/${m}/${y.slice(2)}`; }
+function escapeHtml$(s) { if (s == null) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function ymOf(iso) { return iso ? iso.slice(0, 7) : ''; }
+function ymKey(yyyymm) {
+  if (!yyyymm) return '';
+  const meses = ['','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const [y, m] = yyyymm.split('-');
+  return meses[parseInt(m,10)] + ' ' + y;
+}
+
+// Calcular saldo cta cte de un proveedor (saldoInicial + Σ compras − Σ pagos activos imputados)
+function calcSaldoProveedor(provId, facturas, pagos) {
+  const provs = (window.__cauceData?.proveedores || []);
+  const prov = provs.find(p => p._id === provId);
+  const saldoInicial = Number(prov?.saldoInicial) || 0;
+  const sumComp = facturas.filter(f => f.proveedorId === provId).reduce((s, f) => s + (Number(f.monto) || 0), 0);
+  const sumPag = pagos.filter(p => p.proveedorId === provId && (p.estado || 'activo') === 'activo')
+    .reduce((s, p) => s + (Array.isArray(p.imputaciones) ? p.imputaciones.reduce((a, x) => a + (Number(x.monto) || 0), 0) : 0), 0);
+  return saldoInicial + sumComp - sumPag;
+}
+
+// Calcular IVA crédito fiscal del mes (solo facturas tipo 'factura')
+function calcIvaMes(yyyymm, facturas) {
+  return facturas.filter(f => ymOf(f.fecha) === yyyymm && f.tipo !== 'remito').reduce((s, f) => s + (Number(f.ivaMonto) || 0), 0);
+}
+
+function renderProveedoresVista() {
+  const data = window.__cauceData || {};
+  const proveedores = (data.proveedores || []).filter(p => p.activo !== false);
+  const facturas = data.facturas || [];
+  const pagos = data.pagos || [];
+
+  // Saldos por proveedor + última actividad
+  const filas = proveedores.map(p => {
+    const saldo = calcSaldoProveedor(p._id, facturas, pagos);
+    const compras = facturas.filter(f => f.proveedorId === p._id);
+    const pagosP = pagos.filter(pa => pa.proveedorId === p._id && (pa.estado || 'activo') === 'activo');
+    const ultCompra = compras.length ? compras.map(f => f.fecha).filter(Boolean).sort().slice(-1)[0] : null;
+    const ultPago = pagosP.length ? pagosP.map(pa => pa.fecha).filter(Boolean).sort().slice(-1)[0] : null;
+    const ultTxn = [ultCompra, ultPago].filter(Boolean).sort().slice(-1)[0] || null;
+    return { prov: p, saldo, ultCompra, ultTxn };
+  }).sort((a, b) => b.saldo - a.saldo);
+
+  // KPIs
+  const totalAdeudado = filas.reduce((s, x) => s + Math.max(0, x.saldo), 0);
+  const hoy = new Date();
+  const yyyymm = hoy.getFullYear() + '-' + String(hoy.getMonth() + 1).padStart(2, '0');
+  const ivaMes = calcIvaMes(yyyymm, facturas);
+  const gastoMes = facturas.filter(f => ymOf(f.fecha) === yyyymm).reduce((s, f) => s + (Number(f.monto) || 0), 0);
+  const cantActivos = proveedores.length;
+
+  const kpisHTML = `
+    <div class="kpi-card"><div class="kpi-label">TOTAL ADEUDADO</div><div class="kpi-value" style="color:var(--red);">${fmtMoneda$(totalAdeudado)}</div><div class="kpi-sub">${filas.filter(x => x.saldo > 0).length} proveedores con saldo</div></div>
+    <div class="kpi-card"><div class="kpi-label">IVA CRÉDITO FISCAL</div><div class="kpi-value">${fmtMoneda$(ivaMes)}</div><div class="kpi-sub">${ymKey(yyyymm)}</div></div>
+    <div class="kpi-card"><div class="kpi-label">GASTO DEL MES</div><div class="kpi-value">${fmtMoneda$(gastoMes)}</div><div class="kpi-sub">${ymKey(yyyymm)}</div></div>
+    <div class="kpi-card"><div class="kpi-label">PROVEEDORES ACTIVOS</div><div class="kpi-value">${cantActivos}</div><div class="kpi-sub">en catálogo</div></div>
+  `;
+  const kpisEl = document.getElementById('provKpis');
+  if (kpisEl) kpisEl.innerHTML = kpisHTML;
+
+  // Tabla
+  function pintar(filtroTexto = '') {
+    const tbody = document.getElementById('provTablaBody');
+    if (!tbody) return;
+    const txt = filtroTexto.trim().toLowerCase();
+    const visibles = filas.filter(x => {
+      if (!txt) return true;
+      return ((x.prov.nombre || '') + ' ' + (x.prov.cuit || '') + ' ' + (x.prov.rubro || '')).toLowerCase().includes(txt);
+    });
+    if (visibles.length === 0) { tbody.innerHTML = '<tr><td colspan="7" style="padding:30px;text-align:center;color:var(--text3);">Sin proveedores con esos filtros.</td></tr>'; return; }
+    tbody.innerHTML = visibles.map(x => `
+      <tr>
+        <td><strong>${escapeHtml$(x.prov.nombre || '—')}</strong></td>
+        <td>${escapeHtml$(x.prov.cuit || '—')}</td>
+        <td>${escapeHtml$(x.prov.rubro || '—')}</td>
+        <td class="num" style="color:${x.saldo > 0 ? 'var(--red)' : 'var(--text3)'};font-weight:700;">${fmtMoneda$(x.saldo)}</td>
+        <td>${fmtFechaShort$(x.ultCompra)}</td>
+        <td>${fmtFechaShort$(x.ultTxn)}</td>
+        <td><button onclick="abrirDetalleProveedor('${x.prov._id}')" style="padding:5px 10px;border-radius:6px;background:rgba(96,165,250,.1);color:var(--blue);border:1px solid rgba(96,165,250,.25);font-size:.72rem;cursor:pointer;">Ver detalle</button></td>
+      </tr>
+    `).join('');
+  }
+  pintar(document.getElementById('provBuscador')?.value || '');
+  const buscador = document.getElementById('provBuscador');
+  if (buscador && !buscador._wired) {
+    buscador._wired = true;
+    buscador.addEventListener('input', () => pintar(buscador.value));
+  }
+}
+
+window.abrirDetalleProveedor = function(provId) {
+  const data = window.__cauceData || {};
+  const prov = (data.proveedores || []).find(p => p._id === provId);
+  if (!prov) return;
+  const facturas = (data.facturas || []).filter(f => f.proveedorId === provId).sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+  const pagos = (data.pagos || []).filter(p => p.proveedorId === provId && (p.estado || 'activo') === 'activo').sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+  const saldo = calcSaldoProveedor(provId, data.facturas || [], data.pagos || []);
+  const saldoInicial = Number(prov.saldoInicial) || 0;
+  // Construir timeline unificado
+  const eventos = [];
+  if (saldoInicial > 0) eventos.push({ fecha: '2026-05-01', tipo: 'inicial', monto: saldoInicial, descripcion: 'Saldo inicial al 1/5/2026' });
+  facturas.forEach(f => eventos.push({ fecha: f.fecha, tipo: 'compra', monto: Number(f.monto) || 0, descripcion: `Compra ${f.numeroFC ? '#' + f.numeroFC : '(s/n)'}${f.descripcion ? ' · ' + f.descripcion : ''} · ${catLabel(f.categoria)}` }));
+  pagos.forEach(p => eventos.push({ fecha: p.fecha, tipo: 'pago', monto: -(Number(p.monto) || 0), descripcion: `Pago por ${p.medio || '—'}${p.notas ? ' · ' + p.notas : ''}` }));
+  eventos.sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+  let acum = 0;
+  const filasHTML = eventos.map(ev => {
+    acum += ev.monto;
+    const color = ev.tipo === 'pago' ? 'var(--green)' : ev.tipo === 'compra' ? 'var(--red)' : 'var(--text2)';
+    const sig = ev.monto >= 0 ? '+' : '−';
+    return `<tr><td>${fmtFechaShort$(ev.fecha)}</td><td>${escapeHtml$(ev.descripcion)}</td><td class="num" style="color:${color};font-weight:600;">${sig}${fmtMoneda$(Math.abs(ev.monto))}</td><td class="num" style="color:${acum > 0 ? 'var(--red)' : 'var(--text3)'};font-weight:600;">${fmtMoneda$(acum)}</td></tr>`;
+  }).join('');
+
+  const modal = document.createElement('div');
+  modal.id = 'provDetalleModal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;';
+  modal.innerHTML = `
+    <div style="background:var(--bg2,#0e1018);border:1px solid var(--border);border-radius:14px;padding:26px;max-width:880px;width:100%;max-height:90vh;overflow-y:auto;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap;">
+        <div>
+          <h2 style="margin:0;font-size:1.3rem;">${escapeHtml$(prov.nombre)}</h2>
+          <div style="font-size:.78rem;color:var(--text3);margin-top:4px;">${escapeHtml$(prov.cuit || '—')} · ${escapeHtml$(prov.rubro || '—')}</div>
+        </div>
+        <button onclick="document.getElementById('provDetalleModal').remove()" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:8px;font-size:.85rem;cursor:pointer;">✕ Cerrar</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;">
+        <div style="background:rgba(255,255,255,.02);padding:14px 18px;border-radius:10px;">
+          <div style="font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;">Saldo cta cte</div>
+          <div style="font-size:1.5rem;font-weight:700;color:${saldo > 0 ? 'var(--red)' : 'var(--green)'};margin-top:4px;">${fmtMoneda$(saldo)}</div>
+        </div>
+        <div style="background:rgba(255,255,255,.02);padding:14px 18px;border-radius:10px;">
+          <div style="font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;">Compras</div>
+          <div style="font-size:1.5rem;font-weight:700;margin-top:4px;">${facturas.length}</div>
+          <div style="font-size:.72rem;color:var(--text3);">Total ${fmtMoneda$(facturas.reduce((s, f) => s + (Number(f.monto) || 0), 0))}</div>
+        </div>
+        <div style="background:rgba(255,255,255,.02);padding:14px 18px;border-radius:10px;">
+          <div style="font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;">Pagos</div>
+          <div style="font-size:1.5rem;font-weight:700;margin-top:4px;">${pagos.length}</div>
+          <div style="font-size:.72rem;color:var(--text3);">Total ${fmtMoneda$(pagos.reduce((s, p) => s + (Number(p.monto) || 0), 0))}</div>
+        </div>
+      </div>
+      <h3 style="margin:0 0 10px;font-size:.95rem;">Movimientos</h3>
+      ${eventos.length ? `<table class="caja-data-table" style="width:100%;font-size:.85rem;"><thead><tr><th>Fecha</th><th>Concepto</th><th class="num">Monto</th><th class="num">Saldo</th></tr></thead><tbody>${filasHTML}</tbody></table>` : '<div style="padding:20px;color:var(--text3);font-size:.85rem;">Sin movimientos registrados todavía.</div>'}
+    </div>
+  `;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+};
+
+let _comprasChartCat = null, _comprasChartProv = null;
+
+function renderComprasVista() {
+  const data = window.__cauceData || {};
+  const proveedores = data.proveedores || [];
+  const facturas = data.facturas || [];
+
+  // Llenar selector de meses con los meses que tienen compras
+  const meses = [...new Set(facturas.map(f => ymOf(f.fecha)).filter(Boolean))].sort().reverse();
+  const sel = document.getElementById('comprasMesSelector');
+  if (sel && !sel._wired) {
+    const hoy = new Date();
+    const yyyymm = hoy.getFullYear() + '-' + String(hoy.getMonth() + 1).padStart(2, '0');
+    if (!meses.includes(yyyymm)) meses.unshift(yyyymm);
+    sel.innerHTML = meses.map(m => `<option value="${m}">${ymKey(m)}</option>`).join('');
+    sel.value = meses[0] || yyyymm;
+    sel._wired = true;
+    sel.addEventListener('change', () => renderComprasMes(sel.value));
+  }
+  // Llenar filtro categorías
+  const selCat = document.getElementById('comprasCategoriaFiltro');
+  if (selCat && !selCat._wired) {
+    selCat.innerHTML = '<option value="">Todas las categorías</option>' + CATEGORIAS_GASTO_INFORME.map(c => `<option value="${c.key}">${c.label}</option>`).join('');
+    selCat._wired = true;
+    selCat.addEventListener('change', () => renderComprasMes(sel.value));
+  }
+  renderComprasMes(sel?.value || '');
+}
+
+function renderComprasMes(yyyymm) {
+  const data = window.__cauceData || {};
+  const proveedores = data.proveedores || [];
+  const facturas = data.facturas || [];
+  const provById = {}; proveedores.forEach(p => { provById[p._id] = p; });
+  const catFiltro = document.getElementById('comprasCategoriaFiltro')?.value || '';
+  const delMes = facturas.filter(f => ymOf(f.fecha) === yyyymm && (!catFiltro || f.categoria === catFiltro));
+
+  // KPIs
+  const bruto = delMes.reduce((s, f) => s + (Number(f.monto) || 0), 0);
+  const neto = delMes.reduce((s, f) => s + (Number(f.montoNeto) || (f.tipo === 'remito' ? Number(f.monto) || 0 : 0)), 0);
+  const iva = delMes.reduce((s, f) => s + (Number(f.ivaMonto) || 0), 0);
+  const cant = delMes.length;
+  const kpisEl = document.getElementById('comprasKpis');
+  if (kpisEl) kpisEl.innerHTML = `
+    <div class="kpi-card"><div class="kpi-label">TOTAL BRUTO</div><div class="kpi-value">${fmtMoneda$(bruto)}</div><div class="kpi-sub">${ymKey(yyyymm)}</div></div>
+    <div class="kpi-card"><div class="kpi-label">TOTAL NETO</div><div class="kpi-value">${fmtMoneda$(neto)}</div><div class="kpi-sub">sin IVA</div></div>
+    <div class="kpi-card"><div class="kpi-label">IVA CRÉDITO FISCAL</div><div class="kpi-value">${fmtMoneda$(iva)}</div><div class="kpi-sub">solo facturas</div></div>
+    <div class="kpi-card"><div class="kpi-label">CANTIDAD</div><div class="kpi-value">${cant}</div><div class="kpi-sub">compras del mes</div></div>
+  `;
+
+  // Pie por categoría (sobre todas las del mes — sin aplicar filtro de categoría adentro del gráfico)
+  const delMesCompleto = facturas.filter(f => ymOf(f.fecha) === yyyymm);
+  const porCat = {};
+  delMesCompleto.forEach(f => { porCat[f.categoria || 'otros'] = (porCat[f.categoria || 'otros'] || 0) + (Number(f.monto) || 0); });
+  const catKeys = Object.keys(porCat).sort((a, b) => porCat[b] - porCat[a]);
+  if (_comprasChartCat) { _comprasChartCat.destroy(); _comprasChartCat = null; }
+  const ctx1 = document.getElementById('chartCompCategoria')?.getContext('2d');
+  if (ctx1 && catKeys.length) {
+    _comprasChartCat = new Chart(ctx1, {
+      type: 'doughnut',
+      data: {
+        labels: catKeys.map(k => catLabel(k)),
+        datasets: [{ data: catKeys.map(k => porCat[k]), backgroundColor: catKeys.map(k => catColor(k)), borderWidth: 0 }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#9ca3af', font: { size: 11 } } }, tooltip: { callbacks: { label: (c) => c.label + ': ' + fmtMoneda$(c.parsed) } } } }
+    });
+  } else if (ctx1) {
+    ctx1.clearRect(0, 0, ctx1.canvas.width, ctx1.canvas.height);
+  }
+
+  // Top 10 proveedores
+  const porProv = {};
+  delMesCompleto.forEach(f => { porProv[f.proveedorId] = (porProv[f.proveedorId] || 0) + (Number(f.monto) || 0); });
+  const top = Object.entries(porProv).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  if (_comprasChartProv) { _comprasChartProv.destroy(); _comprasChartProv = null; }
+  const ctx2 = document.getElementById('chartCompTopProv')?.getContext('2d');
+  if (ctx2 && top.length) {
+    _comprasChartProv = new Chart(ctx2, {
+      type: 'bar',
+      data: { labels: top.map(([pid]) => provById[pid]?.nombre || '—'), datasets: [{ data: top.map(([, v]) => v), backgroundColor: 'rgba(96,165,250,.6)', borderRadius: 4 }] },
+      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => fmtMoneda$(c.parsed.x) } } }, scales: { x: { ticks: { color: '#9ca3af', callback: (v) => fmtMoneda$(v) } }, y: { ticks: { color: '#e8e8eb', font: { size: 11 } } } } }
+    });
+  } else if (ctx2) {
+    ctx2.clearRect(0, 0, ctx2.canvas.width, ctx2.canvas.height);
+  }
+
+  // Tabla detallada
+  const tbody = document.getElementById('comprasTablaBody');
+  if (!tbody) return;
+  if (delMes.length === 0) { tbody.innerHTML = '<tr><td colspan="9" style="padding:30px;text-align:center;color:var(--text3);">Sin compras en este mes con esos filtros.</td></tr>'; return; }
+  const filas = [...delMes].sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+  tbody.innerHTML = filas.map(f => {
+    const monto = Number(f.monto) || 0;
+    const pagado = Number(f.montoPagado) || 0;
+    const saldo = monto - pagado;
+    const estado = pagado >= monto && monto > 0 ? 'pagada' : pagado > 0 ? 'parcial' : 'pendiente';
+    const colorEst = estado === 'pagada' ? 'var(--green)' : estado === 'parcial' ? 'var(--amber)' : 'var(--text2)';
+    const tipoLabel = f.tipo === 'remito' ? 'Remito' : 'Factura';
+    const tipoColor = f.tipo === 'remito' ? 'var(--text3)' : 'var(--green)';
+    return `<tr>
+      <td>${fmtFechaShort$(f.fecha)}</td>
+      <td><strong>${escapeHtml$(provById[f.proveedorId]?.nombre || '—')}</strong></td>
+      <td>${escapeHtml$(f.numeroFC || '(s/n)')}</td>
+      <td><span style="font-size:.7rem;font-weight:700;color:${tipoColor};">${tipoLabel}${f.tipo !== 'remito' && f.ivaPct ? ' (' + f.ivaPct + '%)' : ''}</span></td>
+      <td><span style="font-size:.72rem;color:${catColor(f.categoria)};">${catLabel(f.categoria)}</span></td>
+      <td class="num">${fmtMoneda$(Number(f.montoNeto) || (f.tipo === 'remito' ? monto : 0))}</td>
+      <td class="num">${fmtMoneda$(Number(f.ivaMonto) || 0)}</td>
+      <td class="num"><strong>${fmtMoneda$(monto)}</strong></td>
+      <td><span style="font-size:.7rem;font-weight:700;color:${colorEst};letter-spacing:.5px;">${estado.toUpperCase()}</span></td>
+    </tr>`;
+  }).join('');
+}
+
 // === TOP NAV VIEW SWITCHING ===
 let currentView = 'economicos';
 
@@ -4838,7 +5203,7 @@ function switchView(view) {
   // Update nav buttons
   document.querySelectorAll('.top-nav-btn').forEach(btn => btn.classList.remove('active-nav'));
   document.querySelectorAll('.top-nav-btn').forEach(btn => {
-    const viewLabel = {'economicos':'económicos','financieros':'financieros','rrhh':'rrhh','inmobiliario':'inmobiliario'}[view] || view;
+    const viewLabel = {'economicos':'económicos','financieros':'financieros','rrhh':'rrhh','inmobiliario':'inmobiliario','caja':'caja','proveedores':'proveedores','compras':'compras'}[view] || view;
     if (view !== 'organigrama' && btn.textContent.toLowerCase().includes(viewLabel)) {
       btn.classList.add('active-nav');
     }
@@ -4857,6 +5222,9 @@ function switchView(view) {
   } else {
     document.querySelectorAll('.side-index').forEach(s => s.style.display = 'none');
   }
+  // Trigger render de vistas B5
+  if (view === 'proveedores') setTimeout(renderProveedoresVista, 50);
+  if (view === 'compras') setTimeout(renderComprasVista, 50);
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
@@ -5342,6 +5710,11 @@ const rrhhMonthlyData = {
           el.removeAttribute('data-rendered');
           el.innerHTML = '';
         });
+        // Re-render de vistas B5 si están activas
+        if (typeof currentView !== 'undefined') {
+          if (currentView === 'proveedores' && typeof renderProveedoresVista === 'function') renderProveedoresVista();
+          if (currentView === 'compras' && typeof renderComprasVista === 'function') renderComprasVista();
+        }
       }
     } catch (e) {
       console.warn('[Cauce] Firebase merge falló, usando hardcodeados:', e);
