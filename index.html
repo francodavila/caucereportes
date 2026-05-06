@@ -4548,12 +4548,12 @@ let currentUser = null;
 // Para agregar un nuevo socio: sumar { email, name, cargo, allowedViews, allowedTabs }
 // IMPORTANTE: cambiar los placeholders 'TODO@gmail.com' por los mails reales de cada socio.
 const USERS = [
-  { email: 'francodaviladj@gmail.com', name: 'Franco Davila', cargo: 'Administrador', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
-  { email: 'TODO_sofia@gmail.com', name: 'Sofía Maidana', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
-  { email: 'TODO_ramiro@gmail.com', name: 'Ramiro Maidana', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
-  { email: 'TODO_patricia@gmail.com', name: 'Patricia González', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
-  { email: 'TODO_leonardo@gmail.com', name: 'Leonardo La Regina', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
-  { email: 'TODO_agustin@gmail.com', name: 'Agustín Del Valle', cargo: 'Administración', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario'], allowedTabs: null },
+  { email: 'francodaviladj@gmail.com', name: 'Franco Davila', cargo: 'Administrador', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
+  { email: 'TODO_sofia@gmail.com', name: 'Sofía Maidana', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
+  { email: 'TODO_ramiro@gmail.com', name: 'Ramiro Maidana', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
+  { email: 'TODO_patricia@gmail.com', name: 'Patricia González', cargo: 'Socia', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
+  { email: 'TODO_leonardo@gmail.com', name: 'Leonardo La Regina', cargo: 'Socio', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
+  { email: 'TODO_agustin@gmail.com', name: 'Agustín Del Valle', cargo: 'Administración', allowedViews: ['economicos','organigrama','financieros','rrhh','inmobiliario','caja'], allowedTabs: null },
   { email: 'TODO_martin@gmail.com', name: 'Martín Tarallo', cargo: 'Gerente de Servicio', allowedViews: ['economicos','organigrama'], allowedTabs: ['resumen'] },
 ];
 
@@ -4721,7 +4721,7 @@ function applyPermissions(user) {
   const tabs = user.allowedTabs; // null = all tabs allowed
 
   // Filter top nav buttons
-  const viewMap = { 'económicos': 'economicos', 'organigrama': 'organigrama', 'financieros': 'financieros', 'rrhh': 'rrhh', 'inmobiliario': 'inmobiliario' };
+  const viewMap = { 'económicos': 'economicos', 'organigrama': 'organigrama', 'financieros': 'financieros', 'rrhh': 'rrhh', 'inmobiliario': 'inmobiliario', 'caja': 'caja' };
   document.querySelectorAll('.top-nav-btn').forEach(btn => {
     const label = btn.textContent.toLowerCase().trim();
     const viewKey = Object.keys(viewMap).find(k => label.includes(k));
